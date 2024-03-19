@@ -1,0 +1,97 @@
+<script setup lang="ts">
+
+</script>
+
+<template>
+  <div class="message-wrapper">
+    <div class="avatar">
+      <img class="img" src="@/assets/image/wolp.jpg" alt="">
+    </div>
+    <div class="message-content">
+      <div class="message">
+        <div class="user-name-time">
+          <span class="name">章志平</span>
+          <span class="point"></span>
+          <span class="time">2023-04-03</span>
+        </div>
+        <div class="message-text">
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+          很好，非常好，我喜欢
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="less">
+@wh: 55px;
+.message-wrapper {
+  margin: 20px 0;
+  display: flex;
+  padding: 0 25px;
+
+  .avatar {
+    box-sizing: border-box;
+    width: @wh;
+    height: @wh;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 2px solid whitesmoke;
+    margin-right: 15px;
+
+    .img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+    }
+  }
+
+  .message-content {
+    box-sizing: border-box;
+    width: calc(100% - @wh);
+    display: flex;
+
+    .message {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+
+      .user-name-time {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(134, 144, 156, 1);
+        display: flex;
+        align-items: center;
+
+        .point {
+          display: inline-block;
+          box-sizing: border-box;
+          width: 3px;
+          height: 3px;
+          background-color: rgba(134, 144, 156, 1);
+          border-radius: 50%;
+          margin: 0 5px;
+        }
+      }
+
+      .message-text{
+        font-size: 12px;
+        color: #acc2ef;
+        text-align: left;
+        margin-top: 3px;
+      }
+    }
+
+  }
+}
+</style>
