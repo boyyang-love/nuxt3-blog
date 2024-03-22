@@ -158,7 +158,8 @@ const cancel = () => {
   box-sizing: border-box;
   border-radius: 5px;
   padding: 20px 20px 10px;
-  background: rgb(35, 43, 60);
+  //background: rgb(35, 43, 60);
+  background-color: rgb(246,247,253);
 
   .modal-bottom {
     box-sizing: border-box;
@@ -168,12 +169,12 @@ const cancel = () => {
     justify-content: space-around;
 
     .btn {
-      color: #0F1C2E;
+      color: white;
       padding: 5px 20px;
-      background-color: whitesmoke;
+      background-color: rgb(102,211,159);
       border-radius: 5px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bolder;
       box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     }
@@ -188,7 +189,7 @@ const cancel = () => {
 
     .icon {
       font-size: 20px;
-      color: whitesmoke;
+      color: rgba(17, 17, 17, 1);
       cursor: pointer;
     }
 

@@ -23,7 +23,6 @@ import Message from '../message/index.vue'
     </div>
     <div class="btns">
       <n-space align="center" size="small">
-        <nuxt-icon class="face" name="emoji/FaceActivatedFilled"></nuxt-icon>
         <div class="btn">发布评论</div>
       </n-space>
     </div>
@@ -44,13 +43,13 @@ import Message from '../message/index.vue'
 
     .title {
       font-size: 13px;
-      color: #acc2ef;
       font-weight: bolder;
     }
 
     .value {
-      color: rgb(176, 193, 235);
+      font-size: 13px;
       margin: 0 10px;
+      font-weight: bolder;
     }
   }
 
@@ -70,6 +69,8 @@ import Message from '../message/index.vue'
       color: rgb(245, 245, 245);
       background-color: rgb(85, 98, 135);
       cursor: pointer;
+      font-size: 13px;
+      font-weight: bolder;
     }
 
     .face {

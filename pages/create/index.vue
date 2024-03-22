@@ -1,8 +1,10 @@
 <template>
   <div class="create-wrapper">
-    <client-only>
-      <Editor></Editor>
-    </client-only>
+    <div class="inner">
+      <client-only>
+        <Editor></Editor>
+      </client-only>
+    </div>
   </div>
 </template>
 
@@ -13,13 +15,22 @@ import Editor from '@/components/Editor/index.vue'
 <style scoped lang="less">
 .create-wrapper {
   box-sizing: border-box;
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  background-color: rgb(243, 244, 246);
+  overflow: hidden;
 
   .inner {
     box-sizing: border-box;
     border-radius: 10px;
     height: 100%;
+    overflow-y: auto;
 
   }
 }

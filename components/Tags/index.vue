@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import CardTitle from '@/components/CardTitle/index.vue'
+import Title from '@/components/Title/index.vue'
 </script>
 
 <template>
   <div class="tags-wrapper">
     <div class="tag-header">
-      <CardTitle></CardTitle>
+      <Title title="标签" :more="false" padding="10px 0"></Title>
     </div>
     <div class="tag-content">
+      <div class="tag-item" v-for="item in 10">
+        #博客
+      </div>
       <div class="tag-item" v-for="item in 10">
         #vue
       </div>
@@ -19,10 +22,7 @@ import CardTitle from '@/components/CardTitle/index.vue'
 .tags-wrapper {
   box-sizing: border-box;
   width: 100%;
-  background-color: rgb(33, 43, 61);
   border-radius: 5px;
-  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5), -2px 0 5px rgba(0, 0, 0, 0.5);
-  padding: 10px;
   margin-bottom: 10px;
 
   .tag-content {
@@ -32,13 +32,12 @@ import CardTitle from '@/components/CardTitle/index.vue'
 
     .tag-item {
       box-sizing: border-box;
-      padding: 1px 10px;
-      color: whitesmoke;
+      padding: 1px 5px;
       font-size: 13px;
-      font-weight: bold;
-      border: 1px solid whitesmoke;
-      border-radius: 4px;
-      margin: 5px;
+      font-weight: bolder;
+      border: 1px solid rgba(17, 17, 17, 0.4);
+      border-radius: 2px;
+      margin: 4px;
       cursor: pointer;
     }
   }

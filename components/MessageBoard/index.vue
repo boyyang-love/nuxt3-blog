@@ -2,15 +2,15 @@
 import {NInput, NSpace} from 'naive-ui'
 import V3Emoji from 'vue3-emoji'
 import 'vue3-emoji/dist/style.css'
-import CardTitle from '@/components/CardTitle/index.vue'
+import Title from '@/components/Title/index.vue'
 </script>
 
 <template>
   <div class="message-board-wrapper">
     <div class="title">
-      <CardTitle></CardTitle>
+      <Title title="最新留言" padding="10px 0"></Title>
     </div>
-    <div class="message-info" v-for="item in 5">
+    <div class="message-info" v-for="item in 3">
       <div class="avatar">
         <img class="img" src="@/assets/image/wolp.jpg" alt="">
       </div>
@@ -45,21 +45,13 @@ import CardTitle from '@/components/CardTitle/index.vue'
           }"
       ></n-input>
 
-
       <div class="bottom-btn">
         <n-space align="center" size="small">
           <div>
             <client-only>
-              <V3Emoji
-                  :recent="true"
-                  skin="dark"
-                  size="mid"
-                  fulldata
-              >
-                <div class="emoji-wrapper">
-                  <nuxt-icon class="face" name="emoji/FaceActivatedFilled"></nuxt-icon>
-                </div>
-              </V3Emoji>
+              <div class="emoji-wrapper">
+                <nuxt-icon class="face" name="emoji/FaceActivatedFilled"></nuxt-icon>
+              </div>
             </client-only>
           </div>
           <div class="btn">发表评论</div>
@@ -72,10 +64,8 @@ import CardTitle from '@/components/CardTitle/index.vue'
 <style scoped lang="less">
 .message-board-wrapper {
   box-sizing: border-box;
-  background-color: rgb(33, 43, 61);
   border-radius: 5px;
-  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5), -2px 0 5px rgba(0, 0, 0, 0.5);
-  padding: 10px;
+  padding-bottom: 20px;
 
   .message-info {
     @wh: 45px;
@@ -108,9 +98,8 @@ import CardTitle from '@/components/CardTitle/index.vue'
       flex-direction: column;
 
       .user-name-time {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 500;
-        color: rgba(134, 144, 156, 1);
         display: flex;
         align-items: center;
 
@@ -119,17 +108,20 @@ import CardTitle from '@/components/CardTitle/index.vue'
           box-sizing: border-box;
           width: 3px;
           height: 3px;
-          background-color: rgba(134, 144, 156, 1);
+          background-color: rgba(17, 17, 17, 1);
           border-radius: 50%;
           margin: 0 5px;
+        }
+
+        .time {
+          font-size: 12px;
         }
       }
 
       .message-content {
-        font-size: 11px;
-        color: #acc2ef;
-        text-align: left;
-        margin-top: 3px;
+        color: #1f2b3e;
+        font-size: 12px;
+        font-weight: bold;
       }
     }
   }

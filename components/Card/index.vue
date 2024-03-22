@@ -74,15 +74,14 @@ const readAll = () => {
     justify-content: space-between;
 
     .title {
-      font-size: 16px;
-      font-weight: 700;
-      color: whitesmoke;
+      font-size: 15px;
+      font-weight: 800;
+      color: #1f2b3e;
     }
 
     .time {
-      font-size: 12px;
-      font-weight: 400;
-      color: rgb(176, 193, 235);
+      font-size: 13px;
+      color: #1f2b3e;
       display: flex;
       align-items: center;
 
@@ -90,7 +89,7 @@ const readAll = () => {
         width: 3px;
         height: 3px;
         border-radius: 100%;
-        background-color: whitesmoke;
+        background-color: #0F1C2E;
         margin: 0 5px;
       }
     }
@@ -119,13 +118,12 @@ const readAll = () => {
 
       .name {
         font-size: 14px;
-        font-weight: 500;
-        color: whitesmoke;
+        font-weight: 600;
       }
 
       .motto {
-        font-size: 12px;
-        color: rgb(176, 193, 235);
+        font-size: 13px;
+        font-weight: 400;
       }
     }
   }
@@ -165,17 +163,15 @@ const readAll = () => {
           align-items: center;
           font-size: 12px;
           font-weight: 500;
-          color: whitesmoke;
           padding: 2px 6px;
           box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
         }
       }
 
       .sub-title {
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 400;
         line-height: 24px;
-        color: whitesmoke;
         text-align: left;
         vertical-align: top;
       }
@@ -188,12 +184,10 @@ const readAll = () => {
         .text {
           font-size: 13px;
           font-weight: bolder;
-          color: whitesmoke;
         }
 
         .down {
           padding: 4px 5px 0;
-          color: whitesmoke;
           font-size: 13px;
         }
 

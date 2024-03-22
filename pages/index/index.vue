@@ -4,8 +4,8 @@ import {NSpace} from 'naive-ui'
 </script>
 
 <template>
-  <div class="index-wrapper">
-    <div class="index-content">
+  <div class="index-wrapper ">
+    <div class="index-content nes-container is-rounded">
       <div class="left-img">
         <img class="img" src="@/assets/image/wolp.jpg" alt="">
       </div>
@@ -22,19 +22,19 @@ import {NSpace} from 'naive-ui'
         </div>
         <div class="menu">
           <n-space>
-            <nuxt-link to="/home">
+            <nuxt-link to="/home" class="link">
               <div class="menu-item">
                 <nuxt-icon class="icon" name="home/home"></nuxt-icon>
                 <span class="text">首页</span>
               </div>
             </nuxt-link>
-            <nuxt-link to="/blog">
+            <nuxt-link to="/blog" class="link">
               <div class="menu-item">
                 <nuxt-icon class="icon" name="home/cube"></nuxt-icon>
                 <span class="text">博客</span>
               </div>
             </nuxt-link>
-            <nuxt-link to="/wallpaper">
+            <nuxt-link to="/wallpaper" class="link">
               <div class="menu-item">
                 <nuxt-icon class="icon" name="home/image"></nuxt-icon>
                 <span class="text">壁纸</span>
@@ -55,6 +55,10 @@ import {NSpace} from 'naive-ui'
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
 
   background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
   //background-color: #f6f7fe;
@@ -126,8 +130,8 @@ import {NSpace} from 'naive-ui'
           }
 
           .motto {
-            font-size: 13px;
-            color: #aeb7cd;
+            font-size: 15px;
+            color: #a3a5ad;
             text-align: center;
             margin-top: 5px;
           }
@@ -137,20 +141,26 @@ import {NSpace} from 'naive-ui'
       .menu {
         margin-top: 40px;
 
+        .link {
+          text-decoration: none;
+          color: #0F1C2E;
+        }
+
         .menu-item {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           cursor: pointer;
+          text-decoration: none;
 
           .text {
-            font-size: 12px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: bolder;
           }
 
           .icon {
-            font-size: 20px;
+            font-size: 22px;
           }
         }
       }

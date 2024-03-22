@@ -9,7 +9,7 @@ let aiEditor: AiEditor | null = null
 
 onMounted(() => {
   aiEditor = new AiEditor({
-    theme: 'dark',
+    theme: 'light',
     toolbarKeys: ['undo', 'redo', 'brush', 'eraser',
       '|', 'heading', 'font-family', 'font-size',
       '|', 'bold', 'italic', 'underline', 'strike', 'link', 'code', 'subscript', 'superscript', 'hr', 'todo', 'emoji',
@@ -19,6 +19,19 @@ onMounted(() => {
       '|', 'image', 'video', 'attachment', 'quote', 'code-block', 'table',
       '|', 'printer', 'fullscreen',
     ],
+    fontFamily: {
+      values: [
+        {name: '阿里妈妈刀隶体', value: 'AlimamaDaoLiTi'},
+        {name: '宋体', value: 'SimSun'},
+        {name: '仿宋', value: 'FangSong'},
+        {name: '黑体', value: 'SimHei'},
+        {name: '楷体', value: 'KaiTi'},
+        {name: '微软雅黑', value: 'Microsoft YaHei'},
+        {name: '方正仿宋简体_GBK', value: 'FangSong_GB2312'},
+        {name: 'Arial', value: 'Arial'},
+
+      ],
+    },
     element: divRef.value as Element,
     placeholder: '点击输入内容...',
     content: '',
@@ -71,7 +84,7 @@ onUnmounted(() => {
               style="
                   background-color: transparent;
                   height: 40px;
-                  border-bottom: 1px solid rgb(83,96,133);
+                  border-bottom: 1px solid rgba(83,96,133, 0.2);
                   padding-bottom: 10px;
               "
               :bordered="false"
@@ -98,6 +111,7 @@ onUnmounted(() => {
           <n-space>
             <div class="btn btn-preview">预览</div>
             <div class="btn btn-submit">发布</div>
+            <div class="btn btn-exit" @click="$router.back()">退出</div>
           </n-space>
         </div>
       </div>
@@ -116,8 +130,7 @@ onUnmounted(() => {
     align-items: center;
     width: 100%;
     z-index: 99;
-    background-color: rgb(20, 28, 44);
-    border: none;
+    background-color: rgb(243, 244, 246);
 
     .aie-container-header {
       box-sizing: border-box;
@@ -126,9 +139,7 @@ onUnmounted(() => {
       width: 100%;
       padding: 10px 5px;
       z-index: 99;
-      //background-color: #fff;
-      background-color: rgb(35, 43, 60);
-
+      background-color: white;
 
       :deep(div) {
         display: flex;
@@ -136,15 +147,15 @@ onUnmounted(() => {
         align-items: center;
         border: none;
       }
-
     }
 
     .aie-container-main {
+      border: 1px solid rgb(229 231 235);
       width: 710px;
-      min-height: 900px;
-      background-color: rgb(35, 43, 60);
+      min-height: 700px;
       margin: 20px 0;
       border-radius: 5px;
+      background-color: white;
 
       .title {
         padding: 10px 0;
@@ -161,18 +172,21 @@ onUnmounted(() => {
     width: 710px;
 
     .cover {
-      color: white;
+      font-size: 13px;
+      color: #1f2b3e;
       margin-bottom: 10px;
+      font-weight: bolder;
     }
 
     .upload {
       box-sizing: border-box;
       width: 250px;
       height: 120px;
-      border: 1px dashed whitesmoke;
+      border: 2px dashed rgb(102, 211, 159);
       display: flex;
       justify-content: center;
       align-items: center;
+      background: white;
 
       :deep(.n-upload-trigger) {
         box-sizing: border-box;
@@ -193,7 +207,7 @@ onUnmounted(() => {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        color: white;
+        color: #1f2b3e;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -205,13 +219,13 @@ onUnmounted(() => {
     margin-top: 25px;
     box-sizing: border-box;
     width: 100%;
-    height: 55px;
-    background-color: rgb(37, 43, 59);
     position: sticky;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: whitesmoke;
+    padding: 10px 0;
 
     .btn-wrapper {
       box-sizing: border-box;
@@ -225,21 +239,25 @@ onUnmounted(() => {
         font-size: 14px;
         font-weight: bolder;
         border-radius: 3px;
-        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
         cursor: pointer;
       }
 
       .btn-preview {
-        background-color: ghostwhite;
-        color: #0F1C2E;
+        background-color: deeppink;
+        color: white;
       }
 
       .btn-submit {
         color: whitesmoke;
         background-color: #00a497;
       }
+
+      .btn-exit {
+        background-color: #0F1C2E;
+        color: white;
+      }
     }
   }
-
 }
 </style>

@@ -6,35 +6,15 @@ import CardRight from './components/CardRight/index.vue'
 </script>
 
 <template>
-  <div class="blog-wrapper container w-auto m-auto">
-    <div class="top-banner">
-      <img class="img" src="@/assets/image/wolp.jpg" alt="">
-    </div>
-    <div class="content-wrapper">
-      <div class="content">
-        <Title></Title>
-        <div class="cards">
-          <Card v-for="item in 5"></Card>
-        </div>
-        <div class="page">
-          <Page></Page>
-        </div>
-      </div>
-      <div class="content-right">
-        <div class="recommend">
-          <Title></Title>
-          <CardRight v-for="item in 5"></CardRight>
-        </div>
-
-      </div>
-    </div>
+  <div class="blog-wrapper">
+    <Card v-for="item in 100"></Card>
   </div>
 </template>
 
 <style scoped lang="less">
 .blog-wrapper {
   box-sizing: border-box;
-  width: 1000px;
+  width: 100%;
 
   .top-banner {
     box-sizing: border-box;

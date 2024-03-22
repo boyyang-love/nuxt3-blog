@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import {NSpace} from 'naive-ui'
 import {useRouter} from 'vue-router'
-import Title from '@/components/Title/index.vue'
-import CardLeft from './components/CardLeft/index.vue'
-import CardRight from './components/CardRight/index.vue'
-import ImageCard from '@/components/ImageCard/index.vue'
-import Page from '@/components/Page/index.vue'
-import UserCard from '@/components/UserCard/index.vue'
-import Tags from '@/components/Tags/index.vue'
-import MessageBoard from '@/components/MessageBoard/index.vue'
 import {useUserStore} from '@/store/modules/user'
+import Card from '@/components/Card/index.vue'
+import Title from '@/components/Title/index.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -20,36 +14,13 @@ const toDetail = () => {
 </script>
 
 <template>
-  <div class="home-wrapper container w-auto m-auto">
-    <div class="top-banner">
+  <div class="home-wrapper">
+    <div class="banner">
       <img class="img" src="@/assets/image/wolp.jpg" alt="">
     </div>
     <div class="content">
-      <div class="left-content">
-        <Title></Title>
-        <div class="cards">
-          <div class="left">
-            <CardLeft></CardLeft>
-          </div>
-          <div class="right">
-            <CardRight v-for="item in 3" @click="toDetail"></CardRight>
-          </div>
-        </div>
-        <Title></Title>
-        <div class="images">
-          <ImageCard v-for="item in 6"></ImageCard>
-        </div>
-        <div class="page">
-          <Page></Page>
-
-        </div>
-      </div>
-      <div class="right-content">
-        <UserCard></UserCard>
-        <Tags></Tags>
-        <MessageBoard></MessageBoard>
-
-      </div>
+      <Title></Title>
+      <Card v-for="item in 10"></Card>
     </div>
   </div>
 </template>
@@ -57,16 +28,17 @@ const toDetail = () => {
 <style scoped lang="less">
 .home-wrapper {
   box-sizing: border-box;
-  width: 1000px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  //width: 1000px;
 
-  .top-banner {
+  .banner {
     box-sizing: border-box;
     width: 100%;
-    height: 650px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0, 5);
+    height: 250px;
+    border-radius: 3px;
+    overflow: hidden;
 
     .img {
       width: 100%;
@@ -79,15 +51,16 @@ const toDetail = () => {
     box-sizing: border-box;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding-top: 450px;
+    flex-direction: column;
+    padding-top: 50px;
   }
 
-  .left-content {
+
+  .center-content {
     box-sizing: border-box;
-    width: 710px;
+    //width: 710px;
     //background-color: rgba(33, 43, 61, 1);
-    background-color:  #1f2b3e;
+    background-color: #1f2b3e;
     z-index: 1;
     border-radius: 10px;
     display: flex;
@@ -125,11 +98,5 @@ const toDetail = () => {
     }
   }
 
-  .right-content {
-    box-sizing: border-box;
-    width: 280px;
-    z-index: 1;
-    border-radius: 10px;
-  }
 }
 </style>

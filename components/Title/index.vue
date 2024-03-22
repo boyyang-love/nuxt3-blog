@@ -1,16 +1,26 @@
 <script setup lang="ts">
+interface Props {
+  padding?: string
+  more?: boolean
+  title?: string
+}
 
+const props = withDefaults(defineProps<Props>(), {
+  padding: '10px 20px',
+  more: true,
+  title: '最新文章',
+})
 </script>
 
 <template>
-<div class="title-wrapper">
-  <div class="title">最新文章</div>
-  <div class="more">
-    <nuxt-icon name="arrow/left"></nuxt-icon>
-    <span class="text">更多</span>
-    <nuxt-icon name="arrow/right"></nuxt-icon>
+  <div class="title-wrapper">
+    <div class="title">{{ props.title }}</div>
+    <div class="more" v-if="props.more">
+      <nuxt-icon name="arrow/left"></nuxt-icon>
+      <span class="text">更多</span>
+      <nuxt-icon name="arrow/right"></nuxt-icon>
+    </div>
   </div>
-</div>
 </template>
 
 <style scoped lang="less">
@@ -20,20 +30,18 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 10px 0;
+  padding: v-bind("props.padding");
 
   .title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
-    color: whitesmoke;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
   }
 
   .more {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
-    color: whitesmoke;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 
     display: flex;

@@ -6,9 +6,6 @@ import Title from '@/components/Title/index.vue'
 
 <template>
   <div class="home-wrapper container w-auto m-auto">
-    <div class="top-banner">
-      <img class="img" src="@/assets/image/wolp.jpg" alt="">
-    </div>
     <div class="content">
       <div class="left-content">
         <div class="info">
@@ -34,12 +31,6 @@ import Title from '@/components/Title/index.vue'
           <MessageBoard></MessageBoard>
         </div>
       </div>
-      <div class="right-content">
-        <div class="">
-          <Title></Title>
-          <CardRight v-for="item in 5"></CardRight>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -47,46 +38,19 @@ import Title from '@/components/Title/index.vue'
 <style scoped lang="less">
 .home-wrapper {
   box-sizing: border-box;
-  width: 1000px;
-
-  .top-banner {
-    box-sizing: border-box;
-    width: 100%;
-    height: 650px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0, 5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-  }
-
   .content {
     box-sizing: border-box;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding-top: 450px;
   }
 
   .left-content {
-    width: 710px;
-    z-index: 1;
 
     .info {
       box-sizing: border-box;
       border-radius: 10px;
       padding: 10px;
-      background-color: rgb(33, 43, 61);
-      box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5), -2px 0 5px rgba(0, 0, 0, 0.5);
 
       .top-info {
         display: flex;
@@ -106,7 +70,6 @@ import Title from '@/components/Title/index.vue'
 
         .title {
           font-size: 18px;
-          color: whitesmoke;
           font-weight: bolder;
         }
       }
@@ -121,7 +84,6 @@ import Title from '@/components/Title/index.vue'
             width: 50px;
             height: 50px;
             overflow: hidden;
-            border: 2px solid whitesmoke;
             border-radius: 4px;
 
             .img {
@@ -139,29 +101,18 @@ import Title from '@/components/Title/index.vue'
 
           .user-name {
             font-size: 14px;
-            color: whitesmoke;
             font-weight: bolder;
             margin-bottom: 4px;
           }
 
           .user-motto {
             font-size: 12px;
-            color: whitesmoke;
           }
         }
       }
     }
 
 
-  }
-
-  .right-content {
-    background-color: rgb(33, 43, 61);
-    padding: 10px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    z-index: 1;
-    width: 280px;
   }
 }
 </style>

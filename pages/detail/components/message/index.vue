@@ -35,9 +35,9 @@
 <style scoped lang="less">
 @wh: 55px;
 .message-wrapper {
-  margin: 20px 0;
+  margin: 10px 0;
   display: flex;
-  padding: 0 25px;
+  padding: 0 10px;
 
   .avatar {
     box-sizing: border-box;
@@ -45,7 +45,7 @@
     height: @wh;
     border-radius: 5px;
     overflow: hidden;
-    border: 2px solid whitesmoke;
+    border: 2px solid rgba(17, 17, 17, 1);
     margin-right: 15px;
 
     .img {
@@ -69,7 +69,6 @@
       .user-name-time {
         font-size: 12px;
         font-weight: 500;
-        color: rgba(134, 144, 156, 1);
         display: flex;
         align-items: center;
 
@@ -78,7 +77,7 @@
           box-sizing: border-box;
           width: 3px;
           height: 3px;
-          background-color: rgba(134, 144, 156, 1);
+          background-color: rgba(17, 17, 17, 0.4);
           border-radius: 50%;
           margin: 0 5px;
         }
@@ -86,9 +85,9 @@
 
       .message-text{
         font-size: 12px;
-        color: #acc2ef;
         text-align: left;
         margin-top: 3px;
+        font-weight: 700;
       }
     }
 

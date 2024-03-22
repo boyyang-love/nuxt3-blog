@@ -3,7 +3,35 @@
     <NuxtPage/>
   </NuxtLayout>
 </template>
-<style>
+<script lang="ts" setup>
+useHead({
+  script: [
+    {
+      src: "/js/confetti.min.js",
+    },
+  ],
+})
+
+
+onMounted(() => {
+  document.addEventListener('click', function (e) {
+    (window as any).confetti({
+      origin: {
+        x: e.clientX / innerWidth,
+        y: e.clientY / innerHeight
+      }
+    })
+  })
+  // (window as any).confetti()
+})
+
+</script>
+<style lang="less">
+@import "./node_modules/nes.css/css/nes.css";
+//@import "@fontsource/press-start-2p";
+//@import "@fontsource/press-start-2p/400.css";
+@import "@/font/font.less";
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;
@@ -16,7 +44,8 @@
 
 body {
   margin: 0;
-  background-color: #0F1C2E;
-  //background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
+  font-family: AlimamaDaoLiTi, serif;
+  //background-color: #0F1C2E;
+  background-color: rgb(242, 240, 254);
 }
 </style>
