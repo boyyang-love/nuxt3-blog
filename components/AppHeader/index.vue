@@ -6,9 +6,6 @@ import BtnGroup from './components/BtnGroup/index.vue'
 
 <template>
   <div class="app-header-wrapper">
-    <div class="logo">
-      <Logo></Logo>
-    </div>
     <div class="menu">
       <Menu></Menu>
     </div>
@@ -30,8 +27,9 @@ import BtnGroup from './components/BtnGroup/index.vue'
   position: sticky;
   top: 0;
   z-index: 9;
-  background-color: #0F1C2E;
-  //backdrop-filter: blur(5px) saturate(120%);
-  //-webkit-backdrop-filter: blur(5px) saturate(120%);
+  //background-color: #0F1C2E;
+
+  backdrop-filter: blur(5px) saturate(120%);
+  -webkit-backdrop-filter: blur(5px) saturate(120%);
 }
 </style>

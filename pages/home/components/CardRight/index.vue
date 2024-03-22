@@ -17,7 +17,7 @@
       <div class="user-info">
         <div class="avatar">
           <img
-              src="https://img.jsdesign2.com/assets/img/65718aef99920a4223e2b882.png#efc83912e32238a3f619affeaf71a861"
+              src="https://img.jsdesign2.com/assets/img/65718aef99920a4223e2b882.png"
               alt=""
               class="img"
           >

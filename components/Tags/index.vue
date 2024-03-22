@@ -25,21 +25,19 @@ import CardTitle from '@/components/CardTitle/index.vue'
   padding: 10px;
   margin-bottom: 10px;
 
-
   .tag-content {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
 
-
     .tag-item {
       box-sizing: border-box;
-      padding: 2px 8px;
+      padding: 1px 10px;
       color: whitesmoke;
       font-size: 13px;
-      font-weight: bolder;
+      font-weight: bold;
       border: 1px solid whitesmoke;
-      border-radius: 5px;
+      border-radius: 4px;
       margin: 5px;
       cursor: pointer;
     }

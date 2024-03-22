@@ -4,9 +4,9 @@
 
 <template>
   <div class="layout-wrapper">
-    <AppHeader/>
+    <!--    <AppHeader/>-->
     <slot/>
-    <AppFooter/>
+    <!--    <AppFooter/>-->
   </div>
 </template>
 
