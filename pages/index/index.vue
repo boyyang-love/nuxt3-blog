@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import {NSpace} from 'naive-ui'
-
+import {NSpace, NAvatar} from 'naive-ui'
+import {useUserStore} from '@/store/modules/user'
+import errImg  from '@/assets/image/avatar_g.jpg'
+const userStore = useUserStore()
 </script>
 
 <template>
   <div class="index-wrapper ">
-    <div class="index-content nes-container is-rounded">
+    <div class="index-content">
       <div class="left-img">
         <img class="img" src="@/assets/image/wolp.jpg" alt="">
       </div>
       <div class="right-content">
         <div class="user-info">
           <div class="user-avatar">
-            <img class="img" src="@/assets/image/wolp.jpg" alt="">
+            <n-avatar
+                :size="112"
+                :fallback-src="errImg"
+                :src="userStore.user_info.avatar"
+            ></n-avatar>
           </div>
           <div class="user-name-motto">
-            <span class="name">boyyang</span>
-            <span class="motto">第一行没有你，第二行没有你，第三行没有也罢！</span>
+            <span class="name">{{userStore.user_info.username}}</span>
+            <span class="motto">{{ userStore.user_info.motto}}</span>
           </div>
 
         </div>

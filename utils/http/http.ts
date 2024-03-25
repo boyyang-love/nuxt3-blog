@@ -38,11 +38,11 @@ class Http {
                             res = transformRequestData(res, options)
                         }
 
-                        if (res.data.code === 1) {
+                        if (res.data.code === 0) {
                             reject(res.data.msg)
                         }
 
-                        if (res.data.code === 0) {
+                        if (res.data.code === 1) {
                             resolve(res.data as unknown as Promise<Result<T>>)
                         }
                     },

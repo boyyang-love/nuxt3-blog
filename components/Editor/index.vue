@@ -1,11 +1,69 @@
 <script setup lang="ts">
-import {NInput, NUpload, NUploadDragger, NSpace} from 'naive-ui'
+import {NInput, NSpace, useMessage} from 'naive-ui'
 import {onMounted} from 'vue'
+import {createBlog} from '@/api/blog'
+import {type Upload, uploadFile} from '@/api/upload'
+import {env} from '@/utils/env'
 import {AiEditor} from 'aieditor'
 import 'aieditor/dist/style.css'
+import uploadModel from './components/uploadModal/index.vue'
 
+const message = useMessage()
 const divRef = ref()
+const coverImg = ref<string | null>()
+const isShowModal = ref<boolean>(false)
+const modalType = ref<string>('blog') // blog cover
 let aiEditor: AiEditor | null = null
+
+const blogInfo = reactive({
+  title: '',
+  des: '',
+  content: '',
+})
+
+const submit = () => {
+  const des = aiEditor?.getText()
+  const content = aiEditor?.getHtml()
+
+  if (blogInfo.title.trim() === '' || content?.trim() === '' || coverImg.value === null) {
+    message.warning('标题，内容，不能为空')
+    return
+  }
+
+  createBlog({
+    title: blogInfo.title,
+    des: des?.slice(0, 150) || '',
+    cover: coverImg.value || '',
+    content: content || '',
+  }).then(res => {
+    message.success('文章发布成功')
+    aiEditor?.clear()
+    blogInfo.title = ''
+    coverImg.value = ''
+  })
+}
+
+const insert = (items: Upload.UploadListItem[]) => {
+  if (modalType.value === 'blog') {
+    let ins = [] as string[]
+    items.forEach(item => {
+      ins.push(`<img src="${item.file_path}" alt="${item.file_name}" align="center">`)
+    })
+
+    aiEditor?.insert(ins.join('\n'))
+  } else {
+    coverImg.value = items[0].file_path
+  }
+}
+
+const delCover = () => {
+  coverImg.value = null
+}
+
+const uploadCover = () => {
+  modalType.value = 'cover'
+  isShowModal.value = true
+}
 
 onMounted(() => {
   aiEditor = new AiEditor({
@@ -29,7 +87,6 @@ onMounted(() => {
         {name: '微软雅黑', value: 'Microsoft YaHei'},
         {name: '方正仿宋简体_GBK', value: 'FangSong_GB2312'},
         {name: 'Arial', value: 'Arial'},
-
       ],
     },
     element: divRef.value as Element,
@@ -37,14 +94,20 @@ onMounted(() => {
     content: '',
     image: {
       allowBase64: true,
-      defaultSize: 700,
+      defaultSize: 710,
+      customMenuInvoke() {
+        isShowModal.value = true
+        modalType.value = 'blog'
+      },
       uploader: (file: File, uploadUrl: string, headers: Record<string, any>, formName: string): Promise<Record<string, any>> => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+          const res = await uploadFile({file_name: file.name, file: file, dir: 'blog'})
+
           resolve({
             'errorCode': 0,
             'data': {
-              'src': 'https://7072-prod-2g5hif5wbec83baa-1301921121.tcb.qcloud.la/124810450/images/dbf71ce14611284dee2f61c80719d732.jpg\n',
-              'alt': '图片 alt',
+              'src': `${env.VITE_APP_IMG_URL}${res.data.path}`,
+              'alt': file.name,
             },
           })
         })
@@ -66,6 +129,7 @@ onMounted(() => {
       },
     },
   })
+
 })
 
 onUnmounted(() => {
@@ -89,6 +153,7 @@ onUnmounted(() => {
               "
               :bordered="false"
               size="large"
+              v-model:value="blogInfo.title"
           ></n-input>
         </div>
       </div>
@@ -97,32 +162,50 @@ onUnmounted(() => {
       <div class="bottom-wrapper">
         <div class="cover">添加封面</div>
         <div class="upload">
-          <n-upload
-              class="upload-btn"
-              style="width: 100%; height: 100%;"
-              :show-file-list="false"
-          >
+          <div class="img-wrapper" v-if="coverImg">
+            <div class="close" @click="delCover">
+              <nuxt-icon class="icon" name="other/close"></nuxt-icon>
+            </div>
+            <img class="img" :src="coverImg" :alt="coverImg"/>
+          </div>
+          <div class="upload-btn" @click="uploadCover">
             <div class="text">上传文件</div>
-          </n-upload>
+          </div>
         </div>
       </div>
       <div class="bottom-submit">
         <div class="btn-wrapper">
           <n-space>
             <div class="btn btn-preview">预览</div>
-            <div class="btn btn-submit">发布</div>
+            <div class="btn btn-submit" @click="submit">发布</div>
             <div class="btn btn-exit" @click="$router.back()">退出</div>
           </n-space>
         </div>
       </div>
     </div>
   </div>
+
+  <transition name="scale-slide">
+    <uploadModel
+        v-show="isShowModal"
+        v-model:show="isShowModal"
+        :type="modalType"
+        @insert="insert"
+    ></uploadModel>
+  </transition>
+
 </template>
 
 <style lang="less" scoped>
 .editor-wrapper {
   box-sizing: border-box;
-  width: 100vw;
+  //width: 100vw;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  overflow: hidden;
 
   .aie-container {
     box-sizing: border-box;
@@ -151,7 +234,7 @@ onUnmounted(() => {
 
     .aie-container-main {
       border: 1px solid rgb(229 231 235);
-      width: 710px;
+      width: 730px;
       min-height: 700px;
       margin: 20px 0;
       border-radius: 5px;
@@ -169,7 +252,7 @@ onUnmounted(() => {
 
   .bottom-wrapper {
     box-sizing: border-box;
-    width: 710px;
+    width: 730px;
 
     .cover {
       font-size: 13px;
@@ -187,6 +270,52 @@ onUnmounted(() => {
       justify-content: center;
       align-items: center;
       background: white;
+      position: relative;
+
+      .img-wrapper {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 5px;
+
+        .close {
+          box-sizing: border-box;
+          width: 25px;
+          height: 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          background-color: rgb(102, 211, 159);
+          border: 2px solid white;
+          border-radius: 100%;
+          transition: all 0.35s ease-in-out;
+          cursor: pointer;
+
+          &:hover {
+            transform: rotateZ(90deg);
+          }
+
+          .icon {
+            font-size: 18px;
+            color: white;
+            padding-bottom: 2px;
+          }
+        }
+
+        .img {
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 2px;
+        }
+      }
 
       :deep(.n-upload-trigger) {
         box-sizing: border-box;
@@ -260,4 +389,28 @@ onUnmounted(() => {
     }
   }
 }
+
+.scale-slide-enter-active,
+.scale-slide-leave-active {
+  transition: all 0.35s ease-in-out;
+}
+
+.scale-slide-enter-from,
+.scale-slide-leave-to {
+  transform: scale(0.5);
+}
+
+.scale-slide-enter-to,
+.scale-slide-leave-from {
+  transform: scale(1);
+}
+
+
+//.scale-slide-leave-from {
+//  transform: translateY(0);
+//}
+//
+//.scale-slide-leave-to {
+//  transform: translateY(-100%);
+//}
 </style>

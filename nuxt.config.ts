@@ -1,7 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import prismjs from 'vite-plugin-prismjs'
+
 export default defineNuxtConfig({
     devtools: {enabled: false},
-    modules: ['nuxt-icons', 'nuxt-editorjs', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
+    modules: ['nuxt-icons', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
     build: {
         transpile:
             process.env.NODE_ENV === 'production'
@@ -17,20 +19,24 @@ export default defineNuxtConfig({
         optimizeDeps: {
             include:
                 process.env.NODE_ENV === 'development'
-                    ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone', '@editorjs/editorjs']
+                    ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone']
                     : [],
         },
     },
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {},
-        },
-    },
-    css: ['~/assets/css/main.css'],
-    plugins: [],
+    plugins: [
+        '~/plugins/highlight.ts',
+    ],
     app: {
-        pageTransition: { name: 'page', mode: 'out-in' }
+        pageTransition: {name: 'page', mode: 'out-in'},
     },
-
+    // hooks: {
+    //     'pages:extend' (pages) {
+    //         // 添加一个路由
+    //         pages.push({
+    //             name: 'fullScreen',
+    //             path: '/fullScreen',
+    //             file: '~/pages/fullScreen/index.vue'
+    //         })
+    //     }
+    // }
 })

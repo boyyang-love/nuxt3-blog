@@ -6,7 +6,6 @@ import {env} from '@/utils/env'
 const list = ref()
 
 imagesList({page: 1, limit: 50}).then((res) => {
-  console.log(res)
   list.value = res.data.exhibitions.map((e: any) => {
     return {
       ...e,

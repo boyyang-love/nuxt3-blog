@@ -10,7 +10,7 @@ const createHttp = () => {
             // 以下配置都可以在接口配置中直接配置，接口配置会覆盖以下配置
             requestOptions: {
                 // POST请求是否序列化请求参数
-                serializeParams: true,
+                serializeParams: false,
                 // 是否显示提示信息
                 isShowMessage: true,
                 // 是否显示成功信息

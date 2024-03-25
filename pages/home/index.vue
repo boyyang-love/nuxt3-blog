@@ -1,15 +1,47 @@
 <script setup lang="ts">
-import {NSpace} from 'naive-ui'
+import {NSpace, NEmpty, NPagination} from 'naive-ui'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
 import Title from '@/components/Title/index.vue'
+import {listBlog, type Blog} from '@/api/blog'
+import {env} from '~/utils/env'
+
+useHead({
+  bodyAttrs: {
+    'data-prismjs-copy': '复制',
+    'data-prismjs-copy-error': '复制出错',
+    'data-prismjs-copy-success': '已复制',
+  },
+})
 
 const router = useRouter()
 const userStore = useUserStore()
+const page = ref<number>(1)
+const limit = ref<number>(10)
+const blogList = ref<Blog.ListBlogItem[]>()
 const toDetail = () => {
   router.push('/detail')
 }
+
+const getBlogList = () => {
+  listBlog({page: page.value, limit: limit.value}).then((res) => {
+    blogList.value = res.data.list.map(l => {
+      return {
+        ...l,
+        user: {
+          ...l.user,
+          avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`
+        }
+      }
+    })
+  })
+}
+
+onMounted(() => {
+  getBlogList()
+
+})
 
 </script>
 
@@ -20,7 +52,22 @@ const toDetail = () => {
     </div>
     <div class="content">
       <Title></Title>
-      <Card v-for="item in 10"></Card>
+      <div class="empty" v-if="blogList?.length === 0">
+        <n-empty></n-empty>
+      </div>
+      <Card
+          v-else
+          v-for="item in blogList"
+          :avatar="item.user.avatar"
+          :id="item.id"
+          :title="item.title"
+          :created="item.created"
+          :username="item.user.username"
+          :motto="item.user.motto"
+          :cover="item.cover"
+          :content="item.content"
+          :des="item.des"
+      ></Card>
     </div>
   </div>
 </template>
@@ -53,8 +100,31 @@ const toDetail = () => {
     display: flex;
     flex-direction: column;
     padding-top: 50px;
-  }
+    position: relative;
 
+    .empty {
+      box-sizing: border-box;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pagination {
+      box-sizing: border-box;
+      //background-color: rgb(245 246 255 / 80%);
+      //background-color: rgb(241, 239, 254);
+      background-color: rgb(255, 255, 255);
+
+      padding: 10px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: sticky;
+      bottom: 0;
+    }
+  }
 
   .center-content {
     box-sizing: border-box;
@@ -97,6 +167,5 @@ const toDetail = () => {
       gap: 10px;
     }
   }
-
 }
 </style>

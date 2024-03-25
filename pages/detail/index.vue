@@ -1,31 +1,74 @@
 <script setup lang="ts">
+import {NAvatar} from 'naive-ui'
 import MessageBoard from './components/messageBoard/index.vue'
-import CardRight from './components/cardRight/index.vue'
-import Title from '@/components/Title/index.vue'
+import errImg from '@/assets/image/avatar_g.jpg'
+import {useRoute} from 'vue-router'
+import {searchBlogById, type Blog} from '@/api/blog'
+import moment from 'moment'
+import {env} from '~/utils/env'
+
+const route = useRoute()
+const info = ref<Blog.ListBlogItem | null>()
+console.log(route.query.id)
+
+const getBlogInfo = () => {
+  searchBlogById({id: route.query.id as unknown as number}).then((res) => {
+    res.data.info.user = {
+      ...res.data.info.user,
+      avatar: `${env.VITE_APP_IMG_URL}${res.data.info.user.avatar}`,
+    }
+    info.value = res.data.info
+
+  })
+}
+
+onMounted(() => {
+  getBlogInfo()
+})
 </script>
 
 <template>
   <div class="home-wrapper container w-auto m-auto">
     <div class="content">
       <div class="left-content">
+        <div class="top-cover">
+          <img
+              class="img"
+              :src="info?.cover"
+              :alt="info?.title"
+          >
+        </div>
         <div class="info">
-          <div class="top-info">
-            <span class="time">2023-08-01</span>
-          </div>
           <div class="blog-title">
-          <span class="title">
-            vue3的学习
-          </span>
+            <span class="title">
+              {{ info?.title }}
+            </span>
+            <span
+                class="time"
+            >
+              {{ moment(info?.created).format('YYYY-MM-DD') }}
+            </span>
+          </div>
+          <div class="inner-info-wrapper">
+            <div
+                class="inner-html"
+                v-html="info?.content"
+                v-highlight
+            ></div>
           </div>
           <div class="user-info">
             <div class="left">
               <div class="avatar">
-                <img class="img" src="@/assets/image/wolp.jpg" alt="">
+                <n-avatar
+                    :size="50"
+                    :src="info?.user.avatar"
+                    :fallback-src="errImg"
+                ></n-avatar>
               </div>
             </div>
             <div class="right">
-              <span class="user-name">boyyang</span>
-              <span class="user-motto">第一行没有你，第二行没有你，第三行没有也罢！</span>
+              <span class="user-name">{{ info?.user.username }}</span>
+              <span class="user-motto">{{ info?.user.motto }}</span>
             </div>
           </div>
           <MessageBoard></MessageBoard>
@@ -38,6 +81,7 @@ import Title from '@/components/Title/index.vue'
 <style scoped lang="less">
 .home-wrapper {
   box-sizing: border-box;
+
   .content {
     box-sizing: border-box;
     width: 100%;
@@ -47,30 +91,43 @@ import Title from '@/components/Title/index.vue'
 
   .left-content {
 
+    .top-cover {
+      box-sizing: border-box;
+      padding: 10px;
+
+      .img {
+        box-sizing: border-box;
+        width: 100%;
+        border-radius: 5px;
+      }
+    }
+
     .info {
       box-sizing: border-box;
       border-radius: 10px;
       padding: 10px;
 
-      .top-info {
+      .inner-info-wrapper {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
 
-        .time {
-          font-size: 13px;
-          color: whitesmoke;
+        .inner-html {
+          box-sizing: border-box;
+          width: 100%;
         }
       }
 
       .blog-title {
         display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        flex-direction: column;
+        justify-content: space-between;
 
         .title {
           font-size: 18px;
           font-weight: bolder;
+        }
+
+        .time {
+          font-size: 13px;
         }
       }
 

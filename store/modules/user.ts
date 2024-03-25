@@ -1,25 +1,38 @@
 import {defineStore} from 'pinia'
 import {useNuxtApp} from '#app'
+import {store} from '@/store'
+import type {Signinup} from '~/api/signinup'
 
 export interface UserState {
     token: string
+    user_info: Signinup.UserInfo
 }
 
 const useUserStore = defineStore({
     id: 'app-user',
-    state: (): UserState => {
-        return {
-            // 登录成功返回的用户信息
-            token: '',
-        }
+    state: (): UserState => ({
+        token: '',
+        user_info: {} as Signinup.UserInfo,
+    }),
+    getters: {
+        getToken: (state) => {
+            return state.token
+        },
     },
-    getters: {},
-    actions: {},
+    actions: {
+        setUserInfo(userInfo: Signinup.UserInfo) {
+            this.user_info = userInfo
+        },
+        setToken(t: string) {
+            this.token = t
+        },
+
+    },
     //开启持久化
     persist: process.client && {
         key: 'app-user',
         storage: window.localStorage,
-        paths: ['token'],
+        paths: ['token', 'user_info'],
     },
 })
 

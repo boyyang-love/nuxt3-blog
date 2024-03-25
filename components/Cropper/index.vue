@@ -8,7 +8,6 @@ interface ImagesInfo {
   blob: Blob
 }
 
-
 interface Emits {
   (e: 'submit', imagesInfo: ImagesInfo): void
 }

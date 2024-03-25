@@ -3,11 +3,92 @@ import Title from '@/components/Title/index.vue'
 import Card from '@/components/Card/index.vue'
 import Page from '@/components/Page/index.vue'
 import CardRight from './components/CardRight/index.vue'
+import {type Blog, listBlog} from '~/api/blog'
+import {NEmpty, NPagination} from 'naive-ui'
+import {env} from '~/utils/env'
+
+const count = ref<number>(0)
+const page = ref<number>(1)
+const limit = ref<number>(10)
+const blogList = ref<Blog.ListBlogItem[]>()
+
+const pageSizes = [
+  {
+    label: '10 每页',
+    value: 10,
+  },
+  {
+    label: '20 每页',
+    value: 20,
+  },
+  {
+    label: '30 每页',
+    value: 30,
+  },
+  {
+    label: '40 每页',
+    value: 40,
+  },
+]
+const getBlogList = () => {
+  listBlog({page: page.value, limit: limit.value}).then((res) => {
+    count.value = res.data.count
+    blogList.value = res.data.list.map(l => {
+      return {
+        ...l,
+        user: {
+          ...l.user,
+          avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+        },
+      }
+    })
+  })
+}
+
+const pageSizeChange = (e: number) => {
+  limit.value = e
+  getBlogList()
+}
+
+const pageUpdate = (e: number) => {
+  page.value = e
+  getBlogList()
+}
+onMounted(() => {
+  getBlogList()
+})
 </script>
 
 <template>
   <div class="blog-wrapper">
-    <Card v-for="item in 100"></Card>
+    <div class="content">
+      <div class="empty" v-if="blogList?.length === 0">
+        <n-empty></n-empty>
+      </div>
+      <Card
+          v-else
+          v-for="item in blogList"
+          :avatar="item.user.avatar"
+          :id="item.id"
+          :title="item.title"
+          :created="item.created"
+          :username="item.user.username"
+          :motto="item.user.motto"
+          :cover="item.cover"
+          :content="item.content"
+          :des="item.des"
+      ></Card>
+      <div class="pagination" v-show="listBlog.length > 0">
+        <n-pagination
+            :item-count="count"
+            :page-size="limit"
+            :page-sizes="pageSizes"
+            @update:page="pageUpdate"
+            @update:pageSize="pageSizeChange"
+            show-size-picker
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,63 +97,38 @@ import CardRight from './components/CardRight/index.vue'
   box-sizing: border-box;
   width: 100%;
 
-  .top-banner {
-    box-sizing: border-box;
-    width: 100%;
-    height: 650px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0, 5);
-
-    .img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  .content-wrapper {
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding-top: 450px;
-    gap: 10px;
-  }
-
   .content {
     box-sizing: border-box;
-    width: 690px;
-    background-color: rgb(33, 43, 61);
-    z-index: 1;
-    border-radius: 10px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5), -2px 0 5px rgba(0, 0, 0, 0.5);
+    padding-top: 50px;
+    position: relative;
 
-    .images {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-  }
-
-  .content-right {
-    box-sizing: border-box;
-    z-index: 1;
-    width: calc(100% - 690px);
-
-    .recommend {
+    .empty {
       box-sizing: border-box;
       width: 100%;
-      background-color: rgb(33, 43, 61);
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5), -2px 0 5px rgba(0, 0, 0, 0.5);
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pagination {
+      box-sizing: border-box;
+      //background-color: rgb(245 246 255 / 80%);
+      //background-color: rgb(241, 239, 254);
+      background-color: rgb(255, 255, 255);
+
+      padding: 10px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: sticky;
+      bottom: 0;
     }
   }
+
 
 }
 </style>

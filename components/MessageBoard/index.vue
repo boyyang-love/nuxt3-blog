@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import {NInput, NSpace} from 'naive-ui'
-import V3Emoji from 'vue3-emoji'
-import 'vue3-emoji/dist/style.css'
 import Title from '@/components/Title/index.vue'
 </script>
 
@@ -46,16 +44,7 @@ import Title from '@/components/Title/index.vue'
       ></n-input>
 
       <div class="bottom-btn">
-        <n-space align="center" size="small">
-          <div>
-            <client-only>
-              <div class="emoji-wrapper">
-                <nuxt-icon class="face" name="emoji/FaceActivatedFilled"></nuxt-icon>
-              </div>
-            </client-only>
-          </div>
           <div class="btn">发表评论</div>
-        </n-space>
       </div>
     </div>
   </div>

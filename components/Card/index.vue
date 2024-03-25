@@ -1,49 +1,94 @@
 <script setup lang="ts">
+import {NEllipsis, NAvatar} from 'naive-ui'
+import moment from 'moment'
+import {useRouter} from 'vue-router'
+import errImg from '@/assets/image/avatar_g.jpg'
+
+
+const router = useRouter()
 const isReadAll = ref<boolean>(false)
+
+const props = defineProps<{
+  id: number
+  avatar: string
+  title: string
+  created: number
+  username: string
+  motto: string
+  cover: string
+  des: string
+  content: string
+}>()
 const readAll = () => {
   isReadAll.value = true
 }
 
+const toDetail = () => {
+  router.push({
+    path: '/detail',
+    query: {
+      id: props.id,
+    },
+  })
+}
 </script>
 
 <template>
   <div class="card-wrapper">
     <div class="title-wrapper">
-      <div class="title">前端开发的未来趋势</div>
+      <div class="title" @click="toDetail">{{ props.title }}</div>
       <div class="time">
-        <span>1972-01-01</span>
+        <span>{{ moment(props.created).format('YYYY-MM-DD') }}</span>
         <div class="point"></div>
-        <span>21:56:23</span>
+        <span>{{ moment(props.created).format('hh:mm:ss') }}</span>
       </div>
     </div>
     <div class="user-info">
       <div class="avatar">
-        <img
-            src="https://img.jsdesign2.com/assets/img/65718aef99920a4223e2b882.png#efc83912e32238a3f619affeaf71a861"
-            alt=""
-            class="img"
-        >
+        <n-avatar
+            :fallback-src="errImg"
+            :size="45"
+            :src="props.avatar"
+        ></n-avatar>
       </div>
       <div class="info">
-        <div class="name">鲁志娟</div>
+        <div class="name">{{ props.username }}</div>
         <div class="motto">
-          第一行没有你，第二行没有你，第三行没有也罢！
+          {{ props.motto }}
         </div>
       </div>
     </div>
     <div :class="['top-img',isReadAll ? 'all' : '']">
       <img
-          src="https://img.jsdesign2.com/assets/img/65718aef99920a4223e2b882.png#efc83912e32238a3f619affeaf71a861"
-          alt=""
+          :src="props.cover"
+          :alt="props.cover"
           class="img"
       >
       <div class="bottom">
-        <div class="sub-title">
-          2000年后出生的一代人，他们在社交方面与前几代人有着很大的不同...
-          2000年后出生的一代人，他们在社交方面与前几代人有着很大的不同...
-          2000年后出生的一代人，他们在社交方面与前几代人有着很大的不同...
+        <div class="sub-title" v-show="!isReadAll">
+          <n-ellipsis :line-clamp="4" :tooltip="false">
+            {{ props.des }}
+          </n-ellipsis>
         </div>
-        <div class="editor" ref="editor"></div>
+        <div
+            class="editor"
+            ref="editor"
+            v-html="props.content"
+            v-highlight
+            v-if="isReadAll"
+        ></div>
+        <div
+            class="close-readall"
+            @click="isReadAll = false"
+            v-if="isReadAll"
+        >
+          <span class="text">
+            收起
+          </span>
+          <span class="down">
+            <nuxt-icon class="icon" name="arrow/up"></nuxt-icon>
+          </span>
+        </div>
         <div class="readall" @click="readAll" v-if="!isReadAll">
           <span class="text">
             阅读全文
@@ -149,6 +194,7 @@ const readAll = () => {
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-between;
+      position: relative;
 
       .tags {
         display: flex;
@@ -192,6 +238,18 @@ const readAll = () => {
         }
 
       }
+
+      .close-readall {
+        position: absolute;
+        bottom: -10px;
+        right: 0;
+      }
+
+      .editor {
+        box-sizing: border-box;
+        width: 100%;
+        overflow: hidden;
+      }
     }
   }
 
@@ -203,7 +261,8 @@ const readAll = () => {
     .img {
       box-sizing: border-box;
       width: 100%;
-      height: 300px;
+      height: 100%;
+      //height: 300px;
       object-fit: cover;
       margin: 10px 0;
     }

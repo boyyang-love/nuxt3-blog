@@ -32,7 +32,7 @@ const transForm: TransForm = {
             const userStore = useUserStore()
             config.headers = {
                 ...config.headers,
-                [opt.tokenKey as string]: opt.token || userStore.getToken,
+                [opt.tokenKey as string]: opt.token || userStore.token,
             }
         }
 
@@ -47,13 +47,14 @@ const transForm: TransForm = {
             isReturn,
         } = opt
 
+
         const {code, msg, data} = res.data
 
         if (isShowMessage) {
-            if (isShowSuccessMessage && code === 0) {
+            if (isShowSuccessMessage && code === 1) {
             }
 
-            if (isShowErrorMessage && code === 1) {
+            if (isShowErrorMessage && code === 0) {
             }
         }
 

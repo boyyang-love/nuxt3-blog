@@ -48,6 +48,7 @@ import {ContentTop} from '#components'
   width: 1250px;
   padding: 50px 0;
   background-color: rgb(241, 239, 254);
+  margin: 0 auto;
 
   .left,
   .right {
@@ -77,6 +78,7 @@ import {ContentTop} from '#components'
     .content-top {
       position: sticky;
       top: 0;
+      z-index: 8;
     }
   }
 }
