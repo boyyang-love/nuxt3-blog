@@ -6,6 +6,8 @@ declare global {
         $dialog: DialogApi
         $notification: NotificationApi
         $loadingBar: LoadingBarApi
+        $uploadProgress: any
+        confetti: any,
         THREE: any
         VANTA: {
             RINGS: any
@@ -18,6 +20,5 @@ declare global {
             GLOBE: any
             HALO: any
         }
-        confetti: any
     }
 }

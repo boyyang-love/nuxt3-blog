@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import {NModal, NInput, NSpace, NButton, NAvatar} from 'naive-ui'
+import {
+  NModal,
+  NInput,
+  NSpace,
+  NButton,
+  NAvatar,
+  NForm,
+  NFormItem,
+  NIcon,
+  type FormRules,
+  type FormInst,
+} from 'naive-ui'
+import {Home, Cube, FingerPrint, Create, Images, CloudUpload} from '@vicons/ionicons5'
 import {useRoute, useRouter} from 'vue-router'
 import Cropper from '~/components/Cropper/index.vue'
 import {useSigninup} from '@/hooks/signinup'
@@ -7,12 +19,34 @@ import {uploadFile} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
 import {useUserStore} from '@/store/modules/user'
 import {env} from '@/utils/env'
-import errImg  from '@/assets/image/avatar_g.jpg'
+import errImg from '@/assets/image/avatar_g.jpg'
 
 const route = useRoute()
 const router = useRouter()
-const {data, signinSub} = useSigninup()
+const {data, signinupSub, sendEmailCode} = useSigninup()
 const userStore = useUserStore()
+
+const formValues = reactive({
+  username: userStore.user_info.username,
+  motto: userStore.user_info.motto,
+  email: userStore.user_info.email,
+  git_hub: userStore.user_info.git_hub,
+  qq: userStore.user_info.qq,
+  wechat: userStore.user_info.wechat,
+})
+
+watch(() => userStore.showUserInfoModal, (value) => {
+  if (value) {
+    formValues.username = userStore.user_info.username
+    formValues.motto = userStore.user_info.motto
+    formValues.email = userStore.user_info.email
+    formValues.git_hub = userStore.user_info.git_hub
+    formValues.qq = userStore.user_info.qq
+    formValues.wechat = userStore.user_info.wechat
+  }
+})
+
+const userInfoEditRef = ref<FormInst | null>()
 
 const routeName = ref<string>(route.name as string)
 
@@ -21,53 +55,95 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-const menus = [
-  {
-    name: 'home',
-    text: '首页',
-    path: '/home',
-    routeName: 'home',
-    icon: 'home/home',
+const menus = computed(() => {
+  const token = userStore.token
+  if (token) {
+    return [
+      {
+        name: 'home',
+        text: '首页',
+        path: '/home',
+        routeName: 'home',
+        icon: Home,
+      },
+      {
+        name: 'blog',
+        text: '博客',
+        path: '/blog',
+        routeName: 'blog',
+        icon: Cube,
+      },
+      {
+        name: 'wallpaper',
+        text: '壁纸',
+        path: '/wallpaper',
+        routeName: 'wallpaper',
+        icon: Images,
+      },
+      {
+        name: 'create',
+        text: '发布文章',
+        path: '/create',
+        routeName: 'create',
+        icon: Create,
+      },
+      {
+        name: 'upload',
+        text: '上传壁纸',
+        path: '/upload',
+        routeName: 'upload',
+        icon: CloudUpload,
+      },
+      {
+        name: 'upload',
+        text: '个人卡片',
+        path: '/',
+        routeName: '/',
+        icon: FingerPrint,
+      },
+    ]
+  }
+  return [
+    {
+      name: 'home',
+      text: '首页',
+      path: '/home',
+      routeName: 'home',
+      icon: Home,
+    },
+    {
+      name: 'blog',
+      text: '博客',
+      path: '/blog',
+      routeName: 'blog',
+      icon: Cube,
+    },
+    {
+      name: 'upload',
+      text: '个人卡片',
+      path: '/',
+      routeName: '/',
+      icon: FingerPrint,
+    },
+  ]
+})
+
+const rules = {
+  username: {
+    required: true,
+    message: '用户名称不能为空',
+    trigger: 'blur',
   },
-  {
-    name: 'blog',
-    text: '博客',
-    path: '/blog',
-    routeName: 'blog',
-    icon: 'home/cube',
+
+  motto: {
+    required: true,
+    message: '请输入签名',
+    trigger: 'blur',
   },
-  {
-    name: 'wallpaper',
-    text: '壁纸',
-    path: '/wallpaper',
-    routeName: 'wallpaper',
-    icon: 'home/image',
-  },
-  {
-    name: 'create',
-    text: '发布文章',
-    path: '/create',
-    routeName: 'create',
-    icon: 'home/create',
-  },
-  {
-    name: 'upload',
-    text: '上传壁纸',
-    path: '/upload',
-    routeName: 'upload',
-    icon: 'home/cloud',
-  },
-  {
-    name: 'upload',
-    text: '个人卡片',
-    path: '/',
-    routeName: '/',
-    icon: 'home/finger',
-  },
-]
+
+} as FormRules
 
 const submit = (info: { file: File, Bolb: Blob }) => {
-  console.log(info)
   uploadFile(
       {
         file_name: info.file.name,
@@ -88,106 +164,272 @@ const submit = (info: { file: File, Bolb: Blob }) => {
   })
 }
 
+const updateUserInfoSub = () => {
+  userInfoEditRef.value?.validate((errors) => {
+    if (!errors) {
+      updateUserInfo({
+        username: formValues.username,
+        motto: formValues.motto,
+        git_hub: formValues.git_hub,
+        qq: Number(formValues.qq),
+        wechat: formValues.wechat,
+      }).then(() => {
+        window.$message.success('信息更改成功')
+        userStore.$patch({
+          user_info: {
+            username: formValues.username,
+            motto: formValues.motto,
+            git_hub: formValues.git_hub,
+            wechat: formValues.wechat,
+            qq: Number(formValues.qq),
+          },
+          showUserInfoModal: false,
+        })
+      }).catch(err => {
+        window.$message.error(err.msg)
+      })
+    }
+  })
+}
+
+const openUpdateUserInfoModal = () => {
+  if (userStore.token) {
+    userStore.showUserInfoModal = true
+  }
+}
+
+const openSignModal = () => {
+  userStore.showSigninModal = true
+  userStore.isSignin = true
+}
+
 </script>
 
 <template>
-  <div class="app-left">
-    <div class="signinup">
-      <nuxt-icon
-          class="icon"
-          name="home/paperPlane"
-          @click="data.isShow = true"
-      ></nuxt-icon>
-    </div>
-    <div class="user-info">
-      <div class="info">
-        <div class="user-avatar">
-          <client-only>
-            <Cropper @submit="submit">
-              <template #avatar>
-                <n-avatar
-                    :size="74"
-                    :src="userStore.user_info.avatar"
-                    :fallback-src="errImg"
-                ></n-avatar>
-              </template>
-            </Cropper>
-          </client-only>
-        </div>
-        <div class="user-name">boyyang</div>
-        <div class="user-motto">第一行没有你，第二行没有你，第三行没有也罢</div>
+  <client-only>
+    <div class="app-left">
+      <div class="signinup">
+        <nuxt-icon
+            class="icon"
+            name="home/planet"
+            @click="openSignModal"
+        ></nuxt-icon>
       </div>
-    </div>
-    <!--    <div class="website-info">-->
-    <!--      <div class="info-item">-->
-    <!--        <nuxt-icon class="icon" name="home/cube"></nuxt-icon>-->
-    <!--        <span class="value">100</span>-->
-    <!--      </div>-->
-    <!--      <div class="info-item">-->
-    <!--        <nuxt-icon class="icon" name="home/image"></nuxt-icon>-->
-    <!--        <span class="value">100</span>-->
-    <!--      </div>-->
-    <!--      <div class="info-item">-->
-    <!--        <nuxt-icon class="icon" name="header/tag"></nuxt-icon>-->
-    <!--        <span class="value">100</span>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <div class="menu">
-      <div
-          v-for="item in menus"
-      >
-        <nuxt-link :to="item.path" style="text-decoration: none">
-          <div :class="['menu-item', item.routeName === routeName ? 'active' : '']">
-            <nuxt-icon class="icon" :name="item.icon"></nuxt-icon>
-            <div class="text">{{ item.text }}</div>
+      <div class="user-info">
+        <div class="info">
+          <div class="user-avatar">
+            <client-only>
+              <n-avatar
+                  :size="74"
+                  :src="userStore.user_info.avatar"
+                  :fallback-src="errImg"
+                  v-if="!userStore.token"
+              ></n-avatar>
+              <Cropper @submit="submit" v-else>
+                <template #avatar>
+                  <n-avatar
+                      :size="74"
+                      :src="userStore.user_info.avatar"
+                      :fallback-src="errImg"
+                  ></n-avatar>
+                </template>
+              </Cropper>
+            </client-only>
           </div>
-        </nuxt-link>
-      </div>
-    </div>
-
-    <div class="beian">
-      <span>川公网安备51010602002116号</span>
-      <span>蜀ICP备2024050890号-1</span>
-    </div>
-
-    <n-modal
-        v-model:show="data.isShow"
-        :mask-closable="false"
-    >
-      <div class="modal-wrapper">
-        <div class="close">
-          <nuxt-icon
-              class="icon"
-              name="other/close"
-              @click="data.isShow = false"
-          ></nuxt-icon>
+          <div class="user-name" @click="openUpdateUserInfoModal">{{ userStore.user_info.username }}</div>
+          <div class="user-motto">{{ userStore.user_info.motto }}</div>
         </div>
-        <div class="title">登录</div>
-        <div class="user-input">
-          <n-space vertical size="large">
-            <div class="user-name">
+      </div>
+      <div class="menu">
+        <div
+            v-for="item in menus"
+        >
+          <nuxt-link
+              :to="item.path"
+              style="text-decoration: none"
+          >
+            <div
+                :class="['menu-item', item.routeName === routeName ? 'active' : '']"
+            >
+              <n-icon class="icon">
+                <component :is="item.icon"></component>
+              </n-icon>
+              <!--            <nuxt-icon class="icon" :name="item.icon"></nuxt-icon>-->
+              <div class="text">{{ item.text }}</div>
+            </div>
+          </nuxt-link>
+        </div>
+      </div>
+
+      <div class="beian">
+        <span>川公网安备51010602002116号</span>
+        <span>蜀ICP备2024050890号-1</span>
+      </div>
+
+      <n-modal
+          v-model:show="userStore.showSigninModal"
+          :mask-closable="false"
+      >
+        <div class="modal-wrapper">
+          <div class="close">
+            <nuxt-icon
+                class="icon"
+                name="other/close"
+                @click="userStore.showSigninModal = false"
+            ></nuxt-icon>
+          </div>
+          <div class="title">{{ userStore.isSignin ? '登录' : '注册' }}</div>
+          <div class="user-input">
+            <n-space vertical size="large">
+              <div class="user-name">
+                <n-input
+                    placeholder="请输入用户名"
+                    type="text"
+                    v-model:value="data.username"
+                ></n-input>
+              </div>
+              <div class="user-name" v-if="!userStore.isSignin">
+                <n-input
+                    placeholder="请输入邮箱"
+                    type="text"
+                    v-model:value="data.email"
+                ></n-input>
+              </div>
+              <div class="email-code" v-if="!userStore.isSignin">
+                <n-space justify="space-between">
+                  <n-input
+                      placeholder="验证码"
+                      v-model:value="data.code"
+                  ></n-input>
+                  <n-button
+                      type="error"
+                      size="medium"
+                      @Click="sendEmailCode"
+                      :disabled="data.emailSendDisable"
+                  >验证码 {{ data.emailSendDisable ? `${data.emailSendDisableTime}s` : '' }}
+                  </n-button>
+                </n-space>
+              </div>
+              <div class="password">
+                <n-input
+                    placeholder="请输入密码"
+                    type="password"
+                    show-password-on="click"
+                    v-model:value="data.password"
+                ></n-input>
+              </div>
+              <div class="password" v-if="!userStore.isSignin">
+                <n-input
+                    placeholder="请输入重复密码"
+                    type="password"
+                    show-password-on="click"
+                    v-model:value="data.repassword"
+                ></n-input>
+              </div>
+              <div class="change-text">
+              <span
+                  @click="userStore.isSignin = !userStore.isSignin"
+              >
+                {{ userStore.isSignin ? '没有账号？前往注册' : '已有账号？前往登录' }}
+              </span>
+              </div>
+            </n-space>
+          </div>
+          <div class="submit-btn">
+            <n-button type="success" @click="signinupSub">{{ userStore.isSignin ? '登录' : '注册' }}</n-button>
+          </div>
+        </div>
+      </n-modal>
+
+      <n-modal v-model:show="userStore.showUserInfoModal">
+        <div class="userinfo-modal">
+          <div class="title">修改用户信息</div>
+          <div class="close">
+            <nuxt-icon
+                class="icon"
+                name="other/close"
+                @click="userStore.showUserInfoModal = false"
+            ></nuxt-icon>
+          </div>
+          <n-form
+              label-placement="left"
+              label-align="left"
+              label-width="60"
+              ref="userInfoEditRef"
+              :rules="rules"
+              :model="formValues"
+          >
+            <n-form-item
+                path="email"
+                label="账号"
+            >
+              <n-input
+                  placeholder="账号"
+                  disabled
+                  v-model:value="formValues.email"
+              ></n-input>
+            </n-form-item>
+            <n-form-item
+                path="username"
+                label="昵称"
+            >
               <n-input
                   placeholder="请输入用户名"
-                  type="text"
-                  v-model:value="data.username"
+                  v-model:value="formValues.username"
               ></n-input>
-            </div>
-            <div class="password">
+            </n-form-item>
+            <n-form-item
+                path="motto"
+                label="签名"
+            >
               <n-input
-                  placeholder="请输入密码"
-                  type="password"
-                  show-password-on="click"
-                  v-model:value="data.password"
+                  type="textarea"
+                  maxlength="50"
+                  show-count
+                  placeholder="请输入签名"
+                  :autosize="{
+                  minRows: 3,
+                  maxRows: 5
+                }"
+                  v-model:value="formValues.motto"
               ></n-input>
-            </div>
-          </n-space>
+            </n-form-item>
+            <n-form-item
+                path="git_hub"
+                label="GitHub"
+            >
+              <n-input
+                  placeholder="请输入签名"
+                  v-model:value="formValues.git_hub"
+              ></n-input>
+            </n-form-item>
+            <n-form-item
+                path="qq"
+                label="QQ"
+            >
+              <n-input
+                  placeholder="请输入QQ"
+                  v-model:value="formValues.qq"
+              ></n-input>
+            </n-form-item>
+            <n-form-item
+                path="wechat"
+                label="微信"
+            >
+              <n-input
+                  placeholder="请输入微信好"
+                  v-model:value="formValues.wechat"
+              ></n-input>
+            </n-form-item>
+          </n-form>
+
+          <div class="submit-btn">
+            <n-button type="success" @click="updateUserInfoSub">确定</n-button>
+          </div>
         </div>
-        <div class="submit-btn">
-          <n-button type="success" @click="signinSub">登录</n-button>
-        </div>
-      </div>
-    </n-modal>
-  </div>
+      </n-modal>
+    </div>
+  </client-only>
 </template>
 
 <style scoped lang="less">
@@ -246,6 +488,7 @@ const submit = (info: { file: File, Bolb: Blob }) => {
         font-size: 20px;
         margin: 5px 0;
         font-weight: bolder;
+        cursor: pointer;
       }
 
       .user-motto {
@@ -280,6 +523,7 @@ const submit = (info: { file: File, Bolb: Blob }) => {
 
       .icon {
         font-size: 22px;
+        cursor: pointer;
       }
 
       .text {
@@ -323,7 +567,6 @@ const submit = (info: { file: File, Bolb: Blob }) => {
     }
   }
 
-
   .beian {
     box-sizing: border-box;
     text-align: center;
@@ -339,7 +582,7 @@ const submit = (info: { file: File, Bolb: Blob }) => {
 .modal-wrapper {
   box-sizing: border-box;
   width: 400px;
-  height: 220px;
+  //height: 220px;
   background-color: rgb(246, 247, 253);
   border-radius: 5px;
   padding: 10px 50px;
@@ -350,15 +593,17 @@ const submit = (info: { file: File, Bolb: Blob }) => {
     position: absolute;
     top: 5px;
     right: 5px;
-    transition: all 0.35s ease-in-out;
 
     .icon {
       font-size: 20px;
       font-weight: bold;
-    }
+      cursor: pointer;
+      transition: all 0.35s ease-in-out;
+      display: inline-block;
 
-    &:hover {
-      transform: rotate(90deg);
+      &:hover {
+        transform: rotate(90deg);
+      }
     }
   }
 
@@ -378,5 +623,61 @@ const submit = (info: { file: File, Bolb: Blob }) => {
     display: flex;
     justify-content: flex-end;
   }
+
+  .change-text {
+    text-align: end;
+    font-size: 13px;
+    color: deeppink;
+    cursor: pointer;
+  }
+
+  .email-code {
+    box-sizing: border-box;
+    width: 100%;
+  }
+}
+
+.userinfo-modal {
+  box-sizing: border-box;
+  width: 400px;
+  background-color: rgb(246, 247, 253);
+  border-radius: 5px;
+  padding: 10px 20px;
+  position: relative;
+  box-shadow: 3px 3px 5px rgba(17, 17, 17, 0.4);
+
+  .title {
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    .icon {
+      transition: all 0.35s ease-in-out;
+      display: inline-block;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .submit-btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+
 }
 </style>

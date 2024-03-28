@@ -1,63 +1,114 @@
-<script setup lang="ts">
-import {NSpace, NEmpty, NPagination} from 'naive-ui'
+<script lang="ts" setup>
+import {NEmpty, NUpload, NAvatar, NButton, NSkeleton, NSpace} from 'naive-ui'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
 import Title from '@/components/Title/index.vue'
-import {listBlog, type Blog} from '@/api/blog'
+import {type Blog} from '@/api/blog'
 import {env} from '~/utils/env'
-
-useHead({
-  bodyAttrs: {
-    'data-prismjs-copy': '复制',
-    'data-prismjs-copy-error': '复制出错',
-    'data-prismjs-copy-success': '已复制',
-  },
-})
+import {useFileUpload} from '@/hooks/fileUpload'
+import {updateUserInfo} from '@/api/user'
+import errImg from 'assets/image/wolp.jpg'
+import {useAsyncData, refreshNuxtData} from '#app'
+import {$fetch} from 'ofetch/node'
+import type {Result} from '~/utils/http/types'
 
 const router = useRouter()
 const userStore = useUserStore()
-const page = ref<number>(1)
-const limit = ref<number>(10)
-const blogList = ref<Blog.ListBlogItem[]>()
-const toDetail = () => {
-  router.push('/detail')
-}
-
-const getBlogList = () => {
-  listBlog({page: page.value, limit: limit.value}).then((res) => {
-    blogList.value = res.data.list.map(l => {
-      return {
-        ...l,
-        user: {
-          ...l.user,
-          avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`
-        }
-      }
-    })
+const {customRequest, uploadRef} = useFileUpload('bg', (info) => {
+  updateUserInfo({
+    cover: info.FileInfo.file_baseurl,
   })
-}
-
-onMounted(() => {
-  getBlogList()
-
+  userStore.$patch({
+    user_info: {
+      cover: info.FileInfo.file_url,
+    },
+  })
 })
 
+const page = ref<number>(1)
+const limit = ref<number>(20)
+const isShowSkeleton = ref<boolean>(true)
+
+const {data, refresh} = await useAsyncData(
+    'blog_list_recently',
+    () => $fetch<Result<Blog.ListBlogRes>>('/blog/list',
+        {
+          baseURL: env.VITE_APP_API_URL,
+          method: 'GET',
+          params: {
+            page: page.value,
+            limit: limit.value,
+            type: 'recently',
+          },
+          query: {
+            key: new Date().getTime(),
+          },
+          onResponse(ctx): Promise<any> {
+            return new Promise((resolve, reject) => {
+              const {_data} = ctx.response
+              const {data} = _data as Result<Blog.ListBlogRes>
+
+              data.list = data.list.map(l => {
+                return {
+                  ...l,
+                  user: {
+                    ...l.user,
+                    avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+                  },
+                }
+              })
+              isShowSkeleton.value = false
+              resolve(ctx)
+            })
+          },
+        },
+    ),
+)
+
+onMounted(() => {
+  isShowSkeleton.value = true
+  const t = setTimeout(() => {
+    isShowSkeleton.value = false
+    clearTimeout(t)
+  }, 300)
+
+  refreshNuxtData()
+})
 </script>
 
 <template>
   <div class="home-wrapper">
-    <div class="banner">
-      <img class="img" src="@/assets/image/wolp.jpg" alt="">
-    </div>
+    <client-only>
+      <div class="banner">
+        <NAvatar
+            :src="userStore.user_info.cover"
+            :fallback-src="errImg"
+            object-fit="cover"
+            :alt="userStore.user_info.cover"
+            class="img"
+        ></NAvatar>
+        <div class="edit-userinfo-icon" v-if="userStore.token">
+          <n-upload
+              :show-file-list="false"
+              :custom-request="customRequest"
+              ref="uploadRef"
+          >
+            <n-button type="default" size="small">
+              <nuxt-icon class="icon" name="other/camera"></nuxt-icon>
+            </n-button>
+          </n-upload>
+        </div>
+      </div>
+    </client-only>
     <div class="content">
-      <Title></Title>
-      <div class="empty" v-if="blogList?.length === 0">
+      <Title :more="false"></Title>
+      <div class="empty" v-if="data?.data.list.length === 0">
         <n-empty></n-empty>
       </div>
       <Card
           v-else
-          v-for="item in blogList"
+          v-for="item in data?.data.list"
           :avatar="item.user.avatar"
           :id="item.id"
           :title="item.title"
@@ -78,19 +129,38 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   padding: 10px;
-  //width: 1000px;
 
   .banner {
     box-sizing: border-box;
     width: 100%;
-    height: 250px;
     border-radius: 3px;
-    overflow: hidden;
+    position: relative;
 
     .img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 3px;
+    }
+
+    .edit-userinfo-icon {
+      position: absolute;
+      bottom: 20px;
+      right: 15px;
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+
+      .icon {
+        color: rgb(255, 255, 255);
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
   }
 
@@ -105,7 +175,7 @@ onMounted(() => {
     .empty {
       box-sizing: border-box;
       width: 100%;
-      height: 400px;
+      height: 200px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,8 +183,6 @@ onMounted(() => {
 
     .pagination {
       box-sizing: border-box;
-      //background-color: rgb(245 246 255 / 80%);
-      //background-color: rgb(241, 239, 254);
       background-color: rgb(255, 255, 255);
 
       padding: 10px 0;
@@ -128,8 +196,6 @@ onMounted(() => {
 
   .center-content {
     box-sizing: border-box;
-    //width: 710px;
-    //background-color: rgba(33, 43, 61, 1);
     background-color: #1f2b3e;
     z-index: 1;
     border-radius: 10px;

@@ -1,31 +1,26 @@
 <script setup lang="ts">
+import {type Comment} from '~/api/comment'
+import moment from 'moment'
 
+const props = defineProps<{
+  info: Comment.CommentInfo
+}>()
 </script>
 
 <template>
   <div class="message-wrapper">
     <div class="avatar">
-      <img class="img" src="@/assets/image/wolp.jpg" alt="">
+      <img class="img" :src="info.user.avatar" alt="">
     </div>
     <div class="message-content">
       <div class="message">
         <div class="user-name-time">
-          <span class="name">章志平</span>
+          <span class="name">{{ info.user.username }}</span>
           <span class="point"></span>
-          <span class="time">2023-04-03</span>
+          <span class="time">{{ moment(info.created).format('YYYY-MM-DD hh:mm:ss') }}</span>
         </div>
         <div class="message-text">
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
+          {{ info.content }}
         </div>
       </div>
     </div>
@@ -33,7 +28,6 @@
 </template>
 
 <style scoped lang="less">
-@wh: 55px;
 .message-wrapper {
   margin: 10px 0;
   display: flex;
@@ -41,8 +35,8 @@
 
   .avatar {
     box-sizing: border-box;
-    width: @wh;
-    height: @wh;
+    width: 45px;
+    height: 45px;
     border-radius: 5px;
     overflow: hidden;
     border: 2px solid rgba(17, 17, 17, 1);
@@ -58,7 +52,7 @@
 
   .message-content {
     box-sizing: border-box;
-    width: calc(100% - @wh);
+    width: calc(100% - 45px);
     display: flex;
 
     .message {
@@ -83,7 +77,7 @@
         }
       }
 
-      .message-text{
+      .message-text {
         font-size: 12px;
         text-align: left;
         margin-top: 3px;

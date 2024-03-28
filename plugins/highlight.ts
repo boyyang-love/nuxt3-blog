@@ -10,7 +10,6 @@ import {defineNuxtPlugin} from "#app";
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.directive('highlight', function (el) {
-        console.log(el)
         let element = el.querySelectorAll('pre code');
         element.forEach((block: any) => {
             hljs.highlightBlock(block)

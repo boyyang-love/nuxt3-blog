@@ -1,36 +1,69 @@
 <script setup lang="ts">
-import {NInput, NSpace} from 'naive-ui'
+import {NInput, NSpace, NEmpty} from 'naive-ui'
 import Title from '@/components/Title/index.vue'
+import {type Comment, createComment} from '@/api/comment'
+import moment from 'moment'
+import {useUserStore} from '@/store/modules/user'
+
+const props = defineProps<{
+  comments: Comment.CommentInfo[]
+}>()
+
+const userStore = useUserStore()
+const text = ref<string>('')
+
+const submit = () => {
+  if (text.value.trim() === '') {
+    window.$message.error('留言不能为空')
+    return
+  }
+
+  if (!userStore.token) {
+    window.$dialog.error({
+      title: '提示',
+      content: '您需要先登录，才能留言',
+    })
+    return
+  } else {
+    createComment({
+      content: text.value,
+      type: 'website',
+    })
+  }
+}
 </script>
 
 <template>
   <div class="message-board-wrapper">
     <div class="title">
-      <Title title="最新留言" padding="10px 0"></Title>
+      <Title title="最新留言" padding="10px 0" :more="false"></Title>
     </div>
-    <div class="message-info" v-for="item in 3">
+    <div class="empty" v-if="comments.length === 0">
+      <n-empty></n-empty>
+    </div>
+    <div
+        v-else
+        class="message-info"
+        v-for="item in comments"
+    >
       <div class="avatar">
-        <img class="img" src="@/assets/image/wolp.jpg" alt="">
+        <img class="img" :src="item.user.avatar" alt="">
       </div>
       <div class="message">
         <div class="user-name-time">
-          <span class="name">章志平</span>
+          <span class="name">{{ item.user.uid }}</span>
           <span class="point"></span>
-          <span class="time">2023-04-03</span>
+          <span class="time">{{ moment(item.created).format('YYYY-MM-DD') }}</span>
         </div>
         <div class="message-content">
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
-          很好，非常好，我喜欢
+          {{ item.content }}
         </div>
       </div>
     </div>
     <div class="comment">
       <n-input
           type="textarea"
-          placeholder="请输入您的评论"
+          placeholder="请输入您的留言"
           :autosize="{
               maxRows: 5,
               minRows: 3,
@@ -41,10 +74,11 @@ import Title from '@/components/Title/index.vue'
           :input-props="{
             color: 'rgba(242, 243, 245, 1)'
           }"
+          v-model:value="text"
       ></n-input>
 
       <div class="bottom-btn">
-          <div class="btn">发表评论</div>
+        <div class="btn" @click="submit">发表评论</div>
       </div>
     </div>
   </div>

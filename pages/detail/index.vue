@@ -1,77 +1,175 @@
 <script setup lang="ts">
-import {NAvatar} from 'naive-ui'
+import {NAvatar, NSpace, NIcon, NPopconfirm, NSkeleton, NInput} from 'naive-ui'
 import MessageBoard from './components/messageBoard/index.vue'
 import errImg from '@/assets/image/avatar_g.jpg'
-import {useRoute} from 'vue-router'
-import {searchBlogById, type Blog} from '@/api/blog'
+import {useRoute, useRouter} from 'vue-router'
+import {deleteBlog, type Blog} from '@/api/blog'
 import moment from 'moment'
 import {env} from '~/utils/env'
+import {TrashBin, Create} from '@vicons/ionicons5'
+import {useUserStore} from '@/store/modules/user'
+import {useAsyncData} from '#app'
+import {$fetch} from 'ofetch/node'
+import type {Result} from '~/utils/http/types'
 
+const userStore = useUserStore()
 const route = useRoute()
-const info = ref<Blog.ListBlogItem | null>()
-console.log(route.query.id)
+const router = useRouter()
+const isShowSkeleton = ref<boolean>(false)
 
-const getBlogInfo = () => {
-  searchBlogById({id: route.query.id as unknown as number}).then((res) => {
-    res.data.info.user = {
-      ...res.data.info.user,
-      avatar: `${env.VITE_APP_IMG_URL}${res.data.info.user.avatar}`,
-    }
-    info.value = res.data.info
+const {data, refresh} = await useAsyncData(
+    'blog_dtail',
+    () => $fetch<Result<Blog.ListBlogSearchByIdRes>>('/blog/search/id',
+        {
+          baseURL: env.VITE_APP_API_URL,
+          method: 'GET',
+          params: {
+            id: route.query.id,
+          },
+          onResponse(ctx): Promise<any> {
+            return new Promise((resolve, reject) => {
+              const {_data} = ctx.response
+              const {data} = _data as Result<Blog.ListBlogSearchByIdRes>
+              data.info.user = {
+                ...data.info.user,
+                avatar: `${env.VITE_APP_IMG_URL}${data.info.user.avatar}`,
+              }
+              data.info.comment = data.info.comment.map(c => {
+                return {
+                  ...c,
+                  user: {
+                    ...c.user,
+                    avatar: `${env.VITE_APP_IMG_URL}${c.user.avatar}`,
+                  },
+                }
+              })
+              resolve(ctx)
+            })
+          },
+        },
+    ),
+)
 
+const toEdit = () => {
+  router.push({
+    path: '/create',
+    query: {
+      id: route.query.id,
+    },
   })
 }
 
+const delBlog = () => {
+  deleteBlog({id: data.value?.data.info.id as number}).then(() => {
+    window.$message.success('删除成功')
+    router.back()
+  })
+}
+
+watch(() => route.query.id, () => {
+  refresh()
+})
+
 onMounted(() => {
-  getBlogInfo()
+  isShowSkeleton.value = true
+  const t = setTimeout(() => {
+    isShowSkeleton.value = false
+    clearTimeout(t)
+  }, 300)
+})
+
+useHead({
+  title: data.value?.data.info.title,
+  meta: [
+    {name: 'description', content: data.value?.data.info.des},
+  ],
 })
 </script>
 
 <template>
-  <div class="home-wrapper container w-auto m-auto">
+  <div class="home-wrapper">
     <div class="content">
       <div class="left-content">
         <div class="top-cover">
           <img
               class="img"
-              :src="info?.cover"
-              :alt="info?.title"
+              :src="data?.data.info?.cover"
+              :alt="data?.data.info?.title"
           >
         </div>
         <div class="info">
           <div class="blog-title">
             <span class="title">
-              {{ info?.title }}
+              {{ data?.data.info?.title }}
             </span>
             <span
                 class="time"
             >
-              {{ moment(info?.created).format('YYYY-MM-DD') }}
+              {{ moment(data?.data.info?.created).format('YYYY-MM-DD hh:mm:ss') }}
             </span>
           </div>
           <div class="inner-info-wrapper">
             <div
                 class="inner-html"
-                v-html="info?.content"
+                v-html="data?.data.info?.content"
                 v-highlight
             ></div>
           </div>
-          <div class="user-info">
-            <div class="left">
-              <div class="avatar">
-                <n-avatar
-                    :size="50"
-                    :src="info?.user.avatar"
-                    :fallback-src="errImg"
-                ></n-avatar>
+          <client-only>
+            <div class="user-info">
+              <div class="left">
+                <div class="avatar">
+                  <n-avatar
+                      :size="50"
+                      :src="data?.data.info?.user.avatar"
+                      :fallback-src="errImg"
+                  ></n-avatar>
+                </div>
+              </div>
+              <div class="right">
+                <span class="user-name">{{ data?.data.info?.user.username }}</span>
+                <span class="user-motto">{{ data?.data.info?.user.motto }}</span>
+                <div class="edit-wrapper" v-if="userStore.token && userStore.user_info.id === data?.data.info?.user.id">
+                  <n-space>
+                    <n-icon
+                        size="22"
+                        @click="toEdit"
+                        class="icon"
+                    >
+                      <Create></Create>
+                    </n-icon>
+
+                    <n-popconfirm
+                        trigger="click"
+                        positive-text="确定"
+                        negative-text="取消"
+                        @positive-click="delBlog"
+                    >
+                      <template #trigger>
+                        <n-icon
+                            size="22"
+                            class="icon"
+                        >
+                          <TrashBin></TrashBin>
+                        </n-icon>
+                      </template>
+                      <span>
+                      是否确定删除当前文章
+                    </span>
+                    </n-popconfirm>
+                  </n-space>
+                </div>
               </div>
             </div>
-            <div class="right">
-              <span class="user-name">{{ info?.user.username }}</span>
-              <span class="user-motto">{{ info?.user.motto }}</span>
+            <div class="message-board">
+              <MessageBoard
+                  :count="data?.data.info.comment.length"
+                  :infos="data?.data.info.comment"
+                  :id="route.query.id"
+                  @submit="refresh"
+              ></MessageBoard>
             </div>
-          </div>
-          <MessageBoard></MessageBoard>
+          </client-only>
         </div>
       </div>
     </div>
@@ -85,8 +183,6 @@ onMounted(() => {
   .content {
     box-sizing: border-box;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
   }
 
   .left-content {
@@ -152,9 +248,12 @@ onMounted(() => {
         }
 
         .right {
+          box-sizing: border-box;
+          width: 100%;
           display: flex;
           flex-direction: column;
           margin-left: 10px;
+          position: relative;
 
           .user-name {
             font-size: 14px;
@@ -165,11 +264,23 @@ onMounted(() => {
           .user-motto {
             font-size: 12px;
           }
+
+          .edit-wrapper {
+            position: absolute;
+            right: 0;
+
+            .icon {
+              font-size: 22px;
+              cursor: pointer;
+            }
+          }
         }
       }
     }
 
 
   }
+
+
 }
 </style>

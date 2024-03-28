@@ -19,8 +19,8 @@ class Http {
 
         const {
             beforeRequestHook,
-            transformRequestData,
-            requestCatch,
+            transformRespData,
+            respCatch,
         } = transform
 
         const options: RequestOptions = {...requestOptions, ...opt}
@@ -34,8 +34,8 @@ class Http {
                 .request<any, AxiosResponse<Result>>(axiosRequestConfig)
                 .then(
                     (res: AxiosResponse<Result>) => {
-                        if (transformRequestData) {
-                            res = transformRequestData(res, options)
+                        if (transformRespData) {
+                            res = transformRespData(res, options)
                         }
 
                         if (res.data.code === 0) {
@@ -48,8 +48,8 @@ class Http {
                     },
                 )
                 .catch((err) => {
-                    if (requestCatch) {
-                        err = requestCatch(err, options)
+                    if (respCatch) {
+                        err = respCatch(err, options)
                     }
 
                     reject(err)

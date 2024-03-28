@@ -12,6 +12,11 @@ export interface AxiosOptions extends AxiosRequestConfig {
     requestOptions?: RequestOptions
 }
 
+export interface ResultErr {
+    code: number
+    msg: string
+}
+
 export interface RequestOptions {
     // 序列化请求参数
     serializeParams?: boolean
@@ -43,12 +48,12 @@ export abstract class TransForm {
     /**
      * @description: 请求成功处理
      */
-    transformRequestData?: (res: AxiosResponse<Result>, options: RequestOptions) => any
+    transformRespData?: (res: AxiosResponse<Result>, options: RequestOptions) => any
 
     /**
      * @description: 请求失败处理
      */
-    requestCatch?: (e: AxiosError, options: RequestOptions) => any
+    respCatch?: (e: AxiosError<ResultErr, any>, options: RequestOptions) => any
 
     /**
      * @description: 请求之前的拦截器

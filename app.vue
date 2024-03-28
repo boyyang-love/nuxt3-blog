@@ -10,6 +10,7 @@
                 <dialog-content></dialog-content>
                 <message-content></message-content>
                 <notification-content></notification-content>
+                <upload-progress></upload-progress>
               </client-only>
               <NuxtLayout>
                 <NuxtPage/>
@@ -35,6 +36,7 @@ import MessageContent from '@/components/MessageContent/index.vue'
 import DialogContent from '@/components/DialogContent/index.vue'
 import NotificationContent from '@/components/NotificationContent/index.vue'
 import LoadingBarContent from '@/components/LoadingBarContent/index.vue'
+import UploadProgress from '@/components/uploadProgress/index.vue'
 
 
 useHead({
@@ -42,6 +44,7 @@ useHead({
     {
       src: '/js/confetti.min.js',
       defer: true,
+      async: true,
     },
   ],
 })
@@ -71,12 +74,14 @@ onMounted(() => {
 
 .page-enter-from,
 .page-leave-to {
-  transform: scale(0.5);
+  //transform: scale(0.5);
+  opacity: 0;
 }
 
 .page-enter-to,
 .page-leave-from {
-  transform: scale(1);
+  //transform: scale(1);
+  opacity: 1;
 }
 
 body {

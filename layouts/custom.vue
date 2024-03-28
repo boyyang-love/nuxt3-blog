@@ -5,8 +5,7 @@ export default {
 </script>
 
 <template>
-  <div class="custom-wrapper" >
-    custom
+  <div class="custom-wrapper">
     <slot/>
   </div>
 </template>
@@ -14,7 +13,9 @@ export default {
 <style scoped lang="less">
 .custom-wrapper {
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  //position: relative;
+  overflow: hidden;
 }
 </style>

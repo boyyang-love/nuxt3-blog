@@ -27,7 +27,7 @@ export default defineNuxtConfig({
         '~/plugins/highlight.ts',
     ],
     app: {
-        pageTransition: {name: 'page', mode: 'out-in'},
+        // pageTransition: {name: 'page', mode:'in-out'},
     },
     // hooks: {
     //     'pages:extend' (pages) {

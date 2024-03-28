@@ -1,4 +1,4 @@
-import type {RequestOptions, Result, TransForm} from './types'
+import type {RequestOptions, Result, TransForm, ResultErr} from './types'
 import type {AxiosError, AxiosResponse} from 'axios'
 import qs from 'qs'
 import {useUserStore} from '@/store/modules/user'
@@ -39,29 +39,7 @@ const transForm: TransForm = {
         return config
     },
 
-    transformRequestData(res: AxiosResponse<Result>, opt) {
-        const {
-            isShowMessage,
-            isShowSuccessMessage,
-            isShowErrorMessage,
-            isReturn,
-        } = opt
-
-
-        const {code, msg, data} = res.data
-
-        if (isShowMessage) {
-            if (isShowSuccessMessage && code === 1) {
-            }
-
-            if (isShowErrorMessage && code === 0) {
-            }
-        }
-
-        if (!isReturn) {
-            return {data: {code: 0, msg: ''}}
-        }
-
+    transformRespData(res: AxiosResponse<Result>, opt) {
 
         return res
     },
@@ -70,13 +48,9 @@ const transForm: TransForm = {
         return res
     },
 
-    requestCatch(e: AxiosError, options: RequestOptions) {
-        const router = useRouter()
-        if (e?.response?.status === 401) {
-            window.localStorage.clear()
-            router.replace({name: 'Login'}).then(() => {
-            })
-        }
+    respCatch(e: AxiosError<ResultErr, any>, options: RequestOptions) {
+
+        return e.response?.data as ResultErr
     },
 }
 

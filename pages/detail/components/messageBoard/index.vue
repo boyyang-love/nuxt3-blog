@@ -1,15 +1,55 @@
 <script setup lang="ts">
 import {NInput, NSpace} from 'naive-ui'
-import Message from '../message/index.vue'
+import Message from '~/components/Message/index.vue'
+import {type Comment, createComment} from '~/api/comment'
+import {useUserStore} from '@/store/modules/user'
+
+const props = withDefaults(defineProps<{
+      id: number | string
+      count: number,
+      infos: Comment.CommentInfo[]
+    }>(),
+    {
+      id: 0,
+      count: 0,
+      infos: () => [] as Comment.CommentInfo[],
+    })
+
+
+const emits = defineEmits<{
+  submit: []
+}>()
+
+const userStore = useUserStore()
+
+const text = ref<string>('')
+
+const submit = () => {
+  if (text.value.trim() === '') {
+    window.$message.error('评论内容不能为空')
+    return
+  }
+
+  createComment({
+    article_id: Number(props.id as number),
+    type: 'article',
+    content: text.value,
+  }).then(() => {
+    window.$message.success('评论成功')
+    text.value = ''
+    emits('submit')
+  })
+
+}
 </script>
 
 <template>
   <div class="message-board-wrapper">
     <div class="title-wrapper">
       <span class="title">评论留言</span>
-      <span class="value">20</span>
+      <span class="value">{{ count }}</span>
     </div>
-    <div class="input">
+    <div class="input" v-if="userStore.token">
       <n-input
           type="textarea"
           maxlength="200"
@@ -19,16 +59,21 @@ import Message from '../message/index.vue'
               maxRows: 10,
               minRows: 5,
           }"
+          v-model:value="text"
       ></n-input>
     </div>
-    <div class="btns">
+    <div class="btns" v-if="userStore.token">
       <n-space align="center" size="small">
-        <div class="btn">发布评论</div>
+        <div class="btn" @click="submit">发布评论</div>
       </n-space>
     </div>
 
     <div class="messages">
-      <Message v-for="item in 2"></Message>
+      <Message
+          v-for="item in infos"
+          :key="item.id"
+          :info="item"
+      ></Message>
     </div>
   </div>
 </template>

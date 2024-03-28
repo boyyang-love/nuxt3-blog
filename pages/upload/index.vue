@@ -1,16 +1,31 @@
 <script setup lang="ts">
 import {NUpload, NUploadDragger, NP, NText, NInput, NSpace, NButton} from 'naive-ui'
+import {useFileUpload} from '@/hooks/fileUpload'
+
+const {
+  onChange,
+  uploadRef,
+  imgBase64,
+  fileInfo,
+  submit
+} = useFileUpload('images')
+
+
 </script>
 
 <template>
   <div class="upload-wrapper">
     <div class="upload-content">
-      <n-input class="input" placeholder="请输入壁纸名称"></n-input>
+      <n-input
+          class="input"
+          placeholder="请输入壁纸名称"
+          v-model:value="fileInfo.file_name"
+      ></n-input>
+      <img class="img" :src="imgBase64" alt="" v-if="imgBase64">
       <n-upload
-          multiple
-          directory-dnd
-          action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
-          :max="5"
+          v-else
+          ref="uploadRef"
+          @change="onChange"
       >
         <n-upload-dragger>
           <div class="upload-icon">
@@ -25,7 +40,7 @@ import {NUpload, NUploadDragger, NP, NText, NInput, NSpace, NButton} from 'naive
         </n-upload-dragger>
       </n-upload>
       <div class="upload-btn">
-        <div class="btn">
+        <div class="btn" @click="submit">
           上传
         </div>
       </div>
@@ -43,6 +58,12 @@ import {NUpload, NUploadDragger, NP, NText, NInput, NSpace, NButton} from 'naive
     box-sizing: border-box;
     padding-top: 50px;
     width: 60%;
+
+    .img {
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 5px;
+    }
 
     .input {
       margin-bottom: 10px;

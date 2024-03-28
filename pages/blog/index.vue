@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import Title from '@/components/Title/index.vue'
 import Card from '@/components/Card/index.vue'
-import Page from '@/components/Page/index.vue'
-import CardRight from './components/CardRight/index.vue'
-import {type Blog, listBlog} from '~/api/blog'
+import {type Blog} from '~/api/blog'
 import {NEmpty, NPagination} from 'naive-ui'
 import {env} from '~/utils/env'
+import {clearNuxtData, refreshNuxtData, useAsyncData} from '#app'
+import {$fetch} from 'ofetch/node'
+import type {Result} from '~/utils/http/types'
 
 const count = ref<number>(0)
 const page = ref<number>(1)
 const limit = ref<number>(10)
-const blogList = ref<Blog.ListBlogItem[]>()
 
 const pageSizes = [
   {
@@ -30,44 +29,69 @@ const pageSizes = [
     value: 40,
   },
 ]
-const getBlogList = () => {
-  listBlog({page: page.value, limit: limit.value}).then((res) => {
-    count.value = res.data.count
-    blogList.value = res.data.list.map(l => {
-      return {
-        ...l,
-        user: {
-          ...l.user,
-          avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+
+const {data, refresh} = await useAsyncData(
+    'blog_list',
+    () => $fetch<Result<Blog.ListBlogRes>>('/blog/list',
+        {
+          baseURL: env.VITE_APP_API_URL,
+          method: 'GET',
+          params: {
+            page: page.value,
+            limit: limit.value,
+            type: 'created',
+          },
+          query: {
+            key: new Date().getTime(),
+          },
+          onResponse(ctx): Promise<any> {
+            return new Promise((resolve, reject) => {
+              const {_data} = ctx.response
+              const {data} = _data as Result<Blog.ListBlogRes>
+
+              data.list = data.list.map(l => {
+                return {
+                  ...l,
+                  user: {
+                    ...l.user,
+                    avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+                  },
+                }
+              })
+              count.value = data.count
+              resolve(ctx)
+            })
+          },
         },
-      }
-    })
-  })
-}
+    ),
+)
 
 const pageSizeChange = (e: number) => {
   limit.value = e
-  getBlogList()
+  refresh()
 }
 
 const pageUpdate = (e: number) => {
   page.value = e
-  getBlogList()
+  refresh()
 }
+
 onMounted(() => {
-  getBlogList()
+  refreshNuxtData()
 })
+
 </script>
 
 <template>
   <div class="blog-wrapper">
     <div class="content">
-      <div class="empty" v-if="blogList?.length === 0">
+      <div class="empty" v-if="data?.data.list.length === 0">
         <n-empty></n-empty>
       </div>
+
       <Card
           v-else
-          v-for="item in blogList"
+          v-for="item in data?.data.list"
           :avatar="item.user.avatar"
           :id="item.id"
           :title="item.title"
@@ -77,8 +101,12 @@ onMounted(() => {
           :cover="item.cover"
           :content="item.content"
           :des="item.des"
-      ></Card>
-      <div class="pagination" v-show="listBlog.length > 0">
+      >
+        <template #cover>
+
+        </template>
+      </Card>
+      <div class="pagination" v-show="data?.data.list.length > 0">
         <n-pagination
             :item-count="count"
             :page-size="limit"
@@ -96,19 +124,20 @@ onMounted(() => {
 .blog-wrapper {
   box-sizing: border-box;
   width: 100%;
+  padding: 10px;
 
   .content {
     box-sizing: border-box;
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 50px;
+    //padding-top: 50px;
     position: relative;
 
     .empty {
       box-sizing: border-box;
       width: 100%;
-      height: 400px;
+      height: 300px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -128,7 +157,5 @@ onMounted(() => {
       bottom: 0;
     }
   }
-
-
 }
 </style>

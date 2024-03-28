@@ -5,6 +5,7 @@ export namespace User {
         id: number
         username: string
         avatar: string
+        cover: string
         motto: string
         address: string
         tel: number

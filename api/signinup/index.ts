@@ -5,6 +5,7 @@ export namespace Signinup {
         username: string
         password: string
         email: string
+        code: string
     }
 
     export interface SigninReq {
@@ -22,12 +23,13 @@ export namespace Signinup {
         uid: string
         username: string
         avatar: string
+        cover: string
         account: string
         motto: string
         address: string
         tel: string
         email: string
-        qq: string
+        qq: number
         wechat: string
         git_hub: string
     }

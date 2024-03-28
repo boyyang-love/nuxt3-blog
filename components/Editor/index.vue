@@ -1,16 +1,24 @@
 <script setup lang="ts">
-import {NInput, NSpace, useMessage} from 'naive-ui'
+import {NInput, NSpace, useMessage, NUpload} from 'naive-ui'
 import {onMounted} from 'vue'
-import {createBlog} from '@/api/blog'
+import {createBlog, updateBlog, type Blog} from '@/api/blog'
 import {type Upload, uploadFile} from '@/api/upload'
 import {env} from '@/utils/env'
 import {AiEditor} from 'aieditor'
 import 'aieditor/dist/style.css'
-import uploadModel from './components/uploadModal/index.vue'
+import {useFileUpload} from '@/hooks/fileUpload'
+import {useRouter} from 'vue-router'
+
+const props = defineProps<{
+  isEdit: boolean
+  editInfo?: Blog.ListBlogItem
+}>()
+
+const router = useRouter()
 
 const message = useMessage()
+const {imgUrl, uploadRef, customRequest} = useFileUpload()
 const divRef = ref()
-const coverImg = ref<string | null>()
 const isShowModal = ref<boolean>(false)
 const modalType = ref<string>('blog') // blog cover
 let aiEditor: AiEditor | null = null
@@ -21,43 +29,57 @@ const blogInfo = reactive({
   content: '',
 })
 
+// window.$uploadProgress.begin()
+// window.$uploadProgress.end()
+
+watch(() => props.editInfo, (value) => {
+  if (value) {
+    aiEditor?.setContent(value.content)
+    blogInfo.title = value.title
+    imgUrl.value = value.cover
+  }
+})
+
 const submit = () => {
   const des = aiEditor?.getText()
   const content = aiEditor?.getHtml()
 
-  if (blogInfo.title.trim() === '' || content?.trim() === '' || coverImg.value === null) {
+  if (blogInfo.title.trim() === '' || content?.trim() === '') {
     message.warning('标题，内容，不能为空')
     return
   }
 
-  createBlog({
-    title: blogInfo.title,
-    des: des?.slice(0, 150) || '',
-    cover: coverImg.value || '',
-    content: content || '',
-  }).then(res => {
-    message.success('文章发布成功')
-    aiEditor?.clear()
-    blogInfo.title = ''
-    coverImg.value = ''
-  })
-}
-
-const insert = (items: Upload.UploadListItem[]) => {
-  if (modalType.value === 'blog') {
-    let ins = [] as string[]
-    items.forEach(item => {
-      ins.push(`<img src="${item.file_path}" alt="${item.file_name}" align="center">`)
+  if (props.isEdit) {
+    updateBlog({
+      id: Number(props.editInfo?.id),
+      title: blogInfo.title,
+      des: des?.slice(0, 150) || '',
+      cover: imgUrl.value || '',
+      content: content || '',
+    }).then(res => {
+      message.success('文章修改成功')
+      aiEditor?.clear()
+      blogInfo.title = ''
+      imgUrl.value = ''
+      router.back()
     })
-
-    aiEditor?.insert(ins.join('\n'))
   } else {
-    coverImg.value = items[0].file_path
+    createBlog({
+      title: blogInfo.title,
+      des: des?.slice(0, 150) || '',
+      cover: imgUrl.value || '',
+      content: content || '',
+    }).then(res => {
+      message.success('文章发布成功')
+      aiEditor?.clear()
+      blogInfo.title = ''
+      imgUrl.value = ''
+    })
   }
 }
 
 const delCover = () => {
-  coverImg.value = null
+  imgUrl.value = ''
 }
 
 const uploadCover = () => {
@@ -74,7 +96,7 @@ onMounted(() => {
       '|', 'highlight', 'font-color',
       '|', 'align', 'line-height',
       '|', 'bullet-list', 'ordered-list', 'indent-decrease', 'indent-increase', 'break',
-      '|', 'image', 'video', 'attachment', 'quote', 'code-block', 'table',
+      '|', 'image', 'attachment', 'quote', 'code-block', 'table',
       '|', 'printer', 'fullscreen',
     ],
     fontFamily: {
@@ -89,16 +111,38 @@ onMounted(() => {
         {name: 'Arial', value: 'Arial'},
       ],
     },
+    fontSize: {
+      values: [
+        {name: '56', value: 56},
+        {name: '40', value: 48},
+        {name: '34', value: 34.7},
+        {name: '32', value: 32},
+        {name: '29', value: 29.3},
+        {name: '24', value: 24},
+        {name: '21', value: 21.3},
+        {name: '20', value: 20},
+        {name: '18', value: 18.7},
+        {name: '17', value: 17},
+        {name: '16', value: 16},
+        {name: '15', value: 15},
+        {name: '14', value: 14},
+        {name: '13', value: 13},
+        {name: '12', value: 12},
+        {name: '11', value: 11},
+        {name: '10', value: 10},
+        {name: '9', value: 9},
+      ].reverse(),
+    },
     element: divRef.value as Element,
     placeholder: '点击输入内容...',
     content: '',
     image: {
       allowBase64: true,
       defaultSize: 710,
-      customMenuInvoke() {
-        isShowModal.value = true
-        modalType.value = 'blog'
-      },
+      // customMenuInvoke() {
+      //   isShowModal.value = true
+      //   modalType.value = 'blog'
+      // },
       uploader: (file: File, uploadUrl: string, headers: Record<string, any>, formName: string): Promise<Record<string, any>> => {
         return new Promise(async (resolve, reject) => {
           const res = await uploadFile({file_name: file.name, file: file, dir: 'blog'})
@@ -129,7 +173,6 @@ onMounted(() => {
       },
     },
   })
-
 })
 
 onUnmounted(() => {
@@ -162,22 +205,27 @@ onUnmounted(() => {
       <div class="bottom-wrapper">
         <div class="cover">添加封面</div>
         <div class="upload">
-          <div class="img-wrapper" v-if="coverImg">
+          <div class="img-wrapper" v-if="imgUrl">
             <div class="close" @click="delCover">
               <nuxt-icon class="icon" name="other/close"></nuxt-icon>
             </div>
-            <img class="img" :src="coverImg" :alt="coverImg"/>
+            <img class="img" :src="imgUrl" :alt="imgUrl"/>
           </div>
-          <div class="upload-btn" @click="uploadCover">
-            <div class="text">上传文件</div>
-          </div>
+          <n-upload
+              :custom-request="customRequest"
+              :show-file-list="false"
+              ref="uploadRef"
+          >
+            <div class="upload-btn" @click="uploadCover">
+              <div class="text">上传文件</div>
+            </div>
+          </n-upload>
         </div>
       </div>
       <div class="bottom-submit">
         <div class="btn-wrapper">
           <n-space>
-            <div class="btn btn-preview">预览</div>
-            <div class="btn btn-submit" @click="submit">发布</div>
+            <div class="btn btn-submit" @click="submit">{{ isEdit ? '提交修改' : '发布' }}</div>
             <div class="btn btn-exit" @click="$router.back()">退出</div>
           </n-space>
         </div>
@@ -185,34 +233,25 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <transition name="scale-slide">
-    <uploadModel
-        v-show="isShowModal"
-        v-model:show="isShowModal"
-        :type="modalType"
-        @insert="insert"
-    ></uploadModel>
-  </transition>
+  <!--  <uploadModel-->
+  <!--      v-show="isShowModal"-->
+  <!--      v-model:show="isShowModal"-->
+  <!--      :type="modalType"-->
+  <!--      @insert="insert"-->
+  <!--  ></uploadModel>-->
 
 </template>
 
 <style lang="less" scoped>
 .editor-wrapper {
   box-sizing: border-box;
-  //width: 100vw;
-  position: absolute;
   width: 100%;
-  left: 0;
-  top: 0;
-  z-index: 9;
-  overflow: hidden;
 
   .aie-container {
     box-sizing: border-box;
     display: flex;
     align-items: center;
     width: 100%;
-    z-index: 99;
     background-color: rgb(243, 244, 246);
 
     .aie-container-header {
@@ -367,7 +406,7 @@ onUnmounted(() => {
         padding: 4px 15px;
         font-size: 14px;
         font-weight: bolder;
-        border-radius: 3px;
+        border-radius: 2px;
         box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
         cursor: pointer;
       }

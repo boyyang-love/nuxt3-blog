@@ -16,20 +16,12 @@ const props = defineProps<Props>()
         :src="props.url"
         :show-toolbar="false"
         lazy
+        :intersection-observer-options="{
+          root: '#content'
+        }"
         width="100%"
         height="100%"
         object-fit="cover"
-        :preview-disabled="true"
-        :previewed-img-props="{
-          width: '75%',
-          height: '70%',
-          style: {
-              border: '3px solid #f6416c',
-              objectFit: 'cover',
-              boxShadow: '10px 10px 5px rgba(0,0,0,0.6)',
-              borderRadius: '0px',
-          }
-        }"
     >
       <template #placeholder>
         <div class="loading">

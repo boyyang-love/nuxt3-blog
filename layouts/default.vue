@@ -2,6 +2,7 @@
 import {AppLeft} from '#components'
 import {AppRight} from '#components'
 import {ContentTop} from '#components'
+import {NBackTop} from 'naive-ui'
 </script>
 
 <template>
@@ -9,7 +10,8 @@ import {ContentTop} from '#components'
     <div class="left">
       <AppLeft/>
     </div>
-    <div class="content">
+    <div class="content" id="content">
+      <n-back-top></n-back-top>
       <div class="content-top">
         <ContentTop></ContentTop>
       </div>
@@ -46,6 +48,7 @@ import {ContentTop} from '#components'
   box-sizing: border-box;
   display: flex;
   width: 1250px;
+  height: 1000px;
   padding: 50px 0;
   background-color: rgb(241, 239, 254);
   margin: 0 auto;
@@ -55,7 +58,8 @@ import {ContentTop} from '#components'
     box-sizing: border-box;
     background-color: rgb(246, 247, 254);
     width: @w;
-    height: 90vh;
+    //height: 90vh;
+    height: 100%;
     overflow-y: auto;
   }
 
@@ -69,7 +73,8 @@ import {ContentTop} from '#components'
 
   .content {
     box-sizing: border-box;
-    height: 90vh;
+    //height: 90vh;
+    height: 100%;
     background-color: #ffffff;
     width: calc(100% - (@w * 2));
     overflow-y: auto;

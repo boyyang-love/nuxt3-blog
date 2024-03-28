@@ -1,74 +1,123 @@
 <script setup lang="ts">
-import {NSpace, NAvatar} from 'naive-ui'
+import {NSpace, NAvatar, NIcon} from 'naive-ui'
 import {useUserStore} from '@/store/modules/user'
-import errImg  from '@/assets/image/avatar_g.jpg'
+import errImg from '@/assets/image/avatar_g.jpg'
+import {definePageMeta} from '#imports'
+import {Home, Cube, Images} from '@vicons/ionicons5'
+
 const userStore = useUserStore()
+
+const menus = computed(() => {
+  const token = userStore.token
+  if (token) {
+    return [
+      {
+        name: 'home',
+        text: '首页',
+        path: '/home',
+        routeName: 'home',
+        icon: Home,
+      },
+      {
+        name: 'blog',
+        text: '博客',
+        path: '/blog',
+        routeName: 'blog',
+        icon: Cube,
+      },
+      {
+        name: 'wallpaper',
+        text: '壁纸',
+        path: '/wallpaper',
+        routeName: 'wallpaper',
+        icon: Images,
+      },
+    ]
+  }
+
+  return [
+    {
+      name: 'home',
+      text: '首页',
+      path: '/home',
+      routeName: 'home',
+      icon: Home,
+    },
+    {
+      name: 'blog',
+      text: '博客',
+      path: '/blog',
+      routeName: 'blog',
+      icon: Cube,
+    },
+  ]
+})
+
+definePageMeta({
+  layout: false,
+})
 </script>
 
 <template>
-  <div class="index-wrapper ">
-    <div class="index-content">
-      <div class="left-img">
-        <img class="img" src="@/assets/image/wolp.jpg" alt="">
-      </div>
-      <div class="right-content">
-        <div class="user-info">
-          <div class="user-avatar">
+  <nuxt-layout name="custom">
+    <client-only>
+      <div class="index-wrapper ">
+        <div class="index-content">
+          <div class="left-img">
             <n-avatar
-                :size="112"
+                class="img"
                 :fallback-src="errImg"
-                :src="userStore.user_info.avatar"
+                :src="userStore.user_info.cover"
+                object-fit="cover"
             ></n-avatar>
           </div>
-          <div class="user-name-motto">
-            <span class="name">{{userStore.user_info.username}}</span>
-            <span class="motto">{{ userStore.user_info.motto}}</span>
-          </div>
+          <div class="right-content">
+            <div class="user-info">
+              <div class="user-avatar">
+                <n-avatar
+                    :size="112"
+                    :src="userStore.user_info.avatar"
+                    :fallback-src="errImg"
+                >
+                </n-avatar>
+              </div>
+              <div class="user-name-motto">
+                <span class="name">{{ userStore.user_info.username }}</span>
+                <span class="motto">{{ userStore.user_info.motto }}</span>
+              </div>
 
-        </div>
-        <div class="menu">
-          <n-space>
-            <nuxt-link to="/home" class="link">
-              <div class="menu-item">
-                <nuxt-icon class="icon" name="home/home"></nuxt-icon>
-                <span class="text">首页</span>
-              </div>
-            </nuxt-link>
-            <nuxt-link to="/blog" class="link">
-              <div class="menu-item">
-                <nuxt-icon class="icon" name="home/cube"></nuxt-icon>
-                <span class="text">博客</span>
-              </div>
-            </nuxt-link>
-            <nuxt-link to="/wallpaper" class="link">
-              <div class="menu-item">
-                <nuxt-icon class="icon" name="home/image"></nuxt-icon>
-                <span class="text">壁纸</span>
-              </div>
-            </nuxt-link>
-          </n-space>
+            </div>
+            <div class="menu">
+              <n-space>
+                <nuxt-link :to="item.path" class="link" v-for="item in menus">
+                  <div class="menu-item">
+                    <n-icon
+                        :size="22"
+                        class="icon"
+                    >
+                      <component :is="item.icon"></component>
+                    </n-icon>
+                    <span class="text">{{ item.text }}</span>
+                  </div>
+                </nuxt-link>
+              </n-space>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </client-only>
+  </nuxt-layout>
 </template>
 
 <style scoped lang="less">
 .index-wrapper {
   box-sizing: border-box;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 9;
-
   background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
-  //background-color: #f6f7fe;
-
 
   .index-content {
     box-sizing: border-box;

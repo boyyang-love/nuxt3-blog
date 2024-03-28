@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import {NModal, NPagination, NUpload, NEmpty, NImage, NCheckbox, NButton, NSpace} from 'naive-ui'
+import {NPagination, NUpload, NEmpty, NImage, NButton, NSpace, NCheckbox, NModal} from 'naive-ui'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {type Upload, uploadList} from '@/api/upload'
 import {env} from '@/utils/env'
-import {computed} from 'vue'
 import CubeLoading from '~/components/CubeLoading/index.vue'
 
 const emits = defineEmits<{
@@ -54,90 +53,96 @@ const finish = () => {
   getImgList()
 }
 onMounted(() => {
-  getImgList()
+  setTimeout(() => {
+    // getImgList()
+  }, 2000)
+  // getImgList()
 })
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="content">
-      <div class="close">
-        <nuxt-icon
-            class="icon"
-            name="other/close"
-            @click="close"
-        ></nuxt-icon>
-      </div>
-      <div class="empty" v-if="imgList.length === 0">
-        <n-empty></n-empty>
-      </div>
+  <n-modal v-model:show="modelValue" width="1000px">
+    <div class="wrapper">
+      <div class="content">
+        <div class="close">
+          <nuxt-icon
+              class="icon"
+              name="other/close"
+              @click="close"
+          ></nuxt-icon>
+        </div>
+        <div class="empty" v-if="imgList.length === 0">
+          <n-empty></n-empty>
+        </div>
 
-      <div class="img-wrapper" v-else>
-        <div
-            class="image-item"
-            v-for="item in imgList"
-            :key="item.id">
-          <n-image
-              :src="item.file_path"
-              :alt="item.file_name"
-              object-fit="cover"
-              :img-props="{
+        <div class="img-wrapper" v-else>
+          <div
+              class="image-item"
+              v-for="item in imgList"
+              :key="item.id">
+            <n-image
+                :src="item.file_path"
+                :alt="item.file_name"
+                lazy
+                object-fit="cover"
+                :img-props="{
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover'
               }"
-              class="img"
-          >
-            <template #placeholder>
-              <div class="loading">
-                <CubeLoading></CubeLoading>
-              </div>
-            </template>
-          </n-image>
-          <div class="bottom-wrapper">
-<!--            <n-checkbox-->
-<!--                size="small"-->
-<!--                :disabled="props.type === 'cover' && insertImageList.length > 0 && !insertImageList.includes(item) "-->
-<!--                @update:checked="e => selectChange(e, item)"-->
-<!--            ></n-checkbox>-->
+                class="img"
+            >
+              <template #placeholder>
+                <div class="loading">
+                  <CubeLoading></CubeLoading>
+                </div>
+              </template>
+            </n-image>
+            <div class="bottom-wrapper">
+              <n-checkbox
+                  size="small"
+                  :disabled="props.type === 'cover' && insertImageList.length > 0 && !insertImageList.includes(item) "
+                  @update:checked="e => selectChange(e, item)"
+              ></n-checkbox>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="pagenation">
-        <n-space>
-          <n-button
-              v-show="insertImageList.length > 0"
-              size="small"
-              type="success"
-              @click="insert"
-          >
-            插入({{ insertImageList.length }})
-          </n-button>
-          <n-pagination
-              size="medium"
-              v-model:page="page"
-              :item-count="count"
-              :page-size="12"
-              @update:page="getImgList"
-              simple
-          />
-        </n-space>
+        <div class="pagenation">
+          <n-space>
+            <n-button
+                v-show="insertImageList.length > 0"
+                size="small"
+                type="success"
+                @click="insert"
+            >
+              插入({{ insertImageList.length }})
+            </n-button>
+            <n-pagination
+                size="medium"
+                v-model:page="page"
+                :item-count="count"
+                :page-size="12"
+                @update:page="getImgList"
+                simple
+            />
+          </n-space>
 
-      </div>
-      <n-upload
-          class="upload-btn"
-          style="width: 100%; height: 100%;"
-          :show-file-list="false"
-          ref="uploadRef"
-          @finish="finish"
-          :custom-request="customRequest"
-      >
-        <div class="add">
-          <nuxt-icon class="icon" name="other/add"></nuxt-icon>
         </div>
-      </n-upload>
+        <n-upload
+            class="upload-btn"
+            style="width: 100%; height: 100%;"
+            :show-file-list="false"
+            ref="uploadRef"
+            @finish="finish"
+            :custom-request="customRequest"
+        >
+          <div class="add">
+            <nuxt-icon class="icon" name="other/add"></nuxt-icon>
+          </div>
+        </n-upload>
+      </div>
     </div>
-  </div>
+  </n-modal>
 </template>
 
 <style scoped lang="less">
@@ -168,7 +173,7 @@ onMounted(() => {
   .empty {
     box-sizing: border-box;
     width: 100%;
-    height: 220px;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,7 +240,9 @@ onMounted(() => {
     .icon {
       display: inline-block;
       font-size: 22px;
-      transition: all 0.45s ease-in-out;
+      transition: all 0.35s ease-in-out;
+      cursor: pointer;
+
 
       &:hover {
         transform: rotateZ(90deg);

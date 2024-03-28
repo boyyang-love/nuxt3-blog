@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {NEllipsis, NAvatar} from 'naive-ui'
+import {NEllipsis, NAvatar, NImage, NSkeleton} from 'naive-ui'
 import moment from 'moment'
 import {useRouter} from 'vue-router'
 import errImg from '@/assets/image/avatar_g.jpg'
@@ -19,6 +19,7 @@ const props = defineProps<{
   des: string
   content: string
 }>()
+
 const readAll = () => {
   isReadAll.value = true
 }
@@ -59,10 +60,11 @@ const toDetail = () => {
       </div>
     </div>
     <div :class="['top-img',isReadAll ? 'all' : '']">
+      <slot name="cover"></slot>
       <img
+          class="img"
           :src="props.cover"
           :alt="props.cover"
-          class="img"
       >
       <div class="bottom">
         <div class="sub-title" v-show="!isReadAll">
@@ -98,9 +100,7 @@ const toDetail = () => {
           </span>
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -122,6 +122,7 @@ const toDetail = () => {
       font-size: 15px;
       font-weight: 800;
       color: #1f2b3e;
+      cursor: pointer;
     }
 
     .time {
@@ -243,6 +244,10 @@ const toDetail = () => {
         position: absolute;
         bottom: -10px;
         right: 0;
+
+        .text {
+          cursor: pointer;
+        }
       }
 
       .editor {
