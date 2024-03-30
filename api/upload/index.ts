@@ -25,25 +25,12 @@ export const uploadFile = (data: { file_name: string, file: File, dir: string })
     formData.append('dir', data.dir)
     formData.append('file', data.file)
 
-    window.$uploadProgress.begin()
-    let t: null | NodeJS.Timeout = null
 
     return http.request<Upload.UploadRes>(
         {
             method: 'POST',
             url: '/file/upload',
             data: formData,
-            onUploadProgress(e) {
-                const progress = ((e.progress || 0) * 100).toFixed(2)
-                window.$uploadProgress.setPercent(Number(progress))
-                window.$uploadProgress.setEstimated(Number(e.estimated || 0).toFixed(2))
-                if (e.total === e.loaded) {
-                    t && clearTimeout(t)
-                    t = setTimeout(() => {
-                        window.$uploadProgress.end()
-                    }, 3000)
-                }
-            },
         },
         {
             serializeParams: false,

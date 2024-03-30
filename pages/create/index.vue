@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
 import {useRoute} from 'vue-router'
-import Editor from '@/components/Editor/index.vue'
+import Editor from '@/components/WangEditor/index.vue'
 import {searchBlogById, type Blog} from '@/api/blog'
 import {definePageMeta} from '#imports'
 

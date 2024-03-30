@@ -3,7 +3,7 @@ import {NEmpty, NUpload, NAvatar, NButton, NSkeleton, NSpace} from 'naive-ui'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
-import Title from '@/components/Title/index.vue'
+import TitleText from '~/components/TitleText/index.vue'
 import {type Blog} from '@/api/blog'
 import {env} from '~/utils/env'
 import {useFileUpload} from '@/hooks/fileUpload'
@@ -72,13 +72,18 @@ onMounted(() => {
     isShowSkeleton.value = false
     clearTimeout(t)
   }, 300)
-
-  refreshNuxtData()
 })
+
+
 </script>
 
 <template>
   <div class="home-wrapper">
+<!--    <Head>-->
+<!--      <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>-->
+<!--      <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>-->
+<!--      <Meta name="keywords" :content="data?.data.list.map(d => d.title).join(',')"></Meta>-->
+<!--    </Head>-->
     <client-only>
       <div class="banner">
         <NAvatar
@@ -102,7 +107,7 @@ onMounted(() => {
       </div>
     </client-only>
     <div class="content">
-      <Title :more="false"></Title>
+      <TitleText :more="false"></TitleText>
       <div class="empty" v-if="data?.data.list.length === 0">
         <n-empty></n-empty>
       </div>

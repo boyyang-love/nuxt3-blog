@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import prismjs from 'vite-plugin-prismjs'
 
 export default defineNuxtConfig({
+    ssr: true,
     devtools: {enabled: false},
     modules: ['nuxt-icons', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
     build: {
@@ -25,18 +25,40 @@ export default defineNuxtConfig({
     },
     plugins: [
         '~/plugins/highlight.ts',
+        {
+            src: '~/plugins/wangEditor.ts',
+            mode: 'client',
+        },
     ],
     app: {
-        // pageTransition: {name: 'page', mode:'in-out'},
+        head: {
+            title: 'boyyang的个人博客',
+            meta: [
+                {
+                    name: 'description',
+                    content: 'boyyang',
+                },
+                {
+                    name: 'description',
+                    content: '个人博客',
+                },
+                {
+                    name: 'keywords',
+                    content: 'boyyang',
+                },
+                {
+                    name: 'keywords',
+                    content: '个人博客网站',
+                },
+                {
+                    name: 'keywords',
+                    content: '博客网站',
+                },
+                {
+                    name: 'keywords',
+                    content: 'wallpaperCollector',
+                },
+            ],
+        },
     },
-    // hooks: {
-    //     'pages:extend' (pages) {
-    //         // 添加一个路由
-    //         pages.push({
-    //             name: 'fullScreen',
-    //             path: '/fullScreen',
-    //             file: '~/pages/fullScreen/index.vue'
-    //         })
-    //     }
-    // }
 })

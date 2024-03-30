@@ -6,6 +6,7 @@ import {env} from '~/utils/env'
 import {clearNuxtData, refreshNuxtData, useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
+import TitleText from '~/components/TitleText/index.vue'
 
 const count = ref<number>(0)
 const page = ref<number>(1)
@@ -77,13 +78,18 @@ const pageUpdate = (e: number) => {
 }
 
 onMounted(() => {
-  refreshNuxtData()
+  // refreshNuxtData()
 })
 
 </script>
 
 <template>
   <div class="blog-wrapper">
+    <Head>
+      <Title>{{ data?.data.list.map(d => d.title).join(',')}}</Title>
+      <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
+      <Meta name="keywords" :content="data?.data.list.map(d => d.title).join(',')"></Meta>
+    </Head>
     <div class="content">
       <div class="empty" v-if="data?.data.list.length === 0">
         <n-empty></n-empty>

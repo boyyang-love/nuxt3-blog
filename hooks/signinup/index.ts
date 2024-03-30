@@ -82,7 +82,8 @@ export const useSigninup = () => {
             data.emailSendDisable = true
             const t = setInterval(() => {
                 data.emailSendDisableTime--
-                if (data.emailSendDisableTime === 0) {
+                if (data.emailSendDisableTime <= 0) {
+                    data.emailSendDisableTime = 60
                     data.emailSendDisable = false
                     clearInterval(t)
                 }

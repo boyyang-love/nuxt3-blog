@@ -16,9 +16,10 @@ const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const isShowSkeleton = ref<boolean>(false)
+const id = route.query.id
 
 const {data, refresh} = await useAsyncData(
-    'blog_dtail',
+    'blog_detail',
     () => $fetch<Result<Blog.ListBlogSearchByIdRes>>('/blog/search/id',
         {
           baseURL: env.VITE_APP_API_URL,
@@ -76,18 +77,22 @@ onMounted(() => {
     isShowSkeleton.value = false
     clearTimeout(t)
   }, 300)
-})
-
-useHead({
-  title: data.value?.data.info.title,
-  meta: [
-    {name: 'description', content: data.value?.data.info.des},
-  ],
+  nextTick(() => {
+    refresh()
+  })
 })
 </script>
 
 <template>
   <div class="home-wrapper">
+    <Head>
+      <Title>{{ data?.data.info.title || 'boyyang的个人博客网站' }}</Title>
+      <Meta name="description" :content="data?.data.info.des || 'boyyang的个人博客网站'"></Meta>
+      <Meta
+          name="keywords"
+          :content="data?.data.info.tag.map(t => t.tag_name).join(',') ||'boyyang,个人博客网站,博客' "
+      ></Meta>
+    </Head>
     <div class="content">
       <div class="left-content">
         <div class="top-cover">
@@ -114,6 +119,16 @@ useHead({
                 v-html="data?.data.info?.content"
                 v-highlight
             ></div>
+          </div>
+          <div class="tags-wrapper">
+            <n-space>
+              <div
+                  class="tag-item"
+                  v-for="item in data?.data.info.tag"
+              >
+                #{{ item.tag_name }}
+              </div>
+            </n-space>
           </div>
           <client-only>
             <div class="user-info">
@@ -207,9 +222,37 @@ useHead({
         display: flex;
         justify-content: center;
 
+        :deep(img) {
+          max-width: 100%;
+          border-radius: 5px;
+        }
+
+        :deep(code) {
+          border-radius: 5px;
+        }
+
         .inner-html {
           box-sizing: border-box;
           width: 100%;
+        }
+      }
+
+      .tags-wrapper {
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+
+        .tag-item {
+          box-sizing: border-box;
+          padding: 0 5px;
+          border-radius: 1px;
+          font-size: 13px;
+          font-weight: bolder;
+          background-color: #ffffff;
+          color: rgba(17, 17, 17, 1);
+          box-shadow: 3px 3px 5px #d9d9d9,
+            -3px -3px 5px #ffffff;;
+          //box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3),-1px -1px 5px rgba(0, 0, 0, 0.3);
         }
       }
 

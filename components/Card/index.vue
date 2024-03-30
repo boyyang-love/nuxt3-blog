@@ -37,7 +37,9 @@ const toDetail = () => {
 <template>
   <div class="card-wrapper">
     <div class="title-wrapper">
-      <div class="title" @click="toDetail">{{ props.title }}</div>
+      <nuxt-link :to="`/detail/?id=${props.id}`">
+        <div class="title">{{ props.title }}</div>
+      </nuxt-link>
       <div class="time">
         <span>{{ moment(props.created).format('YYYY-MM-DD') }}</span>
         <div class="point"></div>
@@ -75,10 +77,14 @@ const toDetail = () => {
         <div
             class="editor"
             ref="editor"
-            v-html="props.content"
-            v-highlight
             v-if="isReadAll"
-        ></div>
+            v-highlight
+        >
+          <div
+              style="box-sizing: border-box"
+              v-html="props.content"
+          ></div>
+        </div>
         <div
             class="close-readall"
             @click="isReadAll = false"
@@ -254,6 +260,15 @@ const toDetail = () => {
         box-sizing: border-box;
         width: 100%;
         overflow: hidden;
+
+        :deep(img) {
+          max-width: 100%;
+          border-radius: 5px;
+        }
+
+        :deep(code) {
+          border-radius: 5px;
+        }
       }
     }
   }

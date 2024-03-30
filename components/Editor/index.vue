@@ -29,8 +29,6 @@ const blogInfo = reactive({
   content: '',
 })
 
-// window.$uploadProgress.begin()
-// window.$uploadProgress.end()
 
 watch(() => props.editInfo, (value) => {
   if (value) {

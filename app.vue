@@ -65,6 +65,7 @@ onMounted(() => {
 //@import "./node_modules/nes.css/css/nes.css";
 //@import "@fontsource/press-start-2p";
 //@import "@fontsource/press-start-2p/400.css";
+
 @import "@/font/font.less";
 
 .page-enter-active,

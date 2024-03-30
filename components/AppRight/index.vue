@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {NEmpty} from 'naive-ui'
 import CardTop from '~/components/CardTop/index.vue'
-import Title from '@/components/Title/index.vue'
+import Title from '~/components/TitleText/index.vue'
 import {type Blog, listBlog} from '~/api/blog'
 import {env} from '~/utils/env'
 import {useUserStore} from '@/store/modules/user'

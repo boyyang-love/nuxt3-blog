@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {NInput, NSpace, NEmpty} from 'naive-ui'
-import Title from '@/components/Title/index.vue'
+import Title from '~/components/TitleText/index.vue'
 import {type Comment, createComment} from '@/api/comment'
 import moment from 'moment'
 import {useUserStore} from '@/store/modules/user'
