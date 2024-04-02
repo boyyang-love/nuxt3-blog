@@ -5,10 +5,18 @@ import {NEmpty, NPagination} from 'naive-ui'
 import {env} from '~/utils/env'
 import {refreshNuxtData, useFetch} from '#app'
 import type {Result} from '~/utils/http/types'
+import {hash} from 'ohash'
 
 const count = ref<number>(0)
 const page = ref<number>(1)
 const limit = ref<number>(10)
+
+const params = computed(() => {
+  return {
+    page: page.value,
+    limit: limit.value,
+  }
+})
 
 const pageSizes = [
   {
@@ -28,34 +36,72 @@ const pageSizes = [
     value: 40,
   },
 ]
+const {data, refresh} = await useAsyncData(
+    'blog_list',
+    () => $fetch<Result<Blog.ListBlogRes>>('/blog/list',
+        {
+          baseURL: env.VITE_APP_API_URL,
+          method: 'GET',
+          params: {
+            page: page.value,
+            limit: limit.value,
+            type: 'created',
+          },
+          query: {
+            key: new Date().getTime(),
+          },
+          onResponse(ctx): Promise<any> {
+            return new Promise((resolve, reject) => {
+              const {_data} = ctx.response
+              const {data} = _data as Result<Blog.ListBlogRes>
 
-const {data, refresh} = useFetch('/blog/list', {
-      baseURL: env.VITE_APP_API_URL,
-      method: 'GET',
-      params: {
-        page: page.value,
-        limit: limit.value,
-        type: 'created',
-      },
-      onResponse(ctx): Promise<any> {
-        return new Promise((resolve, reject) => {
-          const {_data} = ctx.response
-          const {data} = _data as Result<Blog.ListBlogRes>
-
-          data.list = data.list.map(l => {
-            return {
-              ...l,
-              user: {
-                ...l.user,
-                avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
-              },
-            }
-          })
-          resolve(ctx)
-        })
-      },
-    },
+              data.list = data.list.map(l => {
+                return {
+                  ...l,
+                  user: {
+                    ...l.user,
+                    avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+                  },
+                }
+              })
+              count.value = data.count
+              resolve(ctx)
+            })
+          },
+        },
+    ),
 )
+
+// const {data, refresh} = useFetch('/blog/list', {
+//       baseURL: env.VITE_APP_API_URL,
+//       method: 'GET',
+//       params: {
+//         // page: page.value,
+//         // limit: limit.value,
+//         ...params.value,
+//         type: 'created',
+//       },
+//       onResponse(ctx): Promise<any> {
+//         return new Promise((resolve, reject) => {
+//           const {_data} = ctx.response
+//           const {data} = _data as Result<Blog.ListBlogRes>
+//
+//           data.list = data.list.map(l => {
+//             return {
+//               ...l,
+//               user: {
+//                 ...l.user,
+//                 avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+//               },
+//             }
+//           })
+//           count.value = data.count
+//           console.log(data.count)
+//           resolve(ctx)
+//         })
+//       },
+//     },
+// )
 
 const pageSizeChange = (e: number) => {
   limit.value = e
