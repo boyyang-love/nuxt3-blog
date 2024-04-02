@@ -2,7 +2,6 @@ import type {RequestOptions, Result, TransForm, ResultErr} from './types'
 import type {AxiosError, AxiosResponse} from 'axios'
 import qs from 'qs'
 import {useUserStore} from '@/store/modules/user'
-import {useRouter} from 'vue-router'
 
 const transForm: TransForm = {
     beforeRequestHook(config, opt) {
@@ -57,8 +56,9 @@ const transForm: TransForm = {
             })
         }
 
-        if (e.response?.data) {
-            window.$message.error(e.response.data as unknown as string)
+
+        if (e.response?.data && e.response.data.msg) {
+            window.$message.error(e.response.data.msg)
         }
 
         return e.response?.data as ResultErr

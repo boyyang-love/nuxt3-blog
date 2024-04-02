@@ -228,7 +228,7 @@ definePageMeta({
 
     .cat {
       position: absolute;
-      bottom: calc(100% - 50px);
+      bottom: calc(100% - 85px);
       right: 0;
     }
   }

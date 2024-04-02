@@ -31,7 +31,7 @@ const formValues = reactive({
   motto: userStore.user_info.motto,
   email: userStore.user_info.email,
   git_hub: userStore.user_info.git_hub,
-  qq: userStore.user_info.qq,
+  qq: String(userStore.user_info.qq),
   wechat: userStore.user_info.wechat,
 })
 
@@ -41,7 +41,7 @@ watch(() => userStore.showUserInfoModal, (value) => {
     formValues.motto = userStore.user_info.motto
     formValues.email = userStore.user_info.email
     formValues.git_hub = userStore.user_info.git_hub
-    formValues.qq = userStore.user_info.qq
+    formValues.qq = String(userStore.user_info.qq)
     formValues.wechat = userStore.user_info.wechat
   }
 })
@@ -75,7 +75,7 @@ const menus = computed(() => {
       },
       {
         name: 'wallpaper',
-        text: '壁纸',
+        text: '图片资源',
         path: '/wallpaper',
         routeName: 'wallpaper',
         icon: Images,

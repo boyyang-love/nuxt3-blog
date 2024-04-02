@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {NEmpty, NPagination} from 'naive-ui'
+import {NEmpty, NPagination, NTabs, NTabPane} from 'naive-ui'
 import Card from './components/card/index.vue'
 import {uploadList, type Upload} from '@/api/upload'
 import {env} from '@/utils/env'
 
-const list = ref<Upload.UploadListItem[]>([])
+const list = ref<(Upload.UploadListItem & { path: string })[]>([])
+const tabValue = ref<'images' | 'blog' | 'bg' | 'avatar'>('images')
 const count = ref<number>(0)
 const page = ref<number>(1)
 const limit = ref<number>(20)
@@ -43,16 +44,23 @@ const getUploadList = () => {
   uploadList({
     page: page.value,
     limit: limit.value,
-    type: 'images',
+    type: tabValue.value,
   }).then((res) => {
     count.value = res.data.count
     list.value = res.data.infos.map((e) => {
       return {
         ...e,
         file_path: `${env.VITE_APP_IMG_URL}/${e.file_path}`,
+        path: e.file_path,
       }
     })
   })
+}
+
+const tabValueChange = () => {
+  page.value = 1
+  limit.value = 10
+  getUploadList()
 }
 
 onMounted(() => {
@@ -64,21 +72,48 @@ onMounted(() => {
 
 <template>
   <div class="wallpaper-wrapper" id="wallpaper-wrapper">
+    <div class="tab-wrapper">
+      <n-tabs
+          type="line"
+          default-value="images"
+          v-model:value="tabValue"
+          @update:value="tabValueChange"
+      >
+        <n-tab-pane tab="壁纸" name="images">
+
+        </n-tab-pane>
+        <n-tab-pane tab="博客" name="blog">
+
+        </n-tab-pane>
+        <n-tab-pane tab="背景" name="bg">
+
+        </n-tab-pane>
+        <n-tab-pane tab="头像" name="avatar">
+
+        </n-tab-pane>
+      </n-tabs>
+    </div>
     <div class="empty" v-if="list.length === 0">
       <n-empty></n-empty>
     </div>
     <div class="content" v-else>
       <Card
           v-for="item in list"
+          :id="item.id"
           :url="item.file_path"
           :key="item.id"
+          :type="tabValue"
+          :file-name="item.file_name"
+          :path="item.path"
+          @refresh="getUploadList"
       ></Card>
     </div>
 
     <div class="pagination" v-show="list.length > 0">
       <n-pagination
           :item-count="count"
-          :page-size="limit"
+          v-model:page-size="limit"
+          v-model:page="page"
           :page-sizes="pageSizes"
           @update:page="pageUpdate"
           @update:pageSize="pageSizeChange"
@@ -91,6 +126,13 @@ onMounted(() => {
 <style scoped lang="less">
 .wallpaper-wrapper {
   padding: 10px;
+
+  .tab-wrapper {
+    position: sticky;
+    background-color: rgb(245 246 255 / 80%);
+    top: 50px;
+    padding: 0 20px;
+  }
 
   .content {
     box-sizing: border-box;

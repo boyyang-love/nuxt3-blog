@@ -45,7 +45,6 @@ export const useSigninup = () => {
                 userStore.showSigninModal = false
             }).catch((err) => {
                 window.$uploadProgress.end()
-                window.$message.error(err.msg)
             })
         } else {
             window.$message.warning('账号和密码为必填项')
@@ -73,7 +72,6 @@ export const useSigninup = () => {
                 userStore.isSignin = true
             }).catch((err) => {
                 window.$uploadProgress.end()
-                window.$message.error(err.msg)
             })
         } else {
             window.$message.warning('用户名，密码，邮箱，code为必填项')

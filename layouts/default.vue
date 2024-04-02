@@ -111,7 +111,15 @@ router.beforeEach((to, from, next) => {
     }
 
     .content {
+      box-sizing: border-box;
+      position: relative;
       width: 100%;
+      height: 100vh;
+
+      .content-top {
+        position: sticky;
+        top: 0;
+      }
     }
   }
 }

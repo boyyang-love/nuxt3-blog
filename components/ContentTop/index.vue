@@ -50,7 +50,7 @@ const options = computed(() => {
         icon: renderIcon(Cube),
       },
       {
-        label: '壁纸',
+        label: '图片资源',
         key: 6,
         icon: renderIcon(Images),
       },

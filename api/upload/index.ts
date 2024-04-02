@@ -17,6 +17,18 @@ export namespace Upload {
         infos: UploadListItem[]
     }
 
+    export type FileType = 'images' | 'blog' | 'bg' | 'avatar'
+
+    export interface UploadDeleteReq {
+        id: number
+        file_path: string
+        type: FileType
+    }
+
+    export interface UploadDeleteRes {
+        message: string
+    }
+
 }
 
 export const uploadFile = (data: { file_name: string, file: File, dir: string }) => {
@@ -38,10 +50,18 @@ export const uploadFile = (data: { file_name: string, file: File, dir: string })
     )
 }
 
-export const uploadList = (params: { page?: number, limit?: number, type: 'blog' | 'images' | 'avatar' }) => {
+export const uploadList = (params: { page?: number, limit?: number, type: 'blog' | 'images' | 'avatar' | 'bg' }) => {
     return http.request<Upload.UploadListRes>({
         url: '/file/list',
         method: 'GET',
         params,
+    })
+}
+
+export const uploadDelete = (data: Upload.UploadDeleteReq) => {
+    return http.request<Upload.UploadDeleteRes>({
+        url: '/file/delete',
+        method: 'POST',
+        data,
     })
 }
