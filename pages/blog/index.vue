@@ -3,10 +3,8 @@ import Card from '@/components/Card/index.vue'
 import {type Blog} from '~/api/blog'
 import {NEmpty, NPagination} from 'naive-ui'
 import {env} from '~/utils/env'
-import {clearNuxtData, refreshNuxtData, useAsyncData} from '#app'
-import {$fetch} from 'ofetch/node'
+import {refreshNuxtData, useFetch} from '#app'
 import type {Result} from '~/utils/http/types'
-import TitleText from '~/components/TitleText/index.vue'
 
 const count = ref<number>(0)
 const page = ref<number>(1)
@@ -31,40 +29,32 @@ const pageSizes = [
   },
 ]
 
-const {data, refresh} = await useAsyncData(
-    'blog_list',
-    () => $fetch<Result<Blog.ListBlogRes>>('/blog/list',
-        {
-          baseURL: env.VITE_APP_API_URL,
-          method: 'GET',
-          params: {
-            page: page.value,
-            limit: limit.value,
-            type: 'created',
-          },
-          query: {
-            key: new Date().getTime(),
-          },
-          onResponse(ctx): Promise<any> {
-            return new Promise((resolve, reject) => {
-              const {_data} = ctx.response
-              const {data} = _data as Result<Blog.ListBlogRes>
+const {data, refresh} = useFetch('/blog/list', {
+      baseURL: env.VITE_APP_API_URL,
+      method: 'GET',
+      params: {
+        page: page.value,
+        limit: limit.value,
+        type: 'created',
+      },
+      onResponse(ctx): Promise<any> {
+        return new Promise((resolve, reject) => {
+          const {_data} = ctx.response
+          const {data} = _data as Result<Blog.ListBlogRes>
 
-              data.list = data.list.map(l => {
-                return {
-                  ...l,
-                  user: {
-                    ...l.user,
-                    avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
-                  },
-                }
-              })
-              count.value = data.count
-              resolve(ctx)
-            })
-          },
-        },
-    ),
+          data.list = data.list.map(l => {
+            return {
+              ...l,
+              user: {
+                ...l.user,
+                avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+              },
+            }
+          })
+          resolve(ctx)
+        })
+      },
+    },
 )
 
 const pageSizeChange = (e: number) => {
@@ -78,15 +68,24 @@ const pageUpdate = (e: number) => {
 }
 
 onMounted(() => {
-  // refreshNuxtData()
 })
+
+const refreshing = ref(false)
+const refreshAll = async () => {
+  refreshing.value = true
+  try {
+    await refreshNuxtData()
+  } finally {
+    refreshing.value = false
+  }
+}
 
 </script>
 
 <template>
   <div class="blog-wrapper">
     <Head>
-      <Title>{{ data?.data.list.map(d => d.title).join(',')}}</Title>
+      <Title>{{ data?.data.list.map(d => d.title).join(',') }}</Title>
       <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
       <Meta name="keywords" :content="data?.data.list.map(d => d.title).join(',')"></Meta>
     </Head>

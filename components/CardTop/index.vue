@@ -111,4 +111,22 @@ const props = defineProps<{
 
 
 }
+
+@media screen and (max-width: 1200px) {
+  .card-wrapper {
+    .nuxt-link {
+      .top-cover {
+        height: auto;
+      }
+    }
+  }
+
+  .bottom-wrapper {
+    .title {
+      :deep(soan) {
+        width: 100%;
+      }
+    }
+  }
+}
 </style>

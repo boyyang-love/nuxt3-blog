@@ -144,6 +144,7 @@ const rules = {
 } as FormRules
 
 const submit = (info: { file: File, Bolb: Blob }) => {
+  window.$uploadProgress.begin()
   uploadFile(
       {
         file_name: info.file.name,
@@ -160,6 +161,7 @@ const submit = (info: { file: File, Bolb: Blob }) => {
         },
       })
       window.$message.success(resUser.data.message)
+      window.$uploadProgress.end()
     })
   })
 }
@@ -167,6 +169,7 @@ const submit = (info: { file: File, Bolb: Blob }) => {
 const updateUserInfoSub = () => {
   userInfoEditRef.value?.validate((errors) => {
     if (!errors) {
+      window.$uploadProgress.begin()
       updateUserInfo({
         username: formValues.username,
         motto: formValues.motto,
@@ -174,7 +177,6 @@ const updateUserInfoSub = () => {
         qq: Number(formValues.qq),
         wechat: formValues.wechat,
       }).then(() => {
-        window.$message.success('信息更改成功')
         userStore.$patch({
           user_info: {
             username: formValues.username,
@@ -185,8 +187,11 @@ const updateUserInfoSub = () => {
           },
           showUserInfoModal: false,
         })
+        window.$message.success('信息更改成功')
+        window.$uploadProgress.end()
       }).catch(err => {
         window.$message.error(err.msg)
+        window.$uploadProgress.end()
       })
     }
   })
@@ -262,8 +267,8 @@ const openSignModal = () => {
       </div>
 
       <div class="beian">
-        <span>川公网安备51010602002116号</span>
-        <span>蜀ICP备2024050890号-1</span>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?recordcode=51010602002116" target="_blank">川公网安备51010602002116号</a>
+        <a href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备2024050890号-1</a>
       </div>
 
       <n-modal
@@ -576,6 +581,11 @@ const openSignModal = () => {
     font-weight: bold;
     display: flex;
     flex-direction: column;
+
+    a {
+      text-decoration: none;
+      color: rgba(15, 28, 46, 1);
+    }
   }
 }
 

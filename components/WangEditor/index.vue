@@ -32,6 +32,7 @@ const blogInfo = reactive({
 
 watch(() => props.editInfo, (value) => {
   if (value) {
+    window.$uploadProgress.begin()
     if (editorRef.value) {
       editorRef.value && editorRef.value.setHtml(value.content)
     } else {
@@ -40,6 +41,7 @@ watch(() => props.editInfo, (value) => {
     blogInfo.title = value.title
     imgUrl.value = value.cover
     selectValues.value = value.tag.map(t => Number(t.id))
+    window.$uploadProgress.end()
   }
 })
 
@@ -64,6 +66,7 @@ const submit = () => {
   }
 
   if (props.isEdit) {
+    window.$uploadProgress.begin()
     updateBlog({
       id: Number(props.editInfo?.id),
       title: blogInfo.title,
@@ -75,12 +78,14 @@ const submit = () => {
       }),
     }).then(res => {
       window.$message.success('文章修改成功')
+      window.$uploadProgress.end()
       valueHtml.value = ''
       blogInfo.title = ''
       imgUrl.value = ''
       router.back()
     })
   } else {
+    window.$uploadProgress.begin()
     createBlog({
       title: blogInfo.title,
       des: des?.slice(0, 150) || '',
@@ -90,10 +95,12 @@ const submit = () => {
         return Number(s)
       }),
     }).then(res => {
+      window.$uploadProgress.end()
       window.$message.success('文章发布成功')
       valueHtml.value = ''
       blogInfo.title = ''
       imgUrl.value = ''
+      selectValues.value = []
     })
   }
 }
@@ -228,9 +235,9 @@ const delCover = () => {
     margin-top: 20px;
     margin-bottom: 80px;
 
-    :deep(.w-e-scroll) {
-      overflow: hidden !important;
-    }
+    //:deep(.w-e-scroll) {
+    //  overflow: hidden !important;
+    //}
 
     .title {
       box-sizing: border-box;
@@ -394,6 +401,24 @@ const delCover = () => {
       }
     }
   }
+}
 
+@media screen and (max-width: 1200px) {
+  .editor-wrapper {
+
+    .editor-body {
+      width: 100%;
+    }
+
+    .bottom-wrapper {
+      width: 100%;
+      margin-bottom: 0;
+      padding: 0 20px;
+    }
+
+    .bottom-submit {
+      padding-right: 10px;
+    }
+  }
 }
 </style>

@@ -3,6 +3,7 @@ import {signup, signin} from '@/api/signinup'
 import {sendEmail} from '@/api/email'
 import {useUserStoreWithOut} from '@/store/modules/user'
 import {env} from '~/utils/env'
+import {emailRegex} from '@/utils/emailRegex'
 
 export const useSigninup = () => {
     const data = reactive({
@@ -28,6 +29,7 @@ export const useSigninup = () => {
 
     const signinSub = () => {
         if (data.username.trim() !== '' && data.password.trim() !== '') {
+            window.$uploadProgress.begin()
             signin(
                 {
                     username: data.username,
@@ -39,8 +41,10 @@ export const useSigninup = () => {
                 userStore.setToken(res.data.token)
                 userStore.setUserInfo(res.data.user_info)
                 window.$message.success('登录成功')
+                window.$uploadProgress.end()
                 userStore.showSigninModal = false
             }).catch((err) => {
+                window.$uploadProgress.end()
                 window.$message.error(err.msg)
             })
         } else {
@@ -57,15 +61,18 @@ export const useSigninup = () => {
                 return
             }
 
+            window.$uploadProgress.begin()
             signup({
                 username: data.username,
                 password: data.password,
                 code: data.code,
                 email: data.email,
             }).then(() => {
+                window.$uploadProgress.end()
                 window.$message.success('账号注册成功')
                 userStore.isSignin = true
             }).catch((err) => {
+                window.$uploadProgress.end()
                 window.$message.error(err.msg)
             })
         } else {
@@ -74,8 +81,22 @@ export const useSigninup = () => {
     }
 
     const sendEmailCode = () => {
+        if (data.email.trim() === '') {
+            window.$message.warning('请输入邮箱')
+            return
+        }
+
+        if (!emailRegex(data.email)) {
+            window.$notification.create({
+                type: 'error',
+                title: '提示',
+                content: '邮箱格式错误',
+            })
+            return
+        }
         sendEmail({email: data.email}).then(() => {
             window.$notification.create({
+                type: 'success',
                 title: '提示',
                 content: '验证码已经发送到邮箱，请注意查收',
             })

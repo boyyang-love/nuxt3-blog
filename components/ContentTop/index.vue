@@ -1,6 +1,19 @@
 <script setup lang="ts">
 import {NInput, NIcon, NDropdown} from 'naive-ui'
-import {Menu, Search, FingerPrint, Rocket, Exit} from '@vicons/ionicons5'
+import {
+  Menu,
+  Search,
+  FingerPrint,
+  Rocket,
+  Exit,
+  Planet,
+  Home,
+  Cube,
+  Images,
+  Create,
+  CloudUpload,
+  FingerPrintSharp,
+} from '@vicons/ionicons5'
 import {renderIcon} from '@/utils/renderIcon'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
@@ -17,22 +30,77 @@ const options = computed(() => {
         icon: renderIcon(FingerPrint),
       },
       {
-        label: '注册',
+        label: '登录',
         key: 2,
+        icon: renderIcon(Planet),
+      },
+      {
+        label: '注册',
+        key: 3,
         icon: renderIcon(Rocket),
       },
       {
+        label: '首页',
+        key: 4,
+        icon: renderIcon(Home),
+      },
+      {
+        label: '博客',
+        key: 5,
+        icon: renderIcon(Cube),
+      },
+      {
+        label: '壁纸',
+        key: 6,
+        icon: renderIcon(Images),
+      },
+      {
+        label: '发布文章',
+        key: 7,
+        icon: renderIcon(Create),
+      },
+      {
+        label: '上传壁纸',
+        key: 8,
+        icon: renderIcon(CloudUpload),
+      },
+      {
+        label: '个人卡片',
+        key: 9,
+        icon: renderIcon(FingerPrintSharp),
+      },
+      {
         label: '退出',
-        key: 3,
+        key: 10,
         icon: renderIcon(Exit),
       },
     ]
   } else {
     return [
       {
-        label: '注册',
+        label: '登录',
         key: 2,
+        icon: renderIcon(Planet),
+      },
+      {
+        label: '注册',
+        key: 3,
         icon: renderIcon(Rocket),
+      },
+      {
+        label: '首页',
+        key: 4,
+        icon: renderIcon(Home),
+      },
+      {
+        label: '博客',
+        key: 5,
+        icon: renderIcon(Cube),
+      },
+      {
+        label: '个人卡片',
+        key: 9,
+        icon: renderIcon(FingerPrintSharp),
       },
     ]
   }
@@ -44,10 +112,32 @@ const handleSelect = (key: string | number) => {
     return
   }
   if (key === 2) {
-    userStore.isSignin = false
+    userStore.isSignin = true
     userStore.showSigninModal = true
   }
   if (key === 3) {
+    userStore.isSignin = false
+    userStore.showSigninModal = true
+  }
+  if (key === 4) {
+    router.push('/home')
+  }
+  if (key === 5) {
+    router.push('/blog')
+  }
+  if (key === 6) {
+    router.push('/wallpaper')
+  }
+  if (key === 7) {
+    router.push('/create')
+  }
+  if (key === 8) {
+    router.push('/upload')
+  }
+  if (key === 9) {
+    router.push('/')
+  }
+  if (key === 10) {
     window.localStorage.clear()
     router.replace('/').then(() => {
       location.reload()

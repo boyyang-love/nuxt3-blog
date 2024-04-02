@@ -61,14 +61,16 @@ const toEdit = () => {
 }
 
 const delBlog = () => {
-  deleteBlog({id: data.value?.data.info.id as number}).then(() => {
+  deleteBlog({id: (data.value as any).data.info.id as number}).then(() => {
     window.$message.success('删除成功')
     router.back()
   })
 }
 
-watch(() => route.query.id, () => {
-  refresh()
+watch(() => route.query.id, (newVal) => {
+  if (newVal) {
+    refresh()
+  }
 })
 
 onMounted(() => {
@@ -77,10 +79,18 @@ onMounted(() => {
     isShowSkeleton.value = false
     clearTimeout(t)
   }, 300)
-  nextTick(() => {
-    refresh()
-  })
+
 })
+
+const refreshing = ref(false)
+const refreshAll = async () => {
+  refreshing.value = true
+  try {
+    await refreshNuxtData()
+  } finally {
+    refreshing.value = false
+  }
+}
 </script>
 
 <template>
@@ -325,5 +335,21 @@ onMounted(() => {
   }
 
 
+}
+
+@media screen and (max-width: 1200px) {
+  .home-wrapper {
+
+    .info {
+
+      .blog-title {
+        flex-direction: column;
+
+        .title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }
 </style>

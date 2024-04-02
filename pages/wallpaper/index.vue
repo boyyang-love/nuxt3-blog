@@ -71,6 +71,7 @@ onMounted(() => {
       <Card
           v-for="item in list"
           :url="item.file_path"
+          :key="item.id"
       ></Card>
     </div>
 

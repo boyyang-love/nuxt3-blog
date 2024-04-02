@@ -3,6 +3,15 @@ import {AppLeft} from '#components'
 import {AppRight} from '#components'
 import {ContentTop} from '#components'
 import {NBackTop} from 'naive-ui'
+import {useRouter} from 'vue-router'
+
+const domRef = ref<HTMLElement | null>()
+
+const router = useRouter()
+router.beforeEach((to, from, next) => {
+  domRef.value?.scrollTo(0,0)
+  next()
+})
 </script>
 
 <template>
@@ -10,7 +19,7 @@ import {NBackTop} from 'naive-ui'
     <div class="left">
       <AppLeft/>
     </div>
-    <div class="content" id="content">
+    <div class="content" id="content" ref="domRef">
       <n-back-top></n-back-top>
       <div class="content-top">
         <ContentTop></ContentTop>
@@ -84,6 +93,25 @@ import {NBackTop} from 'naive-ui'
       position: sticky;
       top: 0;
       z-index: 8;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .layout-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    flex-direction: column;
+
+    .left,
+    .right {
+      display: none;
+    }
+
+    .content {
+      width: 100%;
     }
   }
 }

@@ -42,6 +42,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
         if (uploadFileInfo) {
             const file = uploadFileInfo.value?.file as File
             window.$loadingBar.start()
+            window.$uploadProgress.begin()
             uploadFile({
                 file_name: fileInfo.file_name,
                 file: file,
@@ -56,6 +57,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
                     },
                 })
                 window.$loadingBar.finish()
+                window.$uploadProgress.end()
                 window.$message.success(`文件[${file.name}]上传成功`)
                 fileInfo.file_name = ''
                 imgBase64.value = ''
@@ -77,6 +79,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
             onProgress,
         }: UploadCustomRequestOptions) => {
         window.$loadingBar.start()
+        window.$uploadProgress.begin()
         uploadFile({
             file_name: file.name,
             file: file.file as File,
@@ -91,6 +94,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
                     file_url: imgUrl.value,
                 },
             })
+            window.$uploadProgress.end()
             window.$loadingBar.finish()
             window.$message.success(`文件[${file.name}]上传成功`)
         })

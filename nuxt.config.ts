@@ -1,9 +1,29 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import {sitemap} from './static/sitemap'
 
 export default defineNuxtConfig({
     ssr: true,
+    routeRules: {
+        '/index': {
+            ssr: false,
+        },
+        '/create': {
+            ssr: false,
+        },
+        '/upload': {
+            ssr: false,
+        },
+        '/wallpaper': {
+            ssr: false,
+        },
+    },
     devtools: {enabled: false},
-    modules: ['nuxt-icons', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
+    modules: [
+        'nuxt-icons',
+        '@pinia/nuxt',
+        '@pinia-plugin-persistedstate/nuxt',
+        '@nuxtjs/sitemap'
+    ],
     build: {
         transpile:
             process.env.NODE_ENV === 'production'
@@ -58,7 +78,12 @@ export default defineNuxtConfig({
                     name: 'keywords',
                     content: 'wallpaperCollector',
                 },
+                {
+                    name: "baidu-site-verification",
+                    content: "codeva-5PhqvbeMY2",
+                }
             ],
         },
     },
+    sitemap: sitemap
 })

@@ -294,4 +294,33 @@ const toDetail = () => {
     }
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .card-wrapper {
+    padding: 0;
+    margin: 0;
+    .title-wrapper {
+      flex-direction: column;
+    }
+
+    .top-img {
+      flex-direction: column;
+
+      .img {
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 200px;
+      }
+
+      .bottom {
+        width: 100%;
+        padding: 10px 0;
+
+        .sub-title {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
 </style>

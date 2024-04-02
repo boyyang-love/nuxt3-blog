@@ -4,6 +4,7 @@ import {useUserStore} from '@/store/modules/user'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {definePageMeta} from '#imports'
 import {Home, Cube, Images} from '@vicons/ionicons5'
+import Cat from '@/components/Cat/index.vue'
 
 const userStore = useUserStore()
 
@@ -103,6 +104,9 @@ definePageMeta({
               </n-space>
             </div>
           </div>
+          <div class="cat">
+            <Cat></Cat>
+          </div>
         </div>
       </div>
     </client-only>
@@ -127,8 +131,9 @@ definePageMeta({
     box-shadow: 0 12px 15px 2px rgb(224 225 255 / 41%);
     border-radius: 10px;
     display: flex;
-    overflow: hidden;
     padding: 10px;
+    position: relative;
+
 
     .left-img {
       flex: 1;
@@ -219,6 +224,38 @@ definePageMeta({
           }
         }
       }
+    }
+
+    .cat {
+      position: absolute;
+      bottom: calc(100% - 50px);
+      right: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .index-content {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+
+    .left-img {
+      display: none;
+
+      .img {
+        border-radius: 10px;
+      }
+    }
+
+    .right-content {
+      position: relative;
+    }
+
+    .cat {
+      bottom: -55px !important;
+      right: 285px !important;
     }
   }
 }

@@ -35,17 +35,22 @@ window.$uploadProgress = useUploadProgress()
 
 <template>
   <div class="upload-progress" v-if="isShow">
-    <div class="upload-content">
-      <div class="loading">Uploading</div>
-      <div class="percent">
-        <span class="value">{{ percent }}%</span>
-        <span class="point"></span>
-        <span class="value">{{ estimated }}s</span>
-      </div>
-      <div class="bottom-progress"></div>
+    <div class="loader">
+      <svg viewBox="0 0 80 80">
+        <circle id="test" cx="40" cy="40" r="32"></circle>
+      </svg>
     </div>
-    <div class="close" @click="isShow = false">
-      <nuxt-icon name="other/close"></nuxt-icon>
+
+    <div class="loader triangle">
+      <svg viewBox="0 0 86 80">
+        <polygon points="43 8 79 72 7 72"></polygon>
+      </svg>
+    </div>
+
+    <div class="loader">
+      <svg viewBox="0 0 80 80">
+        <rect x="8" y="8" width="64" height="64"></rect>
+      </svg>
     </div>
   </div>
 </template>
@@ -53,73 +58,169 @@ window.$uploadProgress = useUploadProgress()
 <style scoped lang="less">
 .upload-progress {
   box-sizing: border-box;
-  width: 250px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 5px;
-  background: rgb(255, 255, 255);
-  padding: 5px 0;
-  margin: 10px;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  background: rgba(17, 17, 17, 0.7);
   border: 2px solid rgb(170, 176, 194);
   z-index: 99;
+  position: absolute;
 
-  .bottom-bg {
-    content: "";
-    width: 10%;
+  .loader {
+    --path: #23d69b;
+    --dot: #ffff;
+    --duration: 3s;
+    width: 44px;
+    height: 44px;
+    position: relative;
+  }
+
+  .loader:before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    display: block;
+    background: var(--dot);
+    top: 37px;
+    left: 19px;
+    transform: translate(-18px, -18px);
+    animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+
+  .loader svg {
+    display: block;
+    width: 100%;
     height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
   }
 
-  .upload-content {
-    padding: 0 10px;
+  .loader svg rect, .loader svg polygon, .loader svg circle {
+    fill: none;
+    stroke: var(--path);
+    stroke-width: 10px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
 
-    .percent {
-      display: flex;
-      align-items: center;
-      z-index: 2;
+  .loader svg polygon {
+    stroke-dasharray: 145 76 145 76;
+    stroke-dashoffset: 0;
+    animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
 
-      .point {
-        display: inline-block;
-        width: 2px;
-        height: 2px;
-        background-color: rgb(170, 176, 194);
-        border-radius: 50%;
-        margin: 0 5px;
-      }
+  .loader svg rect {
+    stroke-dasharray: 192 64 192 64;
+    stroke-dashoffset: 0;
+    animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
 
-      .value {
-        color: rgb(170, 176, 194);
-        font-size: 13px;
-      }
+  .loader svg circle {
+    stroke-dasharray: 150 50 150 50;
+    stroke-dashoffset: 75;
+    animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+
+  .loader.triangle {
+    width: 48px;
+  }
+
+  .loader.triangle:before {
+    left: 21px;
+    transform: translate(-10px, -18px);
+    animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+
+  @keyframes pathTriangle {
+    33% {
+      stroke-dashoffset: 74;
     }
 
-    .bottom-progress {
-      box-sizing: border-box;
-      transition: all 0.2s linear;
-      width: calc(v-bind(percent) * 1%);
-      height: 2px;
-      background-color: rgb(170, 176, 194);
-      margin-top: 10px;
+    66% {
+      stroke-dashoffset: 147;
     }
 
-    .loading {
-      color: rgb(115, 134, 164);
-      font-size: 14px;
-      font-weight: bolder;
-      margin-bottom: 5px;
-      z-index: 3;
+    100% {
+      stroke-dashoffset: 221;
     }
   }
 
-  .close {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
+  @keyframes dotTriangle {
+    33% {
+      transform: translate(0, 0);
+    }
+
+    66% {
+      transform: translate(10px, -18px);
+    }
+
+    100% {
+      transform: translate(-10px, -18px);
+    }
   }
+
+  @keyframes pathRect {
+    25% {
+      stroke-dashoffset: 64;
+    }
+
+    50% {
+      stroke-dashoffset: 128;
+    }
+
+    75% {
+      stroke-dashoffset: 192;
+    }
+
+    100% {
+      stroke-dashoffset: 256;
+    }
+  }
+
+  @keyframes dotRect {
+    25% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(18px, -18px);
+    }
+
+    75% {
+      transform: translate(0, -36px);
+    }
+
+    100% {
+      transform: translate(-18px, -18px);
+    }
+  }
+
+  @keyframes pathCircle {
+    25% {
+      stroke-dashoffset: 125;
+    }
+
+    50% {
+      stroke-dashoffset: 175;
+    }
+
+    75% {
+      stroke-dashoffset: 225;
+    }
+
+    100% {
+      stroke-dashoffset: 275;
+    }
+  }
+
+  .loader {
+    display: inline-block;
+    margin: 0 16px;
+  }
+
 }
 
 </style>

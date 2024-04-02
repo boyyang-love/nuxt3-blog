@@ -7,7 +7,7 @@ const {
   uploadRef,
   imgBase64,
   fileInfo,
-  submit
+  submit,
 } = useFileUpload('images')
 
 
@@ -91,6 +91,16 @@ const {
       .icon {
         font-size: 40px;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .upload-wrapper {
+    height: calc(100vh - 50px);
+
+    .upload-content {
+      width: 90%;
     }
   }
 }

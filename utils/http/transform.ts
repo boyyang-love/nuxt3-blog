@@ -49,6 +49,17 @@ const transForm: TransForm = {
     },
 
     respCatch(e: AxiosError<ResultErr, any>, options: RequestOptions) {
+        if (e.response?.status === 401) {
+            window.$notification.create({
+                type: 'error',
+                title: '提示',
+                content: 'token过期，请重新登录',
+            })
+        }
+
+        if (e.response?.data) {
+            window.$message.error(e.response.data as unknown as string)
+        }
 
         return e.response?.data as ResultErr
     },

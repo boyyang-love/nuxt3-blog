@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {NEmpty, NUpload, NAvatar, NButton, NSkeleton, NSpace} from 'naive-ui'
+import {NEmpty, NUpload, NAvatar, NButton} from 'naive-ui'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
@@ -9,9 +9,8 @@ import {env} from '~/utils/env'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {updateUserInfo} from '@/api/user'
 import errImg from 'assets/image/wolp.jpg'
-import {useAsyncData, refreshNuxtData} from '#app'
-import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
+import {useFetch} from '#app'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -30,41 +29,36 @@ const page = ref<number>(1)
 const limit = ref<number>(20)
 const isShowSkeleton = ref<boolean>(true)
 
-const {data, refresh} = await useAsyncData(
-    'blog_list_recently',
-    () => $fetch<Result<Blog.ListBlogRes>>('/blog/list',
-        {
-          baseURL: env.VITE_APP_API_URL,
-          method: 'GET',
-          params: {
-            page: page.value,
-            limit: limit.value,
-            type: 'recently',
-          },
-          query: {
-            key: new Date().getTime(),
-          },
-          onResponse(ctx): Promise<any> {
-            return new Promise((resolve, reject) => {
-              const {_data} = ctx.response
-              const {data} = _data as Result<Blog.ListBlogRes>
 
-              data.list = data.list.map(l => {
-                return {
-                  ...l,
-                  user: {
-                    ...l.user,
-                    avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
-                  },
-                }
-              })
-              isShowSkeleton.value = false
-              resolve(ctx)
-            })
-          },
-        },
-    ),
+const {data} = useFetch('/blog/list', {
+      baseURL: env.VITE_APP_API_URL,
+      method: 'GET',
+      params: {
+        page: page.value,
+        limit: limit.value,
+        type: 'recently',
+      },
+      onResponse(ctx): Promise<any> {
+        return new Promise((resolve, reject) => {
+          const {_data} = ctx.response
+          const {data} = _data as Result<Blog.ListBlogRes>
+
+          data.list = data.list.map(l => {
+            return {
+              ...l,
+              user: {
+                ...l.user,
+                avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
+              },
+            }
+          })
+          isShowSkeleton.value = false
+          resolve(ctx)
+        })
+      },
+    },
 )
+
 
 onMounted(() => {
   isShowSkeleton.value = true
@@ -74,16 +68,24 @@ onMounted(() => {
   }, 300)
 })
 
-
+const refreshing = ref(false)
+const refreshAll = async () => {
+  refreshing.value = true
+  try {
+    await refreshNuxtData()
+  } finally {
+    refreshing.value = false
+  }
+}
 </script>
 
 <template>
   <div class="home-wrapper">
-<!--    <Head>-->
-<!--      <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>-->
-<!--      <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>-->
-<!--      <Meta name="keywords" :content="data?.data.list.map(d => d.title).join(',')"></Meta>-->
-<!--    </Head>-->
+    <Head>
+      <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>
+      <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
+      <Meta name="keywords" :content="data?.data.list.map(d => d.title).join(',')"></Meta>
+    </Head>
     <client-only>
       <div class="banner">
         <NAvatar

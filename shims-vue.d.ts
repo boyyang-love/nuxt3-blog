@@ -6,7 +6,10 @@ declare global {
         $dialog: DialogApi
         $notification: NotificationApi
         $loadingBar: LoadingBarApi
-        $uploadProgress: any
+        $uploadProgress: {
+            begin: () => void;
+            end: () => void;
+        },
         confetti: any,
         THREE: any
         VANTA: {

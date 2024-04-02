@@ -13,8 +13,10 @@ const useConfig = () => {
             uploadImage: {
                 async customUpload(file: File, insertFn: InsertFnType) {  // TS 语法
                     window.$loadingBar.start()
+                    window.$uploadProgress.begin()
                     const res = await uploadFile({file_name: file.name, file: file, dir: 'blog'})
                     window.$loadingBar.finish()
+                    window.$uploadProgress.end()
 
                     insertFn(`${env.VITE_APP_IMG_URL}/${res.data.path}`, file.name, `${env.VITE_APP_IMG_URL}/${res.data.file_name}`)
                 },
@@ -28,6 +30,7 @@ const useConfig = () => {
                 },
             }
         },
+        scroll: false,
     }
 
     return {

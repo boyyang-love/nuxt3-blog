@@ -37,35 +37,10 @@ import DialogContent from '@/components/DialogContent/index.vue'
 import NotificationContent from '@/components/NotificationContent/index.vue'
 import LoadingBarContent from '@/components/LoadingBarContent/index.vue'
 import UploadProgress from '@/components/uploadProgress/index.vue'
+import axios from 'axios'
 
-
-useHead({
-  script: [
-    {
-      src: '/js/confetti.min.js',
-      defer: true,
-      async: true,
-    },
-  ],
-})
-
-
-onMounted(() => {
-  document.addEventListener('click', function (e) {
-    window?.confetti({
-      origin: {
-        x: e.clientX / innerWidth,
-        y: e.clientY / innerHeight,
-      },
-    })
-  })
-})
 </script>
 <style lang="less">
-//@import "./node_modules/nes.css/css/nes.css";
-//@import "@fontsource/press-start-2p";
-//@import "@fontsource/press-start-2p/400.css";
-
 @import "@/font/font.less";
 
 .page-enter-active,
@@ -88,7 +63,6 @@ onMounted(() => {
 body {
   margin: 0;
   font-family: AlimamaDaoLiTi, serif;
-  //background-color: #0F1C2E;
   background-color: rgb(242, 240, 254);
 }
 </style>
