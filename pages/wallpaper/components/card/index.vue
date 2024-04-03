@@ -117,7 +117,7 @@ const downloadImage = () => {
 </script>
 
 <template>
-  <div class="image-card-wrapper">
+  <div class="image-card-wrapper" id="image-card-wrapper">
     <div class="icon-wrapper">
       <n-popconfirm
           positive-text="确定"
@@ -208,8 +208,8 @@ const downloadImage = () => {
     box-sizing: border-box;
     //width: 120px;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 3px;
+    right: 3px;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
     --webkit-backdrop-filter: blur(2px);
@@ -231,7 +231,7 @@ const downloadImage = () => {
     .icon {
       cursor: pointer;
       color: whitesmoke;
-      margin: 2px 5px;
+      margin: 2px 3px;
     }
   }
 }

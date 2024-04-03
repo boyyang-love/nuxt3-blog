@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {NInput, NIcon, NDropdown} from 'naive-ui'
+import {NInput, NIcon, NDropdown, NSpace} from 'naive-ui'
 import {
   Menu,
   Search,
@@ -9,14 +9,19 @@ import {
   Planet,
   Home,
   Cube,
+  Image,
   Images,
   Create,
   CloudUpload,
-  FingerPrintSharp,
+  Information,
+  List,
+  Card,
+  Key,
 } from '@vicons/ionicons5'
 import {renderIcon} from '@/utils/renderIcon'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
+import {updateUserPassword} from '@/api/user'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -25,49 +30,75 @@ const options = computed(() => {
   if (userStore.token) {
     return [
       {
-        label: '信息',
-        key: 1,
-        icon: renderIcon(FingerPrint),
-      },
-      {
-        label: '登录',
-        key: 2,
-        icon: renderIcon(Planet),
-      },
-      {
-        label: '注册',
-        key: 3,
-        icon: renderIcon(Rocket),
-      },
-      {
         label: '首页',
         key: 4,
         icon: renderIcon(Home),
       },
       {
+        label: '账号',
+        key: 'message',
+        icon: renderIcon(FingerPrint),
+        children: [
+          {
+            label: '登录',
+            key: 2,
+            icon: renderIcon(Planet),
+          },
+          {
+            label: '注册',
+            key: 3,
+            icon: renderIcon(Rocket),
+          },
+          {
+            label: '信息',
+            key: 1,
+            icon: renderIcon(Information),
+          },
+          {
+            label: '卡片',
+            key: 9,
+            icon: renderIcon(Card),
+          },
+          {
+            label: '密码',
+            key: 11,
+            icon: renderIcon(Key),
+          },
+        ],
+      },
+      {
         label: '博客',
-        key: 5,
         icon: renderIcon(Cube),
+        key: 'blog',
+        children: [
+          {
+            label: '博客列表',
+            key: 5,
+            icon: renderIcon(List),
+          },
+          {
+            label: '发布博客',
+            key: 7,
+            icon: renderIcon(Create),
+          },
+        ],
       },
       {
-        label: '图片资源',
-        key: 6,
-        icon: renderIcon(Images),
-      },
-      {
-        label: '发布文章',
-        key: 7,
-        icon: renderIcon(Create),
-      },
-      {
-        label: '上传壁纸',
-        key: 8,
-        icon: renderIcon(CloudUpload),
-      },
-      {
-        label: '个人卡片',
-        key: 9,
-        icon: renderIcon(FingerPrintSharp),
+        label: '图片',
+        key: 'images',
+        icon: renderIcon(Image),
+        children: [
+          {
+            label: '图片列表',
+            key: 6,
+            icon: renderIcon(Images),
+          },
+          {
+            label: '上传图片',
+            key: 8,
+            icon: renderIcon(CloudUpload),
+          },
+        ],
       },
       {
         label: '退出',
@@ -78,19 +109,26 @@ const options = computed(() => {
   } else {
     return [
       {
-        label: '登录',
-        key: 2,
-        icon: renderIcon(Planet),
-      },
-      {
-        label: '注册',
-        key: 3,
-        icon: renderIcon(Rocket),
-      },
-      {
         label: '首页',
         key: 4,
         icon: renderIcon(Home),
+      },
+      {
+        label: '账号',
+        key: 'message',
+        icon: renderIcon(FingerPrint),
+        children: [
+          {
+            label: '登录',
+            key: 2,
+            icon: renderIcon(Planet),
+          },
+          {
+            label: '注册',
+            key: 3,
+            icon: renderIcon(Rocket),
+          },
+        ],
       },
       {
         label: '博客',
@@ -98,9 +136,9 @@ const options = computed(() => {
         icon: renderIcon(Cube),
       },
       {
-        label: '个人卡片',
+        label: '卡片',
         key: 9,
-        icon: renderIcon(FingerPrintSharp),
+        icon: renderIcon(Card),
       },
     ]
   }
@@ -143,6 +181,56 @@ const handleSelect = (key: string | number) => {
       location.reload()
     })
     return
+  }
+
+  if (key === 11) {
+    let password = ''
+    let repassword = ''
+    window.$dialog.create({
+      title: '密码修改',
+      type: 'info',
+      showIcon: true,
+      positiveText: '提交修改',
+      negativeText: '取消',
+      content: () => h(NSpace, {vertical: true, size: 'large'}, () => [
+        h(NInput, {
+          placeholder: '请输入密码',
+          type: 'password',
+          showPasswordOn: 'click',
+          onChange: (e) => {
+            console.log(e)
+            password = e
+          },
+        }, () => []),
+        h(NInput, {
+          placeholder: '请输入重复密码',
+          type: 'password',
+          showPasswordToggle: true,
+          onChange: (e) => {
+            console.log(e)
+            repassword = e
+          },
+        }, () => []),
+      ]),
+      onPositiveClick: () => {
+        if (password.trim() === '' || repassword.trim() === '') {
+          window.$message.warning('密码不能为空')
+          return false
+        }
+        if (password !== repassword) {
+          window.$message.error('密码不一致')
+          return false
+        }
+
+        window.$uploadProgress.begin()
+        updateUserPassword({password: password}).then(() => {
+          window.$uploadProgress.end()
+          window.$message.success('密码修改成功')
+        }).catch(() => {
+          window.$uploadProgress.end()
+        })
+      },
+    })
   }
 }
 </script>

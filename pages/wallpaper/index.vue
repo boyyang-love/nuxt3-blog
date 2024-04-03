@@ -96,23 +96,28 @@ onMounted(() => {
     <div class="empty" v-if="list.length === 0">
       <n-empty></n-empty>
     </div>
-    <div class="content" v-else>
+    <div
+        class="content"
+        v-else
+    >
       <Card
+          class="item"
           v-for="item in list"
+          :key="item.id"
           :id="item.id"
           :url="item.file_path"
-          :key="item.id"
           :type="tabValue"
           :file-name="item.file_name"
           :path="item.path"
           @refresh="getUploadList"
-      ></Card>
+      >
+      </Card>
     </div>
 
     <div class="pagination" v-show="list.length > 0">
       <n-pagination
           :item-count="count"
-          v-model:page-size="limit"
+          v-model:page-size="limit" bu
           v-model:page="page"
           :page-sizes="pageSizes"
           @update:page="pageUpdate"
@@ -125,13 +130,14 @@ onMounted(() => {
 
 <style scoped lang="less">
 .wallpaper-wrapper {
-  padding: 10px;
+  position: relative;
 
   .tab-wrapper {
     position: sticky;
     background-color: rgb(245 246 255 / 80%);
     top: 50px;
     padding: 0 20px;
+    z-index: 9;
   }
 
   .content {

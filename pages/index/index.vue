@@ -70,6 +70,9 @@ definePageMeta({
                 :fallback-src="errImg"
                 :src="userStore.user_info.cover"
                 object-fit="cover"
+                :img-props="{
+                  alt: userStore.user_info.cover
+                }"
             ></n-avatar>
           </div>
           <div class="right-content">
@@ -79,6 +82,9 @@ definePageMeta({
                     :size="112"
                     :src="userStore.user_info.avatar"
                     :fallback-src="errImg"
+                    :img-props="{
+                      alt: userStore.user_info.avatar
+                    }"
                 >
                 </n-avatar>
               </div>

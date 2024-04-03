@@ -26,3 +26,11 @@ export const updateUserInfo = (data: Partial<User.UpdateUserInfoReq>) => {
         data,
     })
 }
+
+export const updateUserPassword = (data: {password: string}) => {
+    return http.request<User.UpdateUserInfoRes>({
+        url: '/user/update/password',
+        method: 'POST',
+        data,
+    })
+}

@@ -23,3 +23,6 @@ interface ImportMeta {
 interface CSSProperties {
     [key: `--${string}`]: string
 }
+
+declare module '@wangeditor/editor-for-vue'
+declare module 'vue-waterfall2'

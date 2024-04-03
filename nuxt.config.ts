@@ -1,7 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import {sitemap} from './static/sitemap'
+import {splitVendorChunkPlugin} from 'vite'
 
 export default defineNuxtConfig({
+    experimental: {
+        writeEarlyHints: true,
+    },
     ssr: true,
     routeRules: {
         '/index': {
@@ -22,7 +26,7 @@ export default defineNuxtConfig({
         'nuxt-icons',
         '@pinia/nuxt',
         '@pinia-plugin-persistedstate/nuxt',
-        '@nuxtjs/sitemap'
+        '@nuxtjs/sitemap',
     ],
     build: {
         transpile:
@@ -34,6 +38,10 @@ export default defineNuxtConfig({
                     '@juggle/resize-observer',
                 ]
                 : ['@juggle/resize-observer'],
+        analyze: {
+            enabled: true,
+            filename: "stats.html"
+        }
     },
     vite: {
         optimizeDeps: {
@@ -42,6 +50,7 @@ export default defineNuxtConfig({
                     ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone']
                     : [],
         },
+        plugins: [splitVendorChunkPlugin()],
     },
     plugins: [
         '~/plugins/highlight.ts',
@@ -79,11 +88,11 @@ export default defineNuxtConfig({
                     content: 'wallpaperCollector',
                 },
                 {
-                    name: "baidu-site-verification",
-                    content: "codeva-5PhqvbeMY2",
-                }
+                    name: 'baidu-site-verification',
+                    content: 'codeva-5PhqvbeMY2',
+                },
             ],
         },
     },
-    sitemap: sitemap
+    sitemap: sitemap,
 })
