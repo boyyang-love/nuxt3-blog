@@ -157,17 +157,18 @@ const refreshAll = async () => {
 
         </template>
       </Card>
-      <div class="pagination" v-show="data?.data.list.length > 0">
-        <n-pagination
-            :item-count="count"
-            :page-size="limit"
-            :page-sizes="pageSizes"
-            @update:page="pageUpdate"
-            @update:pageSize="pageSizeChange"
-            show-size-picker
-        />
-      </div>
     </div>
+    <div class="pagination" v-show="data?.data.list.length > 0">
+      <n-pagination
+          :item-count="count"
+          :page-size="limit"
+          :page-sizes="pageSizes"
+          @update:page="pageUpdate"
+          @update:pageSize="pageSizeChange"
+          show-size-picker
+      />
+    </div>
+
   </div>
 </template>
 
@@ -175,15 +176,15 @@ const refreshAll = async () => {
 .blog-wrapper {
   box-sizing: border-box;
   width: 100%;
-  padding: 10px;
+  padding: 10px 10px 0;
+  position: relative;
+
 
   .content {
     box-sizing: border-box;
     width: 100%;
     display: flex;
     flex-direction: column;
-    //padding-top: 50px;
-    position: relative;
 
     .empty {
       box-sizing: border-box;
@@ -193,20 +194,21 @@ const refreshAll = async () => {
       justify-content: center;
       align-items: center;
     }
-
-    .pagination {
-      box-sizing: border-box;
-      //background-color: rgb(245 246 255 / 80%);
-      //background-color: rgb(241, 239, 254);
-      background-color: rgb(255, 255, 255);
-
-      padding: 10px 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      position: sticky;
-      bottom: 0;
-    }
   }
+
+  .pagination {
+    box-sizing: border-box;
+    //background-color: rgb(245 246 255 / 80%);
+    //background-color: rgb(241, 239, 254);
+    background-color: rgb(255, 255, 255);
+
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+  }
+
 }
 </style>

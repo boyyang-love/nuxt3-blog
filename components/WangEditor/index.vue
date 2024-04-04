@@ -131,9 +131,8 @@ const delCover = () => {
           ></n-input>
         </div>
         <WangsEditor
-            class="editor-content"
-            style="overflow: hidden"
             v-model="valueHtml"
+            style="min-height: 550px;"
             :defaultConfig="editorConfig"
             @onCreated="handleCreated"
             mode="default"
@@ -223,17 +222,14 @@ const delCover = () => {
     z-index: 9;
   }
 
-  .editor-content {
-    box-sizing: border-box;
-    min-height: 550px;
-    overflow: hidden;
-  }
 
   .editor-body {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     width: 730px;
     margin-top: 20px;
-    margin-bottom: 80px;
+    margin-bottom: 10px;
 
     //:deep(.w-e-scroll) {
     //  overflow: hidden !important;
@@ -249,7 +245,7 @@ const delCover = () => {
   .bottom-wrapper {
     box-sizing: border-box;
     width: 730px;
-    margin-bottom: 150px;
+    //margin-bottom: 150px;
 
     .cover {
       font-size: 13px;

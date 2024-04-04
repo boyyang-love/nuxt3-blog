@@ -92,6 +92,7 @@ const props = defineProps<{
       .sub-title {
         font-size: 12px;
         font-weight: 300;
+        color: #0F1C2E;
       }
     }
 
