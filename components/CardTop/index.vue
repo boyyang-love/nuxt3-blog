@@ -28,7 +28,7 @@ const props = defineProps<{
         </div>
         <div class="sub-title">
           <n-ellipsis
-              :line-clamp="3"
+              :line-clamp="2"
               :tooltip="false"
               style="max-width: 220px"
           >
@@ -36,11 +36,11 @@ const props = defineProps<{
           </n-ellipsis>
         </div>
       </div>
-      <div class="link">
-        <n-icon :size="24" color="deeppink">
-          <Flame></Flame>
-        </n-icon>
-      </div>
+<!--      <div class="link">-->
+<!--        <n-icon :size="20" color="deeppink">-->
+<!--          <Flame></Flame>-->
+<!--        </n-icon>-->
+<!--      </div>-->
     </nuxt-link>
   </div>
 </template>
@@ -48,13 +48,14 @@ const props = defineProps<{
 <style scoped lang="less">
 .card-wrapper {
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   position: relative;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid rgb(102, 211, 159);
+  //border: 1px solid rgb(102, 211, 159);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4) inset, -2px -2px 2px rgba(0, 0, 0, 0.4) inset;
 
   .nuxt-link {
     text-decoration: none;
@@ -70,7 +71,7 @@ const props = defineProps<{
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 5px;
+        border-radius: 2px;
       }
     }
 

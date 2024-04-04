@@ -147,6 +147,7 @@ const refreshAll = async () => {
     position: relative;
 
     .img {
+      box-sizing: border-box;
       width: 100%;
       height: 100%;
       object-fit: cover;

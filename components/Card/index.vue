@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {NEllipsis, NAvatar, NImage, NSkeleton} from 'naive-ui'
+import {NEllipsis, NAvatar, NImage, NSkeleton, NIcon} from 'naive-ui'
+import {CaretUp,CaretDown} from '@vicons/ionicons5'
 import moment from 'moment'
 import {useRouter} from 'vue-router'
 import errImg from '@/assets/image/avatar_g.jpg'
@@ -94,7 +95,9 @@ const toDetail = () => {
             收起
           </span>
           <span class="down">
-            <nuxt-icon class="icon" name="arrow/up"></nuxt-icon>
+            <n-icon class="icon" size="20">
+              <CaretUp></CaretUp>
+            </n-icon>
           </span>
         </div>
         <div class="readall" @click="readAll" v-if="!isReadAll">
@@ -102,7 +105,9 @@ const toDetail = () => {
             阅读全文
           </span>
           <span class="down">
-            <nuxt-icon class="icon" name="arrow/down"></nuxt-icon>
+            <n-icon class="icon" size="20">
+              <CaretDown></CaretDown>
+            </n-icon>
           </span>
         </div>
       </div>
@@ -117,8 +122,9 @@ const toDetail = () => {
   flex-direction: column;
   padding: 10px 20px;
   margin: 10px 0;
-  border-radius: 5px;
-  //background: linear-gradient(45deg, rgb(40, 60, 95), rgb(78, 96, 134));
+  border-radius: 3px;
+  //background: rgba(246,247,253, 1);
+  //box-shadow: 3px 3px 6px #6dd5ed inset, -3px -3px 6px #6dd5ed inset;
 
   .title-wrapper {
     display: flex;
@@ -240,8 +246,12 @@ const toDetail = () => {
         }
 
         .down {
-          padding: 4px 5px 0;
+          display: inline-block;
+          justify-content: center;
+          align-items: center;
+          padding-top: 7px;
           font-size: 13px;
+          cursor: pointer;
         }
 
       }
@@ -250,8 +260,15 @@ const toDetail = () => {
         position: absolute;
         bottom: -10px;
         right: 0;
+        display: flex;
+        align-items: center;
 
         .text {
+          cursor: pointer;
+        }
+
+        .down {
+          padding-top: 5px;
           cursor: pointer;
         }
       }
@@ -299,6 +316,7 @@ const toDetail = () => {
   .card-wrapper {
     padding: 0;
     margin: 0;
+
     .title-wrapper {
       flex-direction: column;
     }
