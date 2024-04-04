@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {NUpload, NUploadDragger, NP, NText, NInput, NSpace, NButton} from 'naive-ui'
+import {NUpload, NUploadDragger, NP, NText, NInput, NIcon} from 'naive-ui'
+import {CloudUpload} from '@vicons/ionicons5'
 import {useFileUpload} from '@/hooks/fileUpload'
 
 const {
@@ -29,7 +30,9 @@ const {
       >
         <n-upload-dragger>
           <div class="upload-icon">
-            <nuxt-icon class="icon" name="home/cloud"></nuxt-icon>
+            <n-icon class="icon">
+              <CloudUpload></CloudUpload>
+            </n-icon>
           </div>
           <n-text style="font-size: 16px">
             点击或者拖动文件到该区域来上传

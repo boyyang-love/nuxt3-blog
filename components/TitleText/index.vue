@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {NIcon} from 'naive-ui'
+import {CaretForward, CaretBack} from '@vicons/ionicons5'
+
 interface Props {
   padding?: string
   more?: boolean
@@ -16,9 +19,13 @@ const props = withDefaults(defineProps<Props>(), {
   <div class="title-wrapper">
     <div class="title">{{ props.title }}</div>
     <div class="more" v-if="props.more">
-      <nuxt-icon name="arrow/left"></nuxt-icon>
+      <n-icon>
+        <CaretBack></CaretBack>
+      </n-icon>
       <span class="text">更多</span>
-      <nuxt-icon name="arrow/right"></nuxt-icon>
+      <n-icon>
+        <CaretForward></CaretForward>
+      </n-icon>
     </div>
   </div>
 </template>

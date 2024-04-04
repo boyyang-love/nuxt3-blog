@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     plugins: [
         {
             src: '~/plugins/highlight.ts',
-            mode: 'client',
+            mode: 'all',
         },
         {
             src: '~/plugins/wangEditor.ts',
@@ -88,4 +88,14 @@ export default defineNuxtConfig({
         },
     },
     sitemap: sitemap,
+    vue: {
+        compilerOptions: {
+            directiveTransforms: {
+                highlight: () => ({
+                    props: [],
+                    needRuntime: true,
+                }),
+            },
+        },
+    },
 })

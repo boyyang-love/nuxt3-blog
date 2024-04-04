@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import VuePictureCropper, {cropper} from 'vue-picture-cropper'
-import {type UploadFileInfo, NUpload, NModal} from 'naive-ui'
+import {type UploadFileInfo, NUpload, NModal, NIcon} from 'naive-ui'
+import {Close} from '@vicons/ionicons5'
 import {ref, watch} from 'vue'
 
 interface ImagesInfo {
@@ -67,7 +68,7 @@ const cancel = () => {
           :show-file-list="false"
           :default-upload="false"
           :file-list="[]"
-          @change="fileChange"
+          :change="fileChange"
           style="width: 100%;height: 100%;"
       >
         <div class="avatar-wrapper">
@@ -106,8 +107,9 @@ const cancel = () => {
         <div class="submit btn" @click="submit">确定</div>
       </div>
       <div class="close" @click="isShowCropper = false">
-        <nuxt-icon
-            class="icon" name="other/close"></nuxt-icon>
+        <n-icon class="icon">
+          <Close></Close>
+        </n-icon>
       </div>
     </div>
   </n-modal>
@@ -158,7 +160,7 @@ const cancel = () => {
   border-radius: 5px;
   padding: 20px 20px 10px;
   //background: rgb(35, 43, 60);
-  background-color: rgb(246,247,253);
+  background-color: rgb(246, 247, 253);
 
   .modal-bottom {
     box-sizing: border-box;
@@ -170,7 +172,7 @@ const cancel = () => {
     .btn {
       color: white;
       padding: 5px 20px;
-      background-color: rgb(102,211,159);
+      background-color: rgb(102, 211, 159);
       border-radius: 5px;
       cursor: pointer;
       font-size: 14px;
