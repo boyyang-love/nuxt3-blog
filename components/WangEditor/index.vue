@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import {NSpace, NUpload, NInput, NSelect, NIcon} from 'naive-ui'
-import {Add} from '@vicons/ionicons5'
+import {Add, Close} from '@vicons/ionicons5'
 import {type Blog, createBlog, updateBlog} from '~/api/blog'
 import {useConfig} from '@/hooks/useConfig'
 import {useFileUpload} from '@/hooks/fileUpload'
@@ -144,7 +144,9 @@ const delCover = () => {
         <div class="upload">
           <div class="img-wrapper" v-if="imgUrl">
             <div class="close" @click="delCover">
-              <nuxt-icon class="icon" name="other/close"></nuxt-icon>
+              <n-icon class="icon">
+                <Close></Close>
+              </n-icon>
             </div>
             <img class="img" :src="imgUrl" :alt="imgUrl"/>
           </div>

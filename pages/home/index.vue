@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import {NEmpty, NUpload, NAvatar, NButton} from 'naive-ui'
+import {NEmpty, NUpload, NAvatar, NButton, NIcon} from 'naive-ui'
+import {Camera} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
@@ -102,7 +103,9 @@ const refreshAll = async () => {
               ref="uploadRef"
           >
             <n-button type="default" size="small">
-              <nuxt-icon class="icon" name="other/camera"></nuxt-icon>
+              <n-icon class="icon">
+                <Camera></Camera>
+              </n-icon>
             </n-button>
           </n-upload>
         </div>
