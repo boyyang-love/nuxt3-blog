@@ -190,8 +190,16 @@ const delCover = () => {
       <div class="bottom-submit">
         <div class="btn-wrapper">
           <n-space>
-            <div class="btn btn-submit" @click="submit">{{ isEdit ? '提交修改' : '发布' }}</div>
-            <div class="btn btn-exit" @click="$router.back()">退出</div>
+            <div class="btn btn-submit" @click="submit">
+              <span>
+                {{ isEdit ? '提交修改' : '发布' }}
+              </span>
+            </div>
+            <div class="btn btn-exit" @click="$router.back()">
+              <span>
+              退出
+              </span>
+            </div>
           </n-space>
         </div>
       </div>
@@ -371,14 +379,77 @@ const delCover = () => {
       justify-content: flex-end;
 
       .btn {
-        box-sizing: border-box;
-        padding: 4px 15px;
-        font-size: 14px;
-        font-weight: bolder;
-        border-radius: 2px;
-        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background: #183153;
+        font-family: "Montserrat", sans-serif;
+        box-shadow: 0 6px 24px 0 rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        border: none;
         cursor: pointer;
       }
+
+      .btn:after {
+        content: " ";
+        width: 0;
+        height: 100%;
+        background: #FFD401;
+        position: absolute;
+        transition: all 0.4s ease-in-out;
+        right: auto;
+        left: auto;
+      }
+
+      .btn:hover::after {
+        right: auto;
+        left: auto;
+        width: 100%;
+      }
+
+      .btn span {
+        text-align: center;
+        text-decoration: none;
+        width: 100%;
+        padding: 5px 25px;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        z-index: 20;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .btn:hover span {
+        color: #183153;
+        animation: scaleUp 0.3s ease-in-out;
+      }
+
+      @keyframes scaleUp {
+        0% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(0.95);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+
+      //.btn {
+      //  box-sizing: border-box;
+      //  padding: 4px 15px;
+      //  font-size: 14px;
+      //  font-weight: bolder;
+      //  border-radius: 2px;
+      //  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+      //  cursor: pointer;
+      //}
 
       .btn-preview {
         background-color: deeppink;

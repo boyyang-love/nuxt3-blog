@@ -1,11 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import {sitemap} from './static/sitemap'
-import {splitVendorChunkPlugin} from 'vite'
 
 export default defineNuxtConfig({
-    experimental: {
-        writeEarlyHints: true,
-    },
     ssr: true,
     routeRules: {
         '/index': {
@@ -23,7 +19,6 @@ export default defineNuxtConfig({
     },
     devtools: {enabled: false},
     modules: [
-        'nuxt-icons',
         '@pinia/nuxt',
         '@pinia-plugin-persistedstate/nuxt',
         '@nuxtjs/sitemap',
@@ -38,10 +33,6 @@ export default defineNuxtConfig({
                     '@juggle/resize-observer',
                 ]
                 : ['@juggle/resize-observer'],
-        analyze: {
-            enabled: true,
-            filename: "stats.html"
-        }
     },
     vite: {
         optimizeDeps: {
@@ -50,10 +41,12 @@ export default defineNuxtConfig({
                     ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone']
                     : [],
         },
-        plugins: [splitVendorChunkPlugin()],
     },
     plugins: [
-        '~/plugins/highlight.ts',
+        {
+            src: '~/plugins/highlight.ts',
+            mode: 'client',
+        },
         {
             src: '~/plugins/wangEditor.ts',
             mode: 'client',

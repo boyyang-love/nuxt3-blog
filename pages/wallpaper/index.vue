@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {nextTick} from 'vue'
 import {NEmpty, NPagination, NTabs, NTabPane} from 'naive-ui'
 import Card from './components/card/index.vue'
 import {uploadList, type Upload} from '@/api/upload'
@@ -66,8 +67,6 @@ const tabValueChange = () => {
 onMounted(() => {
   getUploadList()
 })
-
-
 </script>
 
 <template>
@@ -146,6 +145,7 @@ onMounted(() => {
     -webkit-column-count: 3;
     column-count: 3;
     column-gap: 5px;
+    padding: 0 10px;
   }
 
   .empty {
@@ -159,10 +159,7 @@ onMounted(() => {
 
   .pagination {
     box-sizing: border-box;
-    //background-color: rgb(245 246 255 / 80%);
-    //background-color: rgb(241, 239, 254);
     background-color: rgb(255, 255, 255);
-
     padding: 10px 0;
     width: 100%;
     display: flex;

@@ -11,7 +11,7 @@ import {
   type FormRules,
   type FormInst,
 } from 'naive-ui'
-import {Home, Cube, FingerPrint, Create, Images, CloudUpload} from '@vicons/ionicons5'
+import {Home, Cube, FingerPrint, Create, Images, CloudUpload, Planet, Close} from '@vicons/ionicons5'
 import {useRoute, useRouter} from 'vue-router'
 import Cropper from '~/components/Cropper/index.vue'
 import {useSigninup} from '@/hooks/signinup'
@@ -214,11 +214,12 @@ const openSignModal = () => {
   <client-only>
     <div class="app-left">
       <div class="signinup">
-        <nuxt-icon
+        <n-icon
             class="icon"
-            name="home/planet"
             @click="openSignModal"
-        ></nuxt-icon>
+        >
+          <Planet></Planet>
+        </n-icon>
       </div>
       <div class="user-info">
         <div class="info">
@@ -254,7 +255,7 @@ const openSignModal = () => {
               style="text-decoration: none"
           >
             <div
-                :class="['menu-item', item.routeName === routeName ? 'active' : '']"
+                :class="['menu-item button', item.routeName === routeName ? 'active' : '']"
             >
               <n-icon class="icon">
                 <component :is="item.icon"></component>
@@ -277,11 +278,13 @@ const openSignModal = () => {
       >
         <div class="modal-wrapper">
           <div class="close">
-            <nuxt-icon
+            <n-icon
                 class="icon"
                 name="other/close"
                 @click="userStore.showSigninModal = false"
-            ></nuxt-icon>
+            >
+              <Close></Close>
+            </n-icon>
           </div>
           <div class="title">{{ userStore.isSignin ? '登录' : '注册' }}</div>
           <div class="user-input">
@@ -350,11 +353,12 @@ const openSignModal = () => {
         <div class="userinfo-modal">
           <div class="title">修改用户信息</div>
           <div class="close">
-            <nuxt-icon
+            <n-icon
                 class="icon"
-                name="other/close"
                 @click="userStore.showUserInfoModal = false"
-            ></nuxt-icon>
+            >
+              <Close></Close>
+            </n-icon>
           </div>
           <n-form
               label-placement="left"
@@ -519,12 +523,12 @@ const openSignModal = () => {
       //padding: 10px 0;
       margin: 5px 0;
       border-radius: 4px;
-      color: #0F1C2E;
+      //color: #0F1C2E;
 
-      &:hover {
-        background-color: deeppink;
-        color: white;
-      }
+      //&:hover {
+      //  background-color: deeppink;
+      //  color: white;
+      //}
 
       .icon {
         font-size: 22px;
@@ -540,6 +544,63 @@ const openSignModal = () => {
         margin: 0 0 2px 5px;
       }
     }
+
+    .button {
+      --color: rgb(35, 214, 155);
+      padding: 0.8em 1.7em;
+      background-color: transparent;
+      border-radius: .3em;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: .5s;
+      font-weight: 400;
+      font-size: 17px;
+      //border: 1px solid;
+      font-family: inherit;
+      text-transform: uppercase;
+      //color: var(--color);
+      color: #0F1C2E;
+      z-index: 1;
+    }
+
+    .button::before, .button::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 50px;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      border-radius: 50%;
+      z-index: -1;
+      background-color: deeppink;
+      transition: 1s ease;
+    }
+
+    .button::before {
+      top: -1em;
+      left: -1em;
+    }
+
+    .button::after {
+      left: calc(100% + 1em);
+      top: calc(100% + 1em);
+    }
+
+    .button:hover::before, .button:hover::after {
+      height: 410px;
+      width: 410px;
+    }
+
+    .button:hover {
+      //color: rgb(10, 25, 30);
+      color: #fff;
+    }
+
+    .button:active {
+      filter: brightness(.8);
+    }
+
 
     .active {
       background-color: #23d69b;

@@ -25,4 +25,3 @@ interface CSSProperties {
 }
 
 declare module '@wangeditor/editor-for-vue'
-declare module 'vue-waterfall2'
