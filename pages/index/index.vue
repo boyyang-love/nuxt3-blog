@@ -234,8 +234,8 @@ definePageMeta({
 
     .cat {
       position: absolute;
-      bottom: calc(100% - 85px);
-      right: 0;
+      bottom: 100%;
+      right: 45px;
     }
   }
 }
@@ -260,8 +260,8 @@ definePageMeta({
     }
 
     .cat {
-      bottom: -55px !important;
-      right: 285px !important;
+      bottom: 0 !important;
+      right: 350px !important;
     }
   }
 }
