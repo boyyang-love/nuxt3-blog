@@ -165,6 +165,7 @@ const delCover = () => {
               multiple
               :options="list.map(l => {return {label: l.tag_name, value: l.id}})"
               placeholder="请选择文章标签"
+              filterable
           >
             <template #header>
               <div
@@ -184,9 +185,7 @@ const delCover = () => {
             </template>
           </n-select>
         </div>
-
       </div>
-
 
       <div class="bottom-submit">
         <div class="btn-wrapper">
