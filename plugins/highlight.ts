@@ -7,7 +7,15 @@ export default defineNuxtPlugin((nuxtApp) => {
         {
             mounted(el) {
                 let element = el.querySelectorAll('pre code')
+                element.forEach((block: HTMLElement) => {
+                    if (block.dataset.highlighted === 'yes') return
+                    hljs.highlightElement(block)
+                })
+            },
+            updated(el) {
+                let element = el.querySelectorAll('pre code')
                 element.forEach((block: any) => {
+                    if (block.dataset.highlighted === 'yes') return
                     hljs.highlightElement(block)
                 })
             },
