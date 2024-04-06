@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import {NEllipsis, NAvatar, NImage, NSkeleton, NIcon} from 'naive-ui'
+import {NEllipsis, NAvatar, NIcon} from 'naive-ui'
 import {CaretUp,CaretDown} from '@vicons/ionicons5'
 import moment from 'moment'
-import {useRouter} from 'vue-router'
 import errImg from '@/assets/image/avatar_g.jpg'
 
-
-const router = useRouter()
 const isReadAll = ref<boolean>(false)
 
 const props = defineProps<{
@@ -25,14 +22,6 @@ const readAll = () => {
   isReadAll.value = true
 }
 
-const toDetail = () => {
-  router.push({
-    path: '/detail',
-    query: {
-      id: props.id,
-    },
-  })
-}
 </script>
 
 <template>

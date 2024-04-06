@@ -2,17 +2,13 @@
 import {NEmpty} from 'naive-ui'
 import CardTop from '~/components/CardTop/index.vue'
 import Title from '~/components/TitleText/index.vue'
-import {type Blog, listBlog} from '~/api/blog'
+import {type Blog} from '~/api/blog'
 import {env} from '~/utils/env'
-import {useUserStore} from '@/store/modules/user'
-import {clearNuxtData, refreshNuxtData, useAsyncData} from '#app'
+import {refreshNuxtData, useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
 
-const userStore = useUserStore()
-
-
-const {data, refresh} = await useAsyncData(
+const {data} = await useAsyncData(
     'blog_list_top',
     () => $fetch<Result<Blog.ListBlogRes>>('/blog/list',
         {
@@ -27,7 +23,7 @@ const {data, refresh} = await useAsyncData(
             key: new Date().getTime(),
           },
           onResponse(ctx): Promise<any> {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
               const {_data} = ctx.response
               const {data} = _data as Result<Blog.ListBlogRes>
 

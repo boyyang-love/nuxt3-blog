@@ -40,6 +40,9 @@ const transForm: TransForm = {
 
     transformRespData(res: AxiosResponse<Result>, opt) {
 
+        if (res.data.code === 1 && res.data.msg !== "ok" && res.data.msg) {
+            window.$message.success(res.data.msg)
+        }
         return res
     },
 

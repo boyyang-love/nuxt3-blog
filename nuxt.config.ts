@@ -87,7 +87,7 @@ export default defineNuxtConfig({
             ],
         },
     },
-    sitemap: sitemap,
+    sitemap: sitemap as any,
     vue: {
         compilerOptions: {
             directiveTransforms: {

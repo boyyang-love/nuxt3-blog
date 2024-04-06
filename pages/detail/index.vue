@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {NAvatar, NSpace, NIcon, NPopconfirm, NSkeleton, NInput} from 'naive-ui'
+import {NAvatar, NSpace, NIcon, NPopconfirm} from 'naive-ui'
 import MessageBoard from './components/messageBoard/index.vue'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {useRoute, useRouter} from 'vue-router'
@@ -16,7 +16,6 @@ const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const isShowSkeleton = ref<boolean>(false)
-const id = route.query.id
 
 const {data, refresh} = await useAsyncData(
     'blog_detail',
@@ -28,7 +27,7 @@ const {data, refresh} = await useAsyncData(
             id: route.query.id,
           },
           onResponse(ctx): Promise<any> {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
               const {_data} = ctx.response
               const {data} = _data as Result<Blog.ListBlogSearchByIdRes>
               data.info.user = {
@@ -62,7 +61,6 @@ const toEdit = () => {
 
 const delBlog = () => {
   deleteBlog({id: (data.value as any).data.info.id as number}).then(() => {
-    window.$message.success('删除成功')
     router.back()
   })
 }
@@ -82,15 +80,6 @@ onMounted(() => {
 
 })
 
-const refreshing = ref(false)
-const refreshAll = async () => {
-  refreshing.value = true
-  try {
-    await refreshNuxtData()
-  } finally {
-    refreshing.value = false
-  }
-}
 </script>
 
 <template>

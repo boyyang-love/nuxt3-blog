@@ -222,7 +222,7 @@
   flex-direction: column;
   width: 50px;
   position: absolute;
-  margin: 0px 0px 100px 120px;
+  margin: 0 0 100px 120px;
 }
 .zzz {
   color: black;

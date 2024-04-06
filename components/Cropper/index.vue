@@ -2,30 +2,28 @@
 import VuePictureCropper, {cropper} from 'vue-picture-cropper'
 import {type UploadFileInfo, NUpload, NModal, NIcon} from 'naive-ui'
 import {Close} from '@vicons/ionicons5'
-import {ref, watch} from 'vue'
+import {ref} from 'vue'
 
 interface ImagesInfo {
   file: File
   blob: Blob
 }
 
-interface Emits {
-  (e: 'submit', imagesInfo: ImagesInfo): void
-}
-
-const emits = defineEmits<Emits>()
+const emits = defineEmits<{
+  submit: [imagesInfo: ImagesInfo]
+}>()
 
 const imgDataURL = ref<string>('')
 const previewURL = ref<string>('')
 const isShowCropper = ref<boolean>(false)
 
-const fileChange = (data: {
-  event: Event
+const fileChange = (options: {
+  event?: Event
   fileList: UploadFileInfo[]
   file: UploadFileInfo
 }) => {
   const read = new FileReader()
-  read.readAsDataURL(data.file.file as Blob)
+  read.readAsDataURL(options.file.file as Blob)
   read.onload = e => {
     imgDataURL.value = e.target?.result as string
     isShowCropper.value = true
@@ -54,9 +52,6 @@ const reset = () => {
   cropper.reset()
 }
 
-const cancel = () => {
-  isShowCropper.value = false
-}
 </script>
 
 <template>
@@ -68,7 +63,7 @@ const cancel = () => {
           :show-file-list="false"
           :default-upload="false"
           :file-list="[]"
-          :change="fileChange"
+          @change="fileChange"
           style="width: 100%;height: 100%;"
       >
         <div class="avatar-wrapper">

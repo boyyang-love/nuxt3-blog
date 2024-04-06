@@ -14,7 +14,7 @@
   background: linear-gradient(45deg, transparent 49%, #000 50%, #000 50%, transparent 51%, transparent),
   linear-gradient(-45deg, transparent 49%, #000 50%, #000 50%, transparent 51%, transparent);
   background-size: 1rem 1rem;
-  background-position: 0% 0%;
+  background-position: 0 0;
   -webkit-animation: spTexture 1s infinite linear;
   animation: spTexture 1s infinite linear;
 }

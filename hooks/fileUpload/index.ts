@@ -58,7 +58,6 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
                 })
                 window.$loadingBar.finish()
                 window.$uploadProgress.end()
-                window.$message.success(`文件[${file.name}]上传成功`)
                 fileInfo.file_name = ''
                 imgBase64.value = ''
             })
@@ -96,7 +95,6 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
             })
             window.$uploadProgress.end()
             window.$loadingBar.finish()
-            window.$message.success(`文件[${file.name}]上传成功`)
         })
     }
 

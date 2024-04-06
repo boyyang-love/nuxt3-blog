@@ -143,7 +143,7 @@ const rules = {
 
 } as FormRules
 
-const submit = (info: { file: File, Bolb: Blob }) => {
+const submit = (info: { file: File, blob: Blob }) => {
   window.$uploadProgress.begin()
   uploadFile(
       {
@@ -154,13 +154,12 @@ const submit = (info: { file: File, Bolb: Blob }) => {
     updateUserInfo({
       avatar: resFile.data.path,
       id: userStore.user_info.id,
-    }).then((resUser) => {
+    }).then(() => {
       userStore.$patch({
         user_info: {
           avatar: `${env.VITE_APP_IMG_URL}${resFile.data.path}`,
         },
       })
-      window.$message.success(resUser.data.message)
       window.$uploadProgress.end()
     })
   })
@@ -187,7 +186,6 @@ const updateUserInfoSub = () => {
           },
           showUserInfoModal: false,
         })
-        window.$message.success('信息更改成功')
         window.$uploadProgress.end()
       }).catch(err => {
         window.$message.error(err.msg)

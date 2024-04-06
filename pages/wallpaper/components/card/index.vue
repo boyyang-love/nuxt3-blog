@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {NImage, NSpace, NIcon, NPopconfirm} from 'naive-ui'
-import {Close, Desktop, PaperPlane, CloudDownload} from '@vicons/ionicons5'
+import {NImage, NIcon, NPopconfirm} from 'naive-ui'
+import {Close, PaperPlane, CloudDownload} from '@vicons/ionicons5'
 import CubeLoading from '@/components/CubeLoading/index.vue'
 import {uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
@@ -66,7 +66,6 @@ const setImage = () => {
         },
       })
       window.$uploadProgress.end()
-      window.$message.success('背景图片修改成功')
     }).catch(() => {
       window.$uploadProgress.end()
     })
@@ -83,7 +82,6 @@ const setImage = () => {
         },
       })
       window.$uploadProgress.end()
-      window.$message.success('头像修改成功')
     }).catch(() => {
       window.$uploadProgress.end()
     })
@@ -99,7 +97,6 @@ const delImage = () => {
 
   window.$uploadProgress.begin()
   uploadDelete(data).then(() => {
-    window.$message.success('图片删除成功')
     window.$uploadProgress.end()
     emits('refresh')
   }).catch(() => {

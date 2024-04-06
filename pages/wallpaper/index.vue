@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {nextTick} from 'vue'
 import {NEmpty, NPagination, NTabs, NTabPane} from 'naive-ui'
 import Card from './components/card/index.vue'
 import {uploadList, type Upload} from '@/api/upload'

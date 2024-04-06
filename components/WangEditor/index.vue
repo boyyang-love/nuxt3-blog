@@ -77,7 +77,6 @@ const submit = () => {
         return Number(s)
       }),
     }).then(res => {
-      window.$message.success('文章修改成功')
       window.$uploadProgress.end()
       valueHtml.value = ''
       blogInfo.title = ''
@@ -96,7 +95,6 @@ const submit = () => {
       }),
     }).then(res => {
       window.$uploadProgress.end()
-      window.$message.success('文章发布成功')
       valueHtml.value = ''
       blogInfo.title = ''
       imgUrl.value = ''

@@ -3,9 +3,10 @@ import {NInput, NSpace} from 'naive-ui'
 import Message from '~/components/Message/index.vue'
 import {type Comment, createComment} from '~/api/comment'
 import {useUserStore} from '@/store/modules/user'
+import type {LocationQueryValue} from 'vue-router'
 
 const props = withDefaults(defineProps<{
-      id: number | string
+      id: number | string | LocationQueryValue | LocationQueryValue[]
       count: number,
       infos: Comment.CommentInfo[]
     }>(),
@@ -35,7 +36,6 @@ const submit = () => {
     type: 'article',
     content: text.value,
   }).then(() => {
-    window.$message.success('评论成功')
     text.value = ''
     emits('submit')
   })

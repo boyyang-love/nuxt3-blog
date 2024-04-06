@@ -41,7 +41,7 @@ import axios from 'axios'
 
 </script>
 <style lang="less">
-//@import "@/font/font.less";
+@import "@/font/font.less";
 
 .page-enter-active,
 .page-leave-active {
@@ -62,7 +62,7 @@ import axios from 'axios'
 
 body {
   margin: 0;
-  //font-family: AlimamaDaoLiTi, serif;
+  font-family: AlimamaDaoLiTi, serif;
   background-color: rgb(242, 240, 254);
 }
 </style>

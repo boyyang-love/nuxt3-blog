@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {NEllipsis, NIcon} from 'naive-ui'
-import {Flame} from '@vicons/ionicons5'
+import {NEllipsis} from 'naive-ui'
 
 const props = defineProps<{
   id: number
@@ -36,11 +35,6 @@ const props = defineProps<{
           </n-ellipsis>
         </div>
       </div>
-<!--      <div class="link">-->
-<!--        <n-icon :size="20" color="deeppink">-->
-<!--          <Flame></Flame>-->
-<!--        </n-icon>-->
-<!--      </div>-->
     </nuxt-link>
   </div>
 </template>
@@ -125,7 +119,7 @@ const props = defineProps<{
 
   .bottom-wrapper {
     .title {
-      :deep(soan) {
+      :deep(span) {
         width: 100%;
       }
     }

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import {NEmpty, NUpload, NAvatar, NButton, NIcon} from 'naive-ui'
 import {Camera} from '@vicons/ionicons5'
-import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
 import TitleText from '~/components/TitleText/index.vue'
@@ -13,7 +12,6 @@ import errImg from 'assets/image/wolp.jpg'
 import type {Result} from '~/utils/http/types'
 import {useFetch} from '#app'
 
-const router = useRouter()
 const userStore = useUserStore()
 const {customRequest, uploadRef} = useFileUpload('bg', (info) => {
   updateUserInfo({
@@ -31,7 +29,7 @@ const limit = ref<number>(20)
 const isShowSkeleton = ref<boolean>(true)
 
 
-const {data} = useFetch('/blog/list', {
+const {data} = useFetch<Result<Blog.ListBlogRes>>('/blog/list', {
       baseURL: env.VITE_APP_API_URL,
       method: 'GET',
       params: {
@@ -40,7 +38,7 @@ const {data} = useFetch('/blog/list', {
         type: 'recently',
       },
       onResponse(ctx): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           const {_data} = ctx.response
           const {data} = _data as Result<Blog.ListBlogRes>
 
@@ -69,15 +67,6 @@ onMounted(() => {
   }, 300)
 })
 
-const refreshing = ref(false)
-const refreshAll = async () => {
-  refreshing.value = true
-  try {
-    await refreshNuxtData()
-  } finally {
-    refreshing.value = false
-  }
-}
 </script>
 
 <template>

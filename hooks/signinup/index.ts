@@ -40,10 +40,9 @@ export const useSigninup = () => {
                 res.data.user_info.cover = `${env.VITE_APP_IMG_URL}${res.data.user_info.cover}`
                 userStore.setToken(res.data.token)
                 userStore.setUserInfo(res.data.user_info)
-                window.$message.success('登录成功')
                 window.$uploadProgress.end()
                 userStore.showSigninModal = false
-            }).catch((err) => {
+            }).catch(() => {
                 window.$uploadProgress.end()
             })
         } else {
@@ -68,9 +67,8 @@ export const useSigninup = () => {
                 email: data.email,
             }).then(() => {
                 window.$uploadProgress.end()
-                window.$message.success('账号注册成功')
                 userStore.isSignin = true
-            }).catch((err) => {
+            }).catch(() => {
                 window.$uploadProgress.end()
             })
         } else {
@@ -97,6 +95,7 @@ export const useSigninup = () => {
                 type: 'success',
                 title: '提示',
                 content: '验证码已经发送到邮箱，请注意查收',
+                duration: 5000,
             })
             data.emailSendDisable = true
             const t = setInterval(() => {
