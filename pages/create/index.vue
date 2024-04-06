@@ -52,7 +52,7 @@ definePageMeta({
   height: 100%;
   display: flex;
   justify-content: center;
-  background-color: rgb(243, 244, 246);
+  background-color: #F2F0FDFF;
   overflow-y: auto;
 
   .inner {

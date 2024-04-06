@@ -5,8 +5,10 @@ import errImg from '@/assets/image/avatar_g.jpg'
 import {definePageMeta} from '#imports'
 import {Home, Cube, Images} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
+import {useThemeStore} from '@/store/modules/theme'
 
 const userStore = useUserStore()
+const themeStore = useThemeStore()
 
 const menus = computed(() => {
   const token = userStore.token
@@ -114,6 +116,14 @@ definePageMeta({
             <Cat></Cat>
           </div>
         </div>
+        <div class="theme-circle-wrapper">
+          <div
+              class="item"
+              :style="{'--color': item}"
+              @click="themeStore.setTheme(item)"
+              v-for="item in themeStore.themeSelectArray"
+          ></div>
+        </div>
       </div>
     </client-only>
   </nuxt-layout>
@@ -127,14 +137,15 @@ definePageMeta({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
+  //background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
+  background-color: var(--bg-color);
 
   .index-content {
     box-sizing: border-box;
     width: 870px;
     aspect-ratio: 5/3;
-    background-color: #ffffff;
-    box-shadow: 0 12px 15px 2px rgb(224 225 255 / 41%);
+    background-color: var(--card-color);
+    box-shadow: 0 12px 15px 2px var(--card-shadow);
     border-radius: 10px;
     display: flex;
     padding: 10px;
@@ -172,7 +183,7 @@ definePageMeta({
           width: 120px;
           height: 120px;
           border-radius: 5px;
-          border: 4px solid #1E2022;
+          border: 4px solid var(--border-color);
           overflow: hidden;
 
           .img {
@@ -190,14 +201,14 @@ definePageMeta({
 
           .name {
             font-size: 24px;
-            color: #1E2022;
+            color: var(--font-color);
             font-weight: bolder;
             text-align: center;
           }
 
           .motto {
             font-size: 15px;
-            color: #a3a5ad;
+            color: var(--font-color-200);
             text-align: center;
             margin-top: 5px;
           }
@@ -223,9 +234,11 @@ definePageMeta({
           .text {
             font-size: 14px;
             font-weight: bolder;
+            color: var(--font-color);
           }
 
           .icon {
+            color: var(--font-color);
             font-size: 22px;
           }
         }
@@ -236,6 +249,24 @@ definePageMeta({
       position: absolute;
       bottom: 100%;
       right: 45px;
+    }
+  }
+
+  .theme-circle-wrapper {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+
+    .item {
+      box-sizing: border-box;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: var(--color);
+      border: 1px solid var(--font-color);
+      margin: 5px;
+      cursor: pointer;
     }
   }
 }

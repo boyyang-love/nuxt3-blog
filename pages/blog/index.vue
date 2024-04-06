@@ -122,7 +122,6 @@ const pageUpdate = (e: number) => {
 .blog-wrapper {
   box-sizing: border-box;
   width: 100%;
-  padding: 10px 10px 0;
   position: relative;
 
 
@@ -130,6 +129,8 @@ const pageUpdate = (e: number) => {
     box-sizing: border-box;
     width: 100%;
     display: flex;
+    padding: 10px 10px 0;
+
     flex-direction: column;
 
     .empty {
@@ -146,7 +147,7 @@ const pageUpdate = (e: number) => {
     box-sizing: border-box;
     //background-color: rgb(245 246 255 / 80%);
     //background-color: rgb(241, 239, 254);
-    background-color: rgb(255, 255, 255);
+    background-color: var(--center-top-bg);
 
     padding: 10px 0;
     width: 100%;

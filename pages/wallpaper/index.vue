@@ -132,7 +132,7 @@ onMounted(() => {
 
   .tab-wrapper {
     position: sticky;
-    background-color: rgb(245 246 255 / 80%);
+    background-color: var(--center-top-bg);
     top: 50px;
     padding: 0 20px;
     z-index: 9;
@@ -158,7 +158,7 @@ onMounted(() => {
 
   .pagination {
     box-sizing: border-box;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--center-top-bg);
     padding: 10px 0;
     width: 100%;
     display: flex;

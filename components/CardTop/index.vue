@@ -76,7 +76,7 @@ const props = defineProps<{
       flex-direction: column;
 
       .title {
-        color: #1E2022;
+        color: var(--font-color);
         text-decoration: none;
         font-size: 13px;
         font-weight: bold;
@@ -87,7 +87,7 @@ const props = defineProps<{
       .sub-title {
         font-size: 12px;
         font-weight: 300;
-        color: #0F1C2E;
+        color: var(--font-color-200);
       }
     }
 

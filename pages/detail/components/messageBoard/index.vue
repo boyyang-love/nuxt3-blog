@@ -89,12 +89,14 @@ const submit = () => {
     .title {
       font-size: 13px;
       font-weight: bolder;
+      color: var(--font-color-200);
     }
 
     .value {
       font-size: 13px;
       margin: 0 10px;
       font-weight: bolder;
+      color: var(--font-color-200);
     }
   }
 
@@ -111,8 +113,8 @@ const submit = () => {
       border-radius: 5px;
       box-sizing: border-box;
       padding: 2px 10px;
-      color: rgb(245, 245, 245);
-      background-color: rgb(85, 98, 135);
+      color: var(--font-color);
+      background-color: var(--card-color);
       cursor: pointer;
       font-size: 13px;
       font-weight: bolder;

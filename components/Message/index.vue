@@ -39,7 +39,7 @@ const props = defineProps<{
     height: 45px;
     border-radius: 5px;
     overflow: hidden;
-    border: 2px solid rgba(17, 17, 17, 1);
+    border: 2px solid var(--border-color);
     margin-right: 15px;
 
     .img {
@@ -65,13 +65,14 @@ const props = defineProps<{
         font-weight: 500;
         display: flex;
         align-items: center;
+        color: var(--font-color);
 
         .point {
           display: inline-block;
           box-sizing: border-box;
           width: 3px;
           height: 3px;
-          background-color: rgba(17, 17, 17, 0.4);
+          background-color: var(--font-color-200);
           border-radius: 50%;
           margin: 0 5px;
         }
@@ -82,6 +83,7 @@ const props = defineProps<{
         text-align: left;
         margin-top: 3px;
         font-weight: 700;
+        color: var(--font-color);
       }
     }
 

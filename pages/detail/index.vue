@@ -220,6 +220,7 @@ onMounted(() => {
       .inner-info-wrapper {
         display: flex;
         justify-content: center;
+        color: var(--font-color);
 
         :deep(img) {
           max-width: 100%;
@@ -247,10 +248,10 @@ onMounted(() => {
           border-radius: 1px;
           font-size: 13px;
           font-weight: bolder;
-          background-color: #ffffff;
-          color: rgba(17, 17, 17, 1);
-          box-shadow: 3px 3px 5px #d9d9d9,
-            -3px -3px 5px #ffffff;;
+          background-color: var(--bg-color);
+          color: var(--font-color);
+          box-shadow: 3px 3px 5px var(--card-shadow),
+            -3px -3px 5px var(--card-shadow);
           //box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3),-1px -1px 5px rgba(0, 0, 0, 0.3);
         }
       }
@@ -262,9 +263,11 @@ onMounted(() => {
         .title {
           font-size: 18px;
           font-weight: bolder;
+          color: var(--font-color);
         }
 
         .time {
+          color: var(--font-color-200);
           font-size: 13px;
         }
       }
@@ -301,10 +304,12 @@ onMounted(() => {
             font-size: 14px;
             font-weight: bolder;
             margin-bottom: 4px;
+            color: var(--font-color);
           }
 
           .user-motto {
             font-size: 12px;
+            color: var(--font-color-200);
           }
 
           .edit-wrapper {
@@ -314,16 +319,13 @@ onMounted(() => {
             .icon {
               font-size: 22px;
               cursor: pointer;
+              color: var(--font-color);
             }
           }
         }
       }
     }
-
-
   }
-
-
 }
 
 @media screen and (max-width: 1200px) {

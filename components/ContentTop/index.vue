@@ -263,7 +263,7 @@ const handleSelect = (key: string | number) => {
   padding: 5px 20px;
   width: 100%;
   height: 50px;
-  background-color: rgb(245 246 255 / 80%);
+  background-color: var(--center-top-bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -276,6 +276,7 @@ const handleSelect = (key: string | number) => {
     .icon {
       font-weight: bold;
       cursor: pointer;
+      color: var(--font-color);
     }
   }
 

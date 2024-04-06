@@ -42,6 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   .title {
     font-size: 15px;
     font-weight: 700;
+    color: var(--font-color);
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="lightTheme">
+  <n-config-provider :theme="themeStore.naiveTheme === 'dark' ? darkTheme : lightTheme">
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-message-provider placement="bottom-right">
@@ -26,6 +26,7 @@
 import {
   NConfigProvider,
   lightTheme,
+  darkTheme,
   NMessageProvider,
   NDialogProvider,
   NNotificationProvider,
@@ -37,11 +38,29 @@ import DialogContent from '@/components/DialogContent/index.vue'
 import NotificationContent from '@/components/NotificationContent/index.vue'
 import LoadingBarContent from '@/components/LoadingBarContent/index.vue'
 import UploadProgress from '@/components/uploadProgress/index.vue'
-import axios from 'axios'
+import {useThemeStore} from '@/store/modules/theme'
+
+const themeStore = useThemeStore()
+
+watch(() => themeStore.theme, (value) => {
+  useHead({
+    htmlAttrs: {
+      'data-theme': value,
+    },
+  })
+})
+
+useHead({
+  htmlAttrs: {
+    'data-theme': themeStore.theme,
+  },
+})
 
 </script>
 <style lang="less">
 @import "@/font/font.less";
+@import "@/theme/dark.less";
+@import "@/theme/light.less";
 
 .page-enter-active,
 .page-leave-active {
@@ -63,6 +82,6 @@ import axios from 'axios'
 body {
   margin: 0;
   font-family: AlimamaDaoLiTi, serif;
-  background-color: rgb(242, 240, 254);
+  background-color: var(--bg-color);
 }
 </style>

@@ -59,13 +59,12 @@ router.beforeEach((to, from, next) => {
   width: 1250px;
   height: 1000px;
   padding: 50px 0;
-  background-color: rgb(241, 239, 254);
   margin: 0 auto;
 
   .left,
   .right {
     box-sizing: border-box;
-    background-color: rgb(246, 247, 254);
+    background-color: var(--content-left-right);
     width: @w;
     //height: 90vh;
     height: 100%;
@@ -84,7 +83,7 @@ router.beforeEach((to, from, next) => {
     box-sizing: border-box;
     //height: 90vh;
     height: 100%;
-    background-color: #ffffff;
+    background-color: var(--content-center);
     width: calc(100% - (@w * 2));
     overflow-y: auto;
     //position: relative;

@@ -122,13 +122,13 @@ const readAll = () => {
     .title {
       font-size: 15px;
       font-weight: 800;
-      color: #1f2b3e;
+      color: var(--font-color);
       cursor: pointer;
     }
 
     .time {
       font-size: 13px;
-      color: #1f2b3e;
+      color: var(--font-color-200);
       display: flex;
       align-items: center;
 
@@ -136,7 +136,7 @@ const readAll = () => {
         width: 3px;
         height: 3px;
         border-radius: 100%;
-        background-color: #0F1C2E;
+        background-color: var(--font-color-200);
         margin: 0 5px;
       }
     }
@@ -166,11 +166,13 @@ const readAll = () => {
       .name {
         font-size: 14px;
         font-weight: 600;
+        color: var(--font-color);
       }
 
       .motto {
         font-size: 13px;
         font-weight: 400;
+        color: var(--font-color);
       }
     }
   }
@@ -222,6 +224,7 @@ const readAll = () => {
         line-height: 24px;
         text-align: left;
         vertical-align: top;
+        color: var(--font-color);
       }
 
       .readall {
@@ -232,6 +235,7 @@ const readAll = () => {
         .text {
           font-size: 13px;
           font-weight: bolder;
+          color: var(--font-color);
         }
 
         .down {
@@ -241,6 +245,7 @@ const readAll = () => {
           padding-top: 7px;
           font-size: 13px;
           cursor: pointer;
+          color: var(--font-color);
         }
 
       }
@@ -254,11 +259,13 @@ const readAll = () => {
 
         .text {
           cursor: pointer;
+          color: var(--font-color);
         }
 
         .down {
           padding-top: 5px;
           cursor: pointer;
+          color: var(--font-color);
         }
       }
 
@@ -266,6 +273,7 @@ const readAll = () => {
         box-sizing: border-box;
         width: 100%;
         overflow: hidden;
+        color: var(--font-color);
 
         :deep(img) {
           max-width: 100%;

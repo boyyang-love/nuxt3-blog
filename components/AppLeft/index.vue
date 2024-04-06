@@ -480,7 +480,7 @@ const openSignModal = () => {
         box-sizing: border-box;
         width: 80px;
         height: 80px;
-        border: 3px solid #1f2b3e;
+        border: 3px solid var(--border-color);
         border-radius: 5px;
 
         .img {
@@ -496,12 +496,13 @@ const openSignModal = () => {
         margin: 5px 0;
         font-weight: bolder;
         cursor: pointer;
+        color: var(--font-color);
       }
 
       .user-motto {
         font-size: 12px;
         font-weight: bold;
-        color: rgba(17, 17, 17, 0.8);
+        color: var(--font-color-200);
         text-align: center;
       }
     }
@@ -531,6 +532,7 @@ const openSignModal = () => {
       .icon {
         font-size: 22px;
         cursor: pointer;
+        color: var(--font-color)
       }
 
       .text {
@@ -540,6 +542,7 @@ const openSignModal = () => {
         font-size: 14px;
         font-weight: bolder;
         margin: 0 0 2px 5px;
+        color: var(--font-color);
       }
     }
 
@@ -643,7 +646,7 @@ const openSignModal = () => {
 
     a {
       text-decoration: none;
-      color: rgba(15, 28, 46, 1);
+      color: var(--font-color-200);
     }
   }
 }
@@ -652,7 +655,7 @@ const openSignModal = () => {
   box-sizing: border-box;
   width: 400px;
   //height: 220px;
-  background-color: rgb(246, 247, 253);
+  background-color: var(--bg-color);
   border-radius: 5px;
   padding: 10px 50px;
   position: relative;
@@ -696,7 +699,7 @@ const openSignModal = () => {
   .change-text {
     text-align: end;
     font-size: 13px;
-    color: deeppink;
+    color: var(--font-color-200);
     cursor: pointer;
   }
 
@@ -709,7 +712,7 @@ const openSignModal = () => {
 .userinfo-modal {
   box-sizing: border-box;
   width: 400px;
-  background-color: rgb(246, 247, 253);
+  background-color: var(--bg-color);
   border-radius: 5px;
   padding: 10px 20px;
   position: relative;
@@ -722,6 +725,7 @@ const openSignModal = () => {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 15px;
+    color: var(--font-color);
   }
 
   .close {
@@ -735,6 +739,7 @@ const openSignModal = () => {
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
+      color: var(--font-color);
 
       &:hover {
         transform: rotate(90deg);

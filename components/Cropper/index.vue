@@ -80,9 +80,10 @@ const reset = () => {
       <VuePictureCropper
           :img="imgDataURL"
           :boxStyle="{
+                    boxSizing: 'border-box',
                     width: '600px',
                     height: '345px',
-                    backgroundColor: '#f8f8f8',
+                    backgroundColor: 'var(--bg-color)',
                     margin: 'auto',
           }"
           :options="{
@@ -153,16 +154,15 @@ const reset = () => {
 .dialog-content-wrapper {
   box-sizing: border-box;
   border-radius: 5px;
-  padding: 20px 20px 10px;
-  //background: rgb(35, 43, 60);
-  background-color: rgb(246, 247, 253);
+  padding: 30px 20px 10px;
+  background-color: var(--bg-color);
 
   .modal-bottom {
     box-sizing: border-box;
     width: 100%;
     padding: 10px 0 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
 
     .btn {
       color: white;
@@ -173,24 +173,26 @@ const reset = () => {
       font-size: 14px;
       font-weight: bolder;
       box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+      margin-left: 10px;
     }
   }
 
   .close {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    transition: all 0.45s ease-in-out;
-    transform-origin: center;
+    top: 5px;
+    right: 5px;
+
 
     .icon {
+      display: inline-block;
       font-size: 20px;
-      color: rgba(17, 17, 17, 1);
+      color: var(--font-color);
       cursor: pointer;
-    }
+      transition: all 0.45s ease-in-out;
 
-    &:hover {
-      transform: rotateZ(90deg);
+      &:hover {
+        transform: rotateZ(90deg);
+      }
     }
   }
 }

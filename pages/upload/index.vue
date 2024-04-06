@@ -93,6 +93,7 @@ const {
 
       .icon {
         font-size: 40px;
+        color: var(--font-color);
       }
     }
   }

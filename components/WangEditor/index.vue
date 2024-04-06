@@ -212,6 +212,7 @@ const delCover = () => {
   box-sizing: border-box;
   width: 100%;
   display: flex;
+  position: relative;
 
   .content {
     box-sizing: border-box;
@@ -227,6 +228,7 @@ const delCover = () => {
     position: sticky;
     top: 0;
     z-index: 9;
+    background: var(--bg-color);
   }
 
 
@@ -238,14 +240,11 @@ const delCover = () => {
     margin-top: 20px;
     margin-bottom: 10px;
 
-    //:deep(.w-e-scroll) {
-    //  overflow: hidden !important;
-    //}
-
     .title {
       box-sizing: border-box;
       width: 100%;
       border-bottom: 1px solid rgba(204, 204, 204, 0.4);
+      color: #1E2022FF;
     }
   }
 
@@ -256,7 +255,7 @@ const delCover = () => {
 
     .cover {
       font-size: 13px;
-      color: #1f2b3e;
+      color: #1E2022FF;
       margin-bottom: 10px;
       font-weight: bolder;
     }
@@ -269,7 +268,8 @@ const delCover = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: white;
+      background: #fff;
+
       position: relative;
 
       .img-wrapper {
@@ -303,7 +303,7 @@ const delCover = () => {
 
           .icon {
             font-size: 18px;
-            color: white;
+            color: #1E2022FF;
             padding-bottom: 2px;
           }
         }
@@ -336,7 +336,7 @@ const delCover = () => {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        color: #1f2b3e;
+        color: #1E2022FF;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -353,7 +353,7 @@ const delCover = () => {
       .title {
         margin: 10px 0;
         font-size: 13px;
-        color: #1f2b3e;
+        color: #1E2022FF;
         font-weight: bolder;
       }
 
@@ -369,7 +369,6 @@ const delCover = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: whitesmoke;
     padding: 10px 0;
 
     .btn-wrapper {
