@@ -1,6 +1,6 @@
 import hljs from 'highlight.js'
 import {defineNuxtPlugin} from '#app'
-import 'highlight.js/styles/monokai-sublime.css'
+import 'highlight.js/styles/atom-one-dark.min.css'
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.directive('highlight',
