@@ -113,8 +113,8 @@ const submit = () => {
       border-radius: 5px;
       box-sizing: border-box;
       padding: 2px 10px;
-      color: var(--font-color);
-      background-color: var(--card-color);
+      color: whitesmoke;
+      background-color: deeppink;
       cursor: pointer;
       font-size: 13px;
       font-weight: bolder;

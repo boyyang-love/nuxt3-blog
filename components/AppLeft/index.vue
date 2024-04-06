@@ -594,7 +594,6 @@ const openSignModal = () => {
     }
 
     .button:hover {
-      //color: rgb(10, 25, 30);
       color: #fff;
     }
 

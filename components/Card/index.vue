@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {NEllipsis, NAvatar, NIcon} from 'naive-ui'
-import {CaretUp,CaretDown} from '@vicons/ionicons5'
+import {CaretUp, CaretDown} from '@vicons/ionicons5'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
 
@@ -27,7 +27,7 @@ const readAll = () => {
 <template>
   <div class="card-wrapper">
     <div class="title-wrapper">
-      <nuxt-link :to="`/detail/?id=${props.id}`">
+      <nuxt-link :to="`/detail/?id=${props.id}`" class="link">
         <div class="title">{{ props.title }}</div>
       </nuxt-link>
       <div class="time">
@@ -118,6 +118,11 @@ const readAll = () => {
   .title-wrapper {
     display: flex;
     justify-content: space-between;
+
+    .link {
+      text-decoration-color: var(--font-color);
+      text-underline-offset: 5px;
+    }
 
     .title {
       font-size: 15px;

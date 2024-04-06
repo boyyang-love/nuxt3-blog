@@ -8,7 +8,7 @@ const list = ref<(Upload.UploadListItem & { path: string })[]>([])
 const tabValue = ref<'images' | 'blog' | 'bg' | 'avatar'>('images')
 const count = ref<number>(0)
 const page = ref<number>(1)
-const limit = ref<number>(20)
+const limit = ref<number>(10)
 
 const pageSizes = [
   {
@@ -140,11 +140,13 @@ onMounted(() => {
 
   .content {
     box-sizing: border-box;
-    -moz-column-count: 3; /* Firefox */
+    -moz-column-count: 3;
     -webkit-column-count: 3;
     column-count: 3;
     column-gap: 5px;
     padding: 0 10px;
+    min-height: 750px;
+
   }
 
   .empty {

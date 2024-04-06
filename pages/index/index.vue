@@ -257,16 +257,21 @@ definePageMeta({
     bottom: 10px;
     right: 10px;
     display: flex;
+    padding: 2px 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    --webkit-backdrop-filter: blur(5px);
+    border-radius: 20px;
 
     .item {
       box-sizing: border-box;
-      width: 15px;
-      height: 15px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background-color: var(--color);
-      border: 1px solid var(--font-color);
       margin: 5px;
       cursor: pointer;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0,0.3), -1px -1px 3px rgba(0, 0, 0,0.3);
     }
   }
 }
