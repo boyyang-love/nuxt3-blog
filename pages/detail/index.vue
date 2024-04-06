@@ -245,14 +245,12 @@ onMounted(() => {
         .tag-item {
           box-sizing: border-box;
           padding: 0 5px;
-          border-radius: 1px;
           font-size: 13px;
           font-weight: bolder;
-          background-color: var(--bg-color);
           color: var(--font-color);
-          box-shadow: 3px 3px 5px var(--card-shadow),
-            -3px -3px 5px var(--card-shadow);
-          //box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3),-1px -1px 5px rgba(0, 0, 0, 0.3);
+          border: 1px solid var(--border-color);
+          border-radius: 2px;
+          cursor: pointer;
         }
       }
 
@@ -283,6 +281,7 @@ onMounted(() => {
             height: 50px;
             overflow: hidden;
             border-radius: 4px;
+            border: 3px solid var(--border-color);
 
             .img {
               width: 100%;

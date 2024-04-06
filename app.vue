@@ -63,6 +63,7 @@ useHead({
 @import "@/theme/light.less";
 @import "@/theme/ocean.less";
 @import "@/theme/pink.less";
+@import "@/theme/green.less";
 
 .page-enter-active,
 .page-leave-active {

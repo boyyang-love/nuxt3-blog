@@ -100,10 +100,6 @@ const submit = () => {
     }
   }
 
-  .input {
-
-  }
-
   .btns {
     display: flex;
     margin-top: 15px;

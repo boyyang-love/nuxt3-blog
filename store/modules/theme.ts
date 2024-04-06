@@ -13,10 +13,10 @@ const useThemeStore = defineStore({
     id: 'app-theme',
     state: (): ThemeState => ({
         theme: '#ffffff',
-        themeSelectArray: ['#ffffff', '#0F1C2E', '#20293a', '#ffc6ff'],
+        themeSelectArray: ['#101625', '#3B5998', '#f2f0fd', '#1E1E1E', '#FAD9E6'],
         naiveTheme: 'light',
-        dark: ['#0F1C2E', '#20293a'],
-        light: ['#ffffff', '#ffc6ff'],
+        dark: ['#101625', '#3B5998', '#1E1E1E'],
+        light: ['#f2f0fd', '#FAD9E6'],
     }),
     actions: {
         setTheme(theme: string) {
@@ -32,7 +32,7 @@ const useThemeStore = defineStore({
     persist: process.client && {
         key: 'app-theme',
         storage: window.localStorage,
-        paths: ['theme'],
+        paths: ['theme', 'naiveTheme'],
     },
 })
 
