@@ -61,9 +61,8 @@ useHead({
 @import "@/font/font.less";
 @import "@/theme/dark.less";
 @import "@/theme/light.less";
-@import "@/theme/ocean.less";
-@import "@/theme/pink.less";
-@import "@/theme/green.less";
+@import "@/theme/gray.less";
+@import "@/theme/blue.less";
 
 .page-enter-active,
 .page-leave-active {

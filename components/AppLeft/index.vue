@@ -516,17 +516,16 @@ const openSignModal = () => {
 
     .menu-item {
       box-sizing: border-box;
-      height: 55px;
+      height: 50px;
       display: flex;
       align-items: center;
       padding: 10px 0 10px 45px;
       margin: 5px 0;
-      border-radius: 10px;
+      border-radius: 6px;
 
       .icon {
         font-size: 22px;
         cursor: pointer;
-        color: var(--font-color)
       }
 
       .text {
@@ -536,24 +535,29 @@ const openSignModal = () => {
         font-size: 14px;
         font-weight: bolder;
         margin: 0 0 2px 5px;
-        color: var(--font-color);
       }
     }
 
     .button {
       box-sizing: border-box;
-      padding: 0.8em 1.7em;
+      padding: 10px 20px;
       cursor: pointer;
-      transition: .5s;
+      transition: .5s ease-in-out;
       font-weight: 400;
       font-size: 17px;
+      margin: 20px 0;
+      color: var(--font-color);
+
       background: var(--button-color);
-      margin: 10px 0;
+      box-shadow:  8px 8px 15px var(--button-shadow-one),
+        -8px -8px 15px var(--button-shadow-two);
     }
 
 
     .active {
-      background: var(--button-active-color);
+      color: var(--button-active-color);
+      box-shadow:  4px 4px 10px var(--button-shadow-one),
+        -4px -4px 10px var(--button-shadow-two);
     }
   }
 
@@ -603,7 +607,7 @@ const openSignModal = () => {
   box-sizing: border-box;
   width: 400px;
   //height: 220px;
-  background-color: var(--bg-color);
+  background-color: var(--card-color);
   border-radius: 5px;
   padding: 10px 50px;
   position: relative;
@@ -660,7 +664,7 @@ const openSignModal = () => {
 .userinfo-modal {
   box-sizing: border-box;
   width: 400px;
-  background-color: var(--bg-color);
+  background-color: var(--card-color);
   border-radius: 5px;
   padding: 10px 20px;
   position: relative;
@@ -699,7 +703,5 @@ const openSignModal = () => {
     display: flex;
     justify-content: flex-end;
   }
-
-
 }
 </style>
