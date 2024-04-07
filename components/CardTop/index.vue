@@ -22,14 +22,13 @@ const props = defineProps<{
               :tooltip="false"
               style="max-width: 220px"
           >
-            <{{ props.title }}>
+            {{ props.title }}
           </n-ellipsis>
         </div>
         <div class="sub-title">
           <n-ellipsis
               :line-clamp="2"
               :tooltip="false"
-              style="max-width: 220px"
           >
             {{ props.subTitle }}
           </n-ellipsis>
@@ -46,19 +45,21 @@ const props = defineProps<{
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 10px;
+  padding: 10px 10px 4px;
   margin-bottom: 10px;
   //border: 1px solid rgb(102, 211, 159);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4) inset, -2px -2px 2px rgba(0, 0, 0, 0.4) inset;
+  //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4) inset, -2px -2px 2px rgba(0, 0, 0, 0.4) inset;
+  background: var(--button-color);
+  box-shadow: 3px 3px 5px var(--button-shadow-one),
+    -3px -3px 5px var(--button-shadow-two);
 
   .nuxt-link {
     text-decoration: none;
 
     .top-cover {
       box-sizing: border-box;
-      width: 100%;
-      height: 100px;
       overflow: hidden;
+      height: 100px;
 
       .img {
         box-sizing: border-box;
@@ -66,6 +67,7 @@ const props = defineProps<{
         height: 100%;
         object-fit: cover;
         border-radius: 2px;
+        border: 2px solid var(--border-color);
       }
     }
 
@@ -78,8 +80,8 @@ const props = defineProps<{
       .title {
         color: var(--font-color);
         text-decoration: none;
-        font-size: 13px;
-        font-weight: bold;
+        font-size: 14px;
+        font-weight: bolder;
         display: flex;
         align-items: center;
       }

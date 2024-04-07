@@ -151,7 +151,6 @@ definePageMeta({
     padding: 10px;
     position: relative;
 
-
     .left-img {
       flex: 1;
 

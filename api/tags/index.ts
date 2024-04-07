@@ -11,6 +11,7 @@ export namespace Tag {
         uid: string
         tag_name: string
         user_id: number
+        articles: number[]
     }
 }
 
