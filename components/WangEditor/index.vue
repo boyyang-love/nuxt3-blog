@@ -130,7 +130,7 @@ const delCover = () => {
         </div>
         <WangsEditor
             v-model="valueHtml"
-            style="min-height: 550px;"
+            style="min-height: 600px;"
             :defaultConfig="editorConfig"
             @onCreated="handleCreated"
             mode="default"
@@ -223,7 +223,7 @@ const delCover = () => {
   }
 
   .toolbar {
-    border-bottom: 1px solid #ccc;
+    //border-bottom: 1px solid var(--border-color);
     width: 100%;
     position: sticky;
     top: 0;
@@ -244,7 +244,7 @@ const delCover = () => {
       box-sizing: border-box;
       width: 100%;
       border-bottom: 1px solid rgba(204, 204, 204, 0.4);
-      color: #1E2022FF;
+      color: var(--font-color);
     }
   }
 
@@ -255,7 +255,7 @@ const delCover = () => {
 
     .cover {
       font-size: 13px;
-      color: #1E2022FF;
+      color: var(--font-color);
       margin-bottom: 10px;
       font-weight: bolder;
     }
@@ -268,7 +268,7 @@ const delCover = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #fff;
+      background: var(--card-color);
 
       position: relative;
 
@@ -303,7 +303,7 @@ const delCover = () => {
 
           .icon {
             font-size: 18px;
-            color: #1E2022FF;
+            color: var(--font-color);
             padding-bottom: 2px;
           }
         }
@@ -336,7 +336,7 @@ const delCover = () => {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        color: #1E2022FF;
+        color: var(--font-color);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -353,7 +353,7 @@ const delCover = () => {
       .title {
         margin: 10px 0;
         font-size: 13px;
-        color: #1E2022FF;
+        color: var(--font-color);
         font-weight: bolder;
       }
 

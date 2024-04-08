@@ -327,19 +327,17 @@ const searchByHistory = (word: string) => {
                 placeholder="请输入关键字"
                 v-model:value="keyword"
                 @keydown.enter="searchSubmit"
-            ></n-input>
-            <n-button
-                type="default"
-                @click="searchSubmit"
             >
-              <n-icon
-                  size="20"
-                  class="icon"
-                  @click="search"
-              >
-                <Search></Search>
-              </n-icon>
-            </n-button>
+              <template #suffix>
+                <n-icon
+                    size="20"
+                    class="icon"
+                    @click="searchSubmit"
+                >
+                  <Search></Search>
+                </n-icon>
+              </template>
+            </n-input>
           </div>
           <div class="history-word">
             <div
@@ -430,7 +428,9 @@ const searchByHistory = (word: string) => {
       display: flex;
 
       .input {
-        margin-right: 20px;
+        .icon {
+          cursor: pointer;
+        }
       }
     }
 

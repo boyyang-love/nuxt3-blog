@@ -2,16 +2,32 @@
 import {AppLeft} from '#components'
 import {AppRight} from '#components'
 import {ContentTop} from '#components'
-import {NBackTop} from 'naive-ui'
+import {MoreMenu} from '#components'
+import {NBackTop, type BackTopProps} from 'naive-ui'
 import {useRouter} from 'vue-router'
+import {useBackTopStore} from '@/store/modules/backTop'
 
 const domRef = ref<HTMLElement | null>()
+const backTopDomRef = ref<any | null>()
+
+const backTopStore = useBackTopStore()
 
 const router = useRouter()
 router.beforeEach((to, from, next) => {
-  domRef.value?.scrollTo(0,0)
+  domRef.value?.scrollTo(0, 0)
+  backTopStore.setShow(false)
   next()
 })
+
+watch(() => backTopStore.show, (value) => {
+  if (!value) {
+    backTopDomRef.value?.handleClick()
+  }
+})
+
+const toTop = (show: boolean) => {
+  backTopStore.setShow(show)
+}
 </script>
 
 <template>
@@ -20,7 +36,11 @@ router.beforeEach((to, from, next) => {
       <AppLeft/>
     </div>
     <div class="content" id="content" ref="domRef">
-      <n-back-top></n-back-top>
+      <n-back-top
+          style="display: none"
+          @update:show="toTop"
+          ref="backTopDomRef"
+      ></n-back-top>
       <div class="content-top">
         <ContentTop></ContentTop>
       </div>
@@ -28,6 +48,9 @@ router.beforeEach((to, from, next) => {
     </div>
     <div class="right">
       <AppRight/>
+    </div>
+    <div class="more-menu">
+      <MoreMenu></MoreMenu>
     </div>
   </div>
 </template>
@@ -60,6 +83,7 @@ router.beforeEach((to, from, next) => {
   height: 1000px;
   padding: 50px 0;
   margin: 0 auto;
+  position: relative;
 
   .left,
   .right {
@@ -87,12 +111,19 @@ router.beforeEach((to, from, next) => {
     width: calc(100% - (@w * 2));
     overflow-y: auto;
     //position: relative;
+    transition: all .45s linear;
 
     .content-top {
       position: sticky;
       top: 0;
       z-index: 8;
     }
+  }
+
+  .more-menu {
+    position: absolute;
+    bottom: 40px;
+    right: -50px;
   }
 }
 

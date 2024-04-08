@@ -258,7 +258,6 @@ const openSignModal = () => {
               <n-icon class="icon">
                 <component :is="item.icon"></component>
               </n-icon>
-              <!--            <nuxt-icon class="icon" :name="item.icon"></nuxt-icon>-->
               <div class="text">{{ item.text }}</div>
             </div>
           </nuxt-link>

@@ -1,5 +1,6 @@
 import {http} from '~/utils/http'
 import {type Comment} from '@/api/comment'
+import type {List} from 'postcss/lib/list'
 
 export namespace Blog {
     export interface CreateBlogReq {
@@ -39,6 +40,12 @@ export namespace Blog {
     export interface ListBlogSearchByIdRes {
         info: ListBlogItem
     }
+
+    export interface ListBlogSearchByIdsRes {
+        info: ListBlogItemByids[]
+    }
+
+    export type ListBlogItemByids = Pick<ListBlogItem, 'id' | 'uid' | 'title' | 'des' | 'cover'>
 
     export interface ListBlogItem {
         id: number
@@ -104,6 +111,14 @@ export const updateBlog = (data: Blog.UpdateBlogReq) => {
 export const deleteBlog = (data: Blog.DeleteBlogReq) => {
     return http.request<Blog.DeleteBlogRes>({
         url: '/blog/delete',
+        method: 'POST',
+        data,
+    })
+}
+
+export const searchBlogByIds = (data: { ids: number[] }) => {
+    return http.request<Blog.ListBlogSearchByIdsRes>({
+        url: '/blog/search/ids',
         method: 'POST',
         data,
     })

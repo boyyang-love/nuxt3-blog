@@ -128,6 +128,7 @@ const pageUpdate = (e: number) => {
   .content {
     box-sizing: border-box;
     width: 100%;
+    min-height: 805px;
     display: flex;
     padding: 10px 10px 0;
 

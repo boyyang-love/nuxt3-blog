@@ -11,7 +11,7 @@ export namespace Tag {
         uid: string
         tag_name: string
         user_id: number
-        articles: number[]
+        articles: {id: number}[]
     }
 }
 
@@ -34,6 +34,14 @@ export const tagCreate = (data: { name: string, type: 'image' | 'article' }) => 
 export const tagDelete = (data: { id: number }) => {
     return http.request({
         url: '/tag/delete',
+        method: 'POST',
+        data,
+    })
+}
+
+export const tagUpdate = (data: { id: number, name: string }) => {
+    return http.request({
+        url: '/tag/update',
         method: 'POST',
         data,
     })
