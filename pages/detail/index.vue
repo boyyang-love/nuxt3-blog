@@ -87,10 +87,7 @@ onMounted(() => {
     <Head>
       <Title>{{ data?.data.info.title || 'boyyang的个人博客网站' }}</Title>
       <Meta name="description" :content="data?.data.info.des || 'boyyang的个人博客网站'"></Meta>
-      <Meta
-          name="keywords"
-          :content="data?.data.info.tag.map(t => t.tag_name).join(',') ||'boyyang,个人博客网站,博客' "
-      ></Meta>
+      <Meta name="keywords" :content="`${data?.data.info.keywords},${data?.data.info.tag.map(t => t.tag_name).join(',')}  - boyyang的个人博客网站`"></Meta>
     </Head>
     <div class="content">
       <div class="left-content">

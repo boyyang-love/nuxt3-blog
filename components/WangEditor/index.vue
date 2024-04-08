@@ -24,6 +24,7 @@ const editorRef = shallowRef()
 // 内容 HTML
 const valueHtml = ref('')
 const selectValues = ref<number[] | string[]>([])
+const keywords = ref<string>("")
 const blogInfo = reactive({
   title: '',
   des: '',
@@ -41,6 +42,7 @@ watch(() => props.editInfo, (value) => {
     blogInfo.title = value.title
     imgUrl.value = value.cover
     selectValues.value = value.tag.map(t => Number(t.id))
+    keywords.value = value.keywords
     window.$uploadProgress.end()
   }
 })
@@ -60,8 +62,8 @@ const submit = () => {
   const des = editorRef?.value.getText()
   const content = editorRef.value?.getHtml()
 
-  if (blogInfo.title.trim() === '' || content?.trim() === '') {
-    window.$message.warning('标题，内容，不能为空')
+  if (blogInfo.title.trim() === '' || content?.trim() === '' || keywords.value.trim() === '') {
+    window.$message.warning('标题，内容，关键字，不能为空')
     return
   }
 
@@ -76,6 +78,7 @@ const submit = () => {
       tags: selectValues.value.map(s => {
         return Number(s)
       }),
+      keywords: keywords.value,
     }).then(res => {
       window.$uploadProgress.end()
       valueHtml.value = ''
@@ -93,6 +96,7 @@ const submit = () => {
       tags: selectValues.value.map(s => {
         return Number(s)
       }),
+      keywords: keywords.value,
     }).then(res => {
       window.$uploadProgress.end()
       valueHtml.value = ''
@@ -138,6 +142,14 @@ const delCover = () => {
       </div>
 
       <div class="bottom-wrapper">
+        <div class="keywords">
+          <div class="title">关键字</div>
+          <n-input
+              type="textarea"
+              placeholder="请输入关键字"
+              v-model:value="keywords"
+          ></n-input>
+        </div>
         <div class="cover">添加封面</div>
         <div class="upload">
           <div class="img-wrapper" v-if="imgUrl">
@@ -357,6 +369,16 @@ const delCover = () => {
         font-weight: bolder;
       }
 
+    }
+
+    .keywords {
+
+      .title {
+        font-size: 13px;
+        color: var(--font-color);
+        font-weight: bolder;
+        margin: 5px 0;
+      }
     }
   }
 

@@ -287,6 +287,7 @@ onMounted(() => {
       align-items: center;
       border-radius: 3px;
       cursor: pointer;
+      color: var(--font-color);
     }
 
   }

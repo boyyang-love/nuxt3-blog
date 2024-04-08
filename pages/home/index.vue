@@ -74,7 +74,7 @@ onMounted(() => {
     <Head>
       <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>
       <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
-      <Meta name="keywords" :content="data?.data.list.map(d => d.title).join(',')"></Meta>
+      <Meta name="keywords" :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
     </Head>
     <client-only>
       <div class="banner">

@@ -8,6 +8,7 @@ export namespace Blog {
         des: string
         cover: string
         content: string
+        keywords: string
         tags?: string[] | number[]
     }
 
@@ -17,6 +18,7 @@ export namespace Blog {
         des: string
         cover: string
         content: string
+        keywords: string
         tags?: string[] | number[]
     }
 
@@ -57,6 +59,7 @@ export namespace Blog {
         cover: string
         content: string
         user_id: number
+        keywords: string
         user: UserInfo
         tag: Tag[]
         comment: Comment.CommentInfo[]
