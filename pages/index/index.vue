@@ -298,6 +298,15 @@ definePageMeta({
       bottom: 0 !important;
       right: 350px !important;
     }
+
+  }
+
+  .index-wrapper {
+    .theme-circle-wrapper {
+      left: 0;
+      bottom: 0;
+      width: 100px;
+    }
   }
 }
 </style>

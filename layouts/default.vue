@@ -151,6 +151,12 @@ const toTop = (show: boolean) => {
         top: 0;
       }
     }
+
+    .more-menu {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
   }
 }
 </style>

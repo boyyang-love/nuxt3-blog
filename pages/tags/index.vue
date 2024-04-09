@@ -175,7 +175,7 @@ onMounted(() => {
     <n-modal
         v-model:show="isShowCard"
         style="
-            width: 600px;
+            max-width: 600px;
             position: fixed;
             top: 100px;
             left: 50%;
@@ -356,4 +356,32 @@ onMounted(() => {
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .blog-list {
+
+    .search-result-item {
+      padding: 5px;
+
+      .left-img {
+        box-sizing: border-box;
+        width: 80px;
+        height: 75px;
+      }
+
+      .right-content {
+        padding-left: 5px;
+
+        .title {
+          font-size: 13px;
+        }
+
+        .des {
+          font-size: 12px;
+        }
+      }
+    }
+
+  }
+
+}
 </style>

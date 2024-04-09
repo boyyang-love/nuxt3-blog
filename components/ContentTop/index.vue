@@ -306,7 +306,7 @@ const searchByHistory = (word: string) => {
         size="huge"
         :bordered="false"
         style="
-            width: 600px;
+            max-width: 600px;
             position: fixed;
             top: 100px;
             left: 50%;
@@ -314,7 +314,7 @@ const searchByHistory = (word: string) => {
         "
     >
       <n-card
-          style="width: 600px"
+          clsss="card"
           :bordered="false"
           size="huge"
           role="dialog"
@@ -526,6 +526,51 @@ const searchByHistory = (word: string) => {
 
       &:hover {
         transform: rotateZ(90deg);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .custom-card {
+    .content-wrapper {
+
+      .search-result {
+        box-sizing: border-box;
+        border-radius: 5px;
+        height: 350px;
+        overflow-y: auto;
+
+        .search-result-item {
+          padding: 5px;
+
+          .left-img {
+            box-sizing: border-box;
+            width: 105px;
+            height: 65px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+          }
+
+          .right-content {
+            display: flex;
+            flex-direction: column;
+            padding-left: 5px;
+
+            .title {
+              font-size: 13px;
+              font-weight: bolder;
+              color: var(--font-color);
+            }
+
+            .des {
+              font-size: 12px;
+              font-weight: bold;
+              color: var(--font-color-200);
+            }
+          }
+        }
       }
     }
   }
