@@ -33,7 +33,7 @@ const readAll = () => {
       <div class="time">
         <span>{{ moment(props.created).format('YYYY-MM-DD') }}</span>
         <div class="point"></div>
-        <span>{{ moment(props.created).format('hh:mm:ss') }}</span>
+        <span>{{ moment(props.created).format('HH:mm:ss') }}</span>
       </div>
     </div>
     <div class="user-info">

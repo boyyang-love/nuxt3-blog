@@ -106,7 +106,7 @@ onMounted(() => {
             <span
                 class="time"
             >
-              {{ moment(data?.data.info?.created).format('YYYY-MM-DD hh:mm:ss') }}
+              {{ moment(data?.data.info?.created).format('YYYY-MM-DD HH:mm:ss') }}
             </span>
           </div>
           <div class="inner-info-wrapper">
