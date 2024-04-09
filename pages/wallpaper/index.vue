@@ -1,81 +1,31 @@
 <script setup lang="ts">
-import {NEmpty, NPagination, NTabs, NTabPane} from 'naive-ui'
-import Card from './components/card/index.vue'
-import {uploadList, type Upload} from '@/api/upload'
-import {env} from '@/utils/env'
+import {NTabs, NTabPane} from 'naive-ui'
+import WaterFull from './components/waterFull/index.vue'
 
-const list = ref<(Upload.UploadListItem & { path: string })[]>([])
 const tabValue = ref<'images' | 'blog' | 'bg' | 'avatar'>('images')
-const count = ref<number>(0)
-const page = ref<number>(1)
-const limit = ref<number>(10)
+const more = ref<boolean>(false)
 
-const pageSizes = [
-  {
-    label: '10 每页',
-    value: 10,
-  },
-  {
-    label: '20 每页',
-    value: 20,
-  },
-  {
-    label: '30 每页',
-    value: 30,
-  },
-  {
-    label: '40 每页',
-    value: 40,
-  },
-]
-
-const pageSizeChange = (e: number) => {
-  limit.value = e
-  getUploadList()
+const isNoMore = (noMore: boolean) => {
+  more.value = noMore
 }
 
-const pageUpdate = (e: number) => {
-  page.value = e
-  getUploadList()
+const tabChange = () => {
+  more.value = false
 }
 
-const getUploadList = () => {
-
-  uploadList({
-    page: page.value,
-    limit: limit.value,
-    type: tabValue.value,
-  }).then((res) => {
-    count.value = res.data.count
-    list.value = res.data.infos.map((e) => {
-      return {
-        ...e,
-        file_path: `${env.VITE_APP_IMG_URL}/${e.file_path}`,
-        path: e.file_path,
-      }
-    })
-  })
-}
-
-const tabValueChange = () => {
-  page.value = 1
-  limit.value = 10
-  getUploadList()
-}
-
-onMounted(() => {
-  getUploadList()
-})
 </script>
 
 <template>
-  <div class="wallpaper-wrapper" id="wallpaper-wrapper">
+  <div
+      class="wallpaper-wrapper"
+      id="wallpaper-wrapper"
+  >
     <div class="tab-wrapper">
       <n-tabs
           type="line"
           default-value="images"
           v-model:value="tabValue"
-          @update:value="tabValueChange"
+          @update:value="tabChange"
       >
         <n-tab-pane tab="壁纸" name="images">
 
@@ -91,82 +41,51 @@ onMounted(() => {
         </n-tab-pane>
       </n-tabs>
     </div>
-    <div class="empty" v-if="list.length === 0">
-      <n-empty></n-empty>
-    </div>
-    <div
-        class="content"
-        v-else
-    >
-      <Card
-          class="item"
-          v-for="item in list"
-          :key="item.id"
-          :id="item.id"
-          :url="item.file_path"
+    <div class="water">
+      <WaterFull
           :type="tabValue"
-          :file-name="item.file_name"
-          :path="item.path"
-          @refresh="getUploadList"
-      >
-      </Card>
+          @isNoMore="isNoMore"
+      ></WaterFull>
     </div>
+    <div class="no-more" v-if="more">没有更多了</div>
 
-    <div class="pagination" v-show="list.length > 0">
-      <n-pagination
-          :item-count="count"
-          v-model:page-size="limit" bu
-          v-model:page="page"
-          :page-sizes="pageSizes"
-          @update:page="pageUpdate"
-          @update:pageSize="pageSizeChange"
-          show-size-picker
-      />
-    </div>
   </div>
 </template>
 
 <style scoped lang="less">
 .wallpaper-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow: hidden;
   position: relative;
 
   .tab-wrapper {
     position: sticky;
     background-color: var(--center-top-bg);
-    top: 50px;
+    top: 0;
     padding: 0 20px;
     z-index: 9;
   }
 
-  .content {
-    box-sizing: border-box;
-    -moz-column-count: 3;
-    -webkit-column-count: 3;
-    column-count: 3;
-    column-gap: 5px;
-    padding: 0 10px;
-    min-height: 750px;
 
-  }
-
-  .empty {
+  .water {
     box-sizing: border-box;
     width: 100%;
-    height: 300px;
+    height: calc(100% - 100px);
+    overflow: hidden;
+    padding: 10px;
+  }
+
+  .no-more {
     display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
-  }
-
-  .pagination {
-    box-sizing: border-box;
-    background-color: var(--center-top-bg);
-    padding: 10px 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: sticky;
-    bottom: 0;
+    position: absolute;
+    bottom: 10px;
+    color: var(--font-color);
+    font-size: 13px;
   }
 }
 </style>

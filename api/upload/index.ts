@@ -10,6 +10,8 @@ export namespace Upload {
         id: number
         file_name: string
         file_path: string
+        w: number
+        h: number
     }
 
     export interface UploadListRes {

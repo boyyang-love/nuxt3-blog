@@ -1,18 +1,24 @@
 <template>
-  <div class="loader"></div>
+    <div class="loader"></div>
 </template>
 
 <style lang="less" scoped>
+.loading-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
 .loader {
+  display: block;
   clear: both;
-  width: 2rem;
-  height: 2rem;
+  width: 30px;
+  height: 30px;
   margin: 1rem auto;
-  border: 0.0625rem #000 solid;
+  border: 0.0625rem var(--font-color) solid;
   border-radius: 0.25rem;
   position: relative;
-  background: linear-gradient(45deg, transparent 49%, #000 50%, #000 50%, transparent 51%, transparent),
-  linear-gradient(-45deg, transparent 49%, #000 50%, #000 50%, transparent 51%, transparent);
+  background: linear-gradient(45deg, transparent 49%, var(--font-color) 50%, var(--font-color) 50%, transparent 51%, transparent),
+  linear-gradient(-45deg, transparent 49%, var(--font-color) 50%, var(--font-color) 50%, transparent 51%, transparent);
   background-size: 1rem 1rem;
   background-position: 0 0;
   -webkit-animation: spTexture 1s infinite linear;

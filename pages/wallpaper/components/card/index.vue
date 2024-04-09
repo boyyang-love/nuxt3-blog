@@ -17,7 +17,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emits = defineEmits<{
-  refresh: []
+  del: [id: number]
 }>()
 const userStore = useUserStore()
 
@@ -98,7 +98,7 @@ const delImage = () => {
   window.$uploadProgress.begin()
   uploadDelete(data).then(() => {
     window.$uploadProgress.end()
-    emits('refresh')
+    emits('del', props.id)
   }).catch(() => {
     window.$uploadProgress.end()
   })
@@ -163,10 +163,9 @@ const downloadImage = () => {
         :show-toolbar="false"
         lazy
         :intersection-observer-options="{
-          root: '#content'
+          root: '#waterfall-container'
         }"
-        width="100%"
-        height="100%"
+        style="height: 100%"
         object-fit="cover"
     >
       <template #placeholder>
@@ -182,19 +181,21 @@ const downloadImage = () => {
 .image-card-wrapper {
   box-sizing: border-box;
   width: 100%;
+  height: 100%;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
 
   .n-img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 5px;
 
     .loading {
       box-sizing: border-box;
-      width: 250px;
-      aspect-ratio: 3/2;
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
