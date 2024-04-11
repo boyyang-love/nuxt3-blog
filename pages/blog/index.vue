@@ -79,7 +79,8 @@ const pageUpdate = (e: number) => {
     <Head>
       <Title>{{ data?.data.list.map(d => d.title).join(',') }}</Title>
       <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
-      <Meta name="keywords" :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
+      <Meta name="keywords"
+            :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
     </Head>
     <div class="content">
       <div class="empty" v-if="data?.data.list.length === 0">
@@ -91,6 +92,7 @@ const pageUpdate = (e: number) => {
           v-for="item in data?.data.list"
           :avatar="item.user.avatar"
           :id="item.id"
+          :userid="item.user.id"
           :title="item.title"
           :created="item.created"
           :username="item.user.username"
@@ -105,14 +107,16 @@ const pageUpdate = (e: number) => {
       </Card>
     </div>
     <div class="pagination" v-show="data?.data?.list.length">
-      <n-pagination
-          :item-count="count"
-          :page-size="limit"
-          :page-sizes="pageSizes"
-          @update:page="pageUpdate"
-          @update:pageSize="pageSizeChange"
-          show-size-picker
-      />
+      <client-only>
+        <n-pagination
+            :item-count="count"
+            :page-size="limit"
+            :page-sizes="pageSizes"
+            @update:page="pageUpdate"
+            @update:pageSize="pageSizeChange"
+            show-size-picker
+        />
+      </client-only>
     </div>
 
   </div>

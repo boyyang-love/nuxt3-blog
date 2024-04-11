@@ -53,11 +53,23 @@ const sitemap = {
         })
         if (res.data.code === 1) {
             let list = res.data.data.list
-            let detailList = list.map((item: any) => ({
-                loc: `${hostUrl}/detail/?id=${item.id}`,
-                changefreq: 'daily',
-                priority: 0.9,
-            }))
+            let detailList = [] as any
+            list.forEach((item: any) => {
+                detailList.push(
+                    {
+                        loc: `${hostUrl}/detail/?id=${item.id}`,
+                        changefreq: 'daily',
+                        priority: 0.9,
+                    },
+                )
+                detailList.push(
+                    {
+                        loc: `${hostUrl}/details/?id=${item.id}`,
+                        changefreq: 'daily',
+                        priority: 0.9,
+                    },
+                )
+            })
             url = [
                 ...url,
                 ...detailList,

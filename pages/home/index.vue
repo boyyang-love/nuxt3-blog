@@ -110,6 +110,7 @@ onMounted(() => {
           v-for="item in data?.data.list"
           :avatar="item.user.avatar"
           :id="item.id"
+          :userid="item.user.id"
           :title="item.title"
           :created="item.created"
           :username="item.user.username"

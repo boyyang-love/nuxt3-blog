@@ -257,7 +257,8 @@ definePageMeta({
     right: 10px;
     display: flex;
     padding: 2px 5px;
-    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--border-color);
+    background-color: var(--card-color);
     backdrop-filter: blur(5px);
     --webkit-backdrop-filter: blur(5px);
     border-radius: 20px;
@@ -302,10 +303,17 @@ definePageMeta({
   }
 
   .index-wrapper {
+    box-sizing: border-box;
+    display: flex;
     .theme-circle-wrapper {
-      left: 0;
-      bottom: 0;
-      width: 100px;
+      background-color: var(--card-color);
+      border: 2px solid var(--border-color);
+      backdrop-filter: blur(5px) saturate(200%);
+      --webkit-backdrop-filter: blur(5px);
+      display: flex;
+      left: 10px;
+      bottom: 10px;
+      width: 115px;
     }
   }
 }

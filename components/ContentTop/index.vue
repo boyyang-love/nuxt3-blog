@@ -15,9 +15,9 @@ import {
   CloudUpload,
   Information,
   List,
-  Card,
   Key,
   Close,
+  TabletLandscape,
 } from '@vicons/ionicons5'
 import {renderIcon} from '@/utils/renderIcon'
 import {useRouter} from 'vue-router'
@@ -64,7 +64,7 @@ const options = computed(() => {
           {
             label: '卡片',
             key: 9,
-            icon: renderIcon(Card),
+            icon: renderIcon(TabletLandscape),
           },
           {
             label: '密码',
@@ -145,7 +145,7 @@ const options = computed(() => {
       {
         label: '卡片',
         key: 9,
-        icon: renderIcon(Card),
+        icon: renderIcon(TabletLandscape),
       },
     ]
   }

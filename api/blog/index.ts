@@ -78,6 +78,20 @@ export namespace Blog {
         tag_name: string
         type: string
     }
+
+    export interface ListBlogSearchByUserIdRes {
+        count: number
+        infos: ListBlogSearchByUserIdInfo[]
+    }
+
+    export interface ListBlogSearchByUserIdInfo {
+        id: number
+        title: string
+        des: string
+        cover: string
+        created: number
+        updated: number
+    }
 }
 export const createBlog = (data: Blog.CreateBlogReq) => {
     return http.request({
@@ -122,6 +136,14 @@ export const deleteBlog = (data: Blog.DeleteBlogReq) => {
 export const searchBlogByIds = (data: { ids: number[] }) => {
     return http.request<Blog.ListBlogSearchByIdsRes>({
         url: '/blog/search/ids',
+        method: 'POST',
+        data,
+    })
+}
+
+export const searchBlogByUserId = (data: { page: number, limit: number, id: number }) => {
+    return http.request<Blog.ListBlogSearchByUserIdRes>({
+        url: '/blog/search/userid',
         method: 'POST',
         data,
     })

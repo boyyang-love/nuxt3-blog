@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {NEllipsis, NAvatar, NIcon} from 'naive-ui'
 import {CaretUp, CaretDown} from '@vicons/ionicons5'
+import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
 
@@ -8,6 +9,7 @@ const isReadAll = ref<boolean>(false)
 
 const props = defineProps<{
   id: number
+  userid: number
   avatar: string
   title: string
   created: number
@@ -18,8 +20,19 @@ const props = defineProps<{
   content: string
 }>()
 
+const router = useRouter()
+
 const readAll = () => {
   isReadAll.value = true
+}
+
+const toDetail = () => {
+  router.push({
+    path: '/user',
+    query: {
+      id: props.userid,
+    },
+  })
 }
 
 </script>
@@ -37,14 +50,22 @@ const readAll = () => {
       </div>
     </div>
     <div class="user-info">
-      <div class="avatar">
-        <n-avatar
-            :fallback-src="errImg"
-            :size="45"
-            :src="props.avatar"
-        ></n-avatar>
+      <div
+          class="avatar"
+      >
+        <client-only>
+          <nuxt-link class="link" :to="`/user/?id=${props.userid}`">
+            <n-avatar
+                :fallback-src="errImg"
+                :size="50"
+                :src="props.avatar"
+            ></n-avatar>
+          </nuxt-link>
+        </client-only>
       </div>
-      <div class="info">
+      <div
+          class="info"
+      >
         <div class="name">{{ props.username }}</div>
         <div class="motto">
           {{ props.motto }}
@@ -153,10 +174,11 @@ const readAll = () => {
 
     .avatar {
       box-sizing: border-box;
-      width: 45px;
-      height: 45px;
+      width: 50px;
+      height: 50px;
       overflow: hidden;
       border-radius: 5px;
+      border: 2px solid var(--border-color);
 
       .img {
         width: 100%;

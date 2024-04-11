@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
+// import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import {NSpace, NUpload, NInput, NSelect, NIcon} from 'naive-ui'
 import {Add, Close} from '@vicons/ionicons5'
 import {type Blog, createBlog, updateBlog} from '~/api/blog'
@@ -7,6 +7,7 @@ import {useConfig} from '@/hooks/useConfig'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {useTags} from '@/hooks/useTags'
 import {useRouter} from 'vue-router'
+import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
 
 
 const props = defineProps<{
@@ -24,7 +25,7 @@ const editorRef = shallowRef()
 // 内容 HTML
 const valueHtml = ref('')
 const selectValues = ref<number[] | string[]>([])
-const keywords = ref<string>("")
+const keywords = ref<string>('')
 const blogInfo = reactive({
   title: '',
   des: '',
@@ -114,109 +115,111 @@ const delCover = () => {
 </script>
 
 <template>
-  <div class="editor-wrapper">
-    <div class="content">
-      <WangsToolbar
-          class="toolbar"
-          :editor="editorRef"
-          :defaultConfig="toolbarConfig"
-          mode="default"
-      />
-
-      <div class="editor-body">
-        <div class="title">
-          <n-input
-              size="large"
-              placeholder="请输入标题"
-              :bordered="false"
-              v-model:value="blogInfo.title"
-          ></n-input>
-        </div>
-        <WangsEditor
-            v-model="valueHtml"
-            style="min-height: 600px;"
-            :defaultConfig="editorConfig"
-            @onCreated="handleCreated"
+  <client-only>
+    <div class="editor-wrapper">
+      <div class="content">
+        <Toolbar
+            class="toolbar"
+            :editor="editorRef"
+            :defaultConfig="toolbarConfig"
             mode="default"
         />
-      </div>
 
-      <div class="bottom-wrapper">
-        <div class="keywords">
-          <div class="title">关键字</div>
-          <n-input
-              type="textarea"
-              placeholder="请输入关键字"
-              v-model:value="keywords"
-          ></n-input>
-        </div>
-        <div class="cover">添加封面</div>
-        <div class="upload">
-          <div class="img-wrapper" v-if="imgUrl">
-            <div class="close" @click="delCover">
-              <n-icon class="icon">
-                <Close></Close>
-              </n-icon>
-            </div>
-            <img class="img" :src="imgUrl" :alt="imgUrl"/>
+        <div class="editor-body">
+          <div class="title">
+            <n-input
+                size="large"
+                placeholder="请输入标题"
+                :bordered="false"
+                v-model:value="blogInfo.title"
+            ></n-input>
           </div>
-          <n-upload
-              :custom-request="customRequest"
-              :show-file-list="false"
-              ref="uploadRef"
-          >
-            <div class="upload-btn">
-              <div class="text">上传文件</div>
-            </div>
-          </n-upload>
+          <Editor
+              v-model="valueHtml"
+              style="min-height: 600px;"
+              :defaultConfig="editorConfig"
+              @onCreated="handleCreated"
+              mode="default"
+          />
         </div>
-        <div class="tags">
-          <div class="title">文章标签</div>
-          <n-select
-              v-model:value="selectValues"
-              multiple
-              :options="list.map(l => {return {label: l.tag_name, value: l.id}})"
-              placeholder="请选择文章标签"
-              filterable
-          >
-            <template #header>
-              <div
-                  class="add-wrapper"
-                  style="width: 100%;
-                  display: flex;
-                  justify-content: center"
-              >
-                <n-icon
-                    size="22"
-                    style="cursor: pointer"
-                    @click="createNewTag('article')"
-                >
-                  <Add></Add>
+
+        <div class="bottom-wrapper">
+          <div class="keywords">
+            <div class="title">关键字</div>
+            <n-input
+                type="textarea"
+                placeholder="请输入关键字"
+                v-model:value="keywords"
+            ></n-input>
+          </div>
+          <div class="cover">添加封面</div>
+          <div class="upload">
+            <div class="img-wrapper" v-if="imgUrl">
+              <div class="close" @click="delCover">
+                <n-icon class="icon">
+                  <Close></Close>
                 </n-icon>
               </div>
-            </template>
-          </n-select>
+              <img class="img" :src="imgUrl" :alt="imgUrl"/>
+            </div>
+            <n-upload
+                :custom-request="customRequest"
+                :show-file-list="false"
+                ref="uploadRef"
+            >
+              <div class="upload-btn">
+                <div class="text">上传文件</div>
+              </div>
+            </n-upload>
+          </div>
+          <div class="tags">
+            <div class="title">文章标签</div>
+            <n-select
+                v-model:value="selectValues"
+                multiple
+                :options="list.map(l => {return {label: l.tag_name, value: l.id}})"
+                placeholder="请选择文章标签"
+                filterable
+            >
+              <template #header>
+                <div
+                    class="add-wrapper"
+                    style="width: 100%;
+                  display: flex;
+                  justify-content: center"
+                >
+                  <n-icon
+                      size="22"
+                      style="cursor: pointer"
+                      @click="createNewTag('article')"
+                  >
+                    <Add></Add>
+                  </n-icon>
+                </div>
+              </template>
+            </n-select>
+          </div>
         </div>
-      </div>
 
-      <div class="bottom-submit">
-        <div class="btn-wrapper">
-          <n-space>
-            <div class="btn btn-submit" @click="submit">
+        <div class="bottom-submit">
+          <div class="btn-wrapper">
+            <n-space>
+              <div class="btn btn-submit" @click="submit">
               <span>
                 {{ isEdit ? '提交修改' : '发布' }}
               </span>
-            </div>
-            <div class="btn btn-exit" @click="$router.back()">
+              </div>
+              <div class="btn btn-exit" @click="$router.back()">
               <span>
               退出
               </span>
-            </div>
-          </n-space>
+              </div>
+            </n-space>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <style scoped lang="less">

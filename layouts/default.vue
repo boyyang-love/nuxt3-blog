@@ -49,9 +49,11 @@ const toTop = (show: boolean) => {
     <div class="right">
       <AppRight/>
     </div>
-    <div class="more-menu">
-      <MoreMenu></MoreMenu>
-    </div>
+    <client-only>
+      <div class="more-menu">
+        <MoreMenu></MoreMenu>
+      </div>
+    </client-only>
   </div>
 </template>
 

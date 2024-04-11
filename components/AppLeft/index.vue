@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {markRaw} from 'vue'
 import {
   NModal,
   NInput,
@@ -11,7 +12,7 @@ import {
   type FormRules,
   type FormInst,
 } from 'naive-ui'
-import {Home, Cube, FingerPrint, Create, Images, CloudUpload, Planet, Close} from '@vicons/ionicons5'
+import {Home, Cube, FingerPrint, Create, Images, CloudUpload, Planet, Close, TabletLandscape} from '@vicons/ionicons5'
 import {useRoute, useRouter} from 'vue-router'
 import Cropper from '~/components/Cropper/index.vue'
 import {useSigninup} from '@/hooks/signinup'
@@ -64,42 +65,42 @@ const menus = computed(() => {
         text: '首页',
         path: '/home',
         routeName: 'home',
-        icon: Home,
+        icon: markRaw(Home) ,
       },
       {
         name: 'blog',
         text: '博客',
         path: '/blog',
         routeName: 'blog',
-        icon: Cube,
+        icon: markRaw(Cube),
       },
       {
         name: 'wallpaper',
         text: '图片',
         path: '/wallpaper',
         routeName: 'wallpaper',
-        icon: Images,
+        icon: markRaw(Images),
       },
       {
         name: 'create',
         text: '发布博客',
         path: '/create',
         routeName: 'create',
-        icon: Create,
+        icon: markRaw(Create),
       },
       {
         name: 'upload',
         text: '上传图片',
         path: '/upload',
         routeName: 'upload',
-        icon: CloudUpload,
+        icon: markRaw(CloudUpload),
       },
       {
-        name: 'upload',
+        name: 'card',
         text: '个人卡片',
         path: '/',
         routeName: '/',
-        icon: FingerPrint,
+        icon: markRaw(TabletLandscape),
       },
     ]
   }
@@ -109,21 +110,21 @@ const menus = computed(() => {
       text: '首页',
       path: '/home',
       routeName: 'home',
-      icon: Home,
+      icon: markRaw(Home),
     },
     {
       name: 'blog',
       text: '博客',
       path: '/blog',
       routeName: 'blog',
-      icon: Cube,
+      icon: markRaw(Cube),
     },
     {
       name: 'upload',
       text: '个人卡片',
       path: '/',
       routeName: '/',
-      icon: FingerPrint,
+      icon: markRaw(FingerPrint),
     },
   ]
 })

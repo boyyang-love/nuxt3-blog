@@ -23,7 +23,6 @@ export const useTags = (type: TagType) => {
                     return false
                 } else {
                     tagCreate({name: tagName, type: type}).then(() => {
-                        window.$message.success('创建成功')
                         getTags()
                     })
                 }

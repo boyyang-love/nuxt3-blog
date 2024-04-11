@@ -31,6 +31,13 @@ export namespace Upload {
         message: string
     }
 
+    export type UploadListPublicItem = UploadListItem
+
+    export interface UploadListPublicRes {
+        count: number
+        infos: UploadListPublicItem[]
+    }
+
 }
 
 export const uploadFile = (data: { file_name: string, file: File, dir: string }) => {
@@ -65,5 +72,13 @@ export const uploadDelete = (data: Upload.UploadDeleteReq) => {
         url: '/file/delete',
         method: 'POST',
         data,
+    })
+}
+
+export const uploadListPublic = (params: { page?: number, limit?: number, id: number }) => {
+    return http.request<Upload.UploadListPublicRes>({
+        url: '/file/list/public',
+        method: 'GET',
+        params,
     })
 }
