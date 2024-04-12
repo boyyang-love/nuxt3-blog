@@ -77,7 +77,7 @@ const delTag = (item: Tag.TagInfo) => {
     title: '删除标签',
     positiveText: '确认删除',
     negativeText: '取消',
-    content: `是否确实删除「${item.tag_name}」标签？`,
+    content: `是否确定删除「${item.tag_name}」标签？`,
     onPositiveClick: () => {
       loading = true
       tagDelete({id: item.id}).then(() => {

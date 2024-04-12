@@ -7,13 +7,16 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .loader {
   display: block;
   clear: both;
   width: 30px;
   height: 30px;
-  margin: 1rem auto;
+  margin:  auto;
   border: 0.0625rem var(--font-color) solid;
   border-radius: 0.25rem;
   position: relative;

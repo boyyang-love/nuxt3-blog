@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import {NEllipsis, NAvatar, NIcon} from 'naive-ui'
+import {h} from 'vue'
+import {NEllipsis, NAvatar, NIcon, NDropdown, NImage, NPopover} from 'naive-ui'
 import {CaretUp, CaretDown} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
+import {getUserInfoById, type User} from '@/api/user'
+import {env} from '~/utils/env'
+import errImage from '@/assets/image/wolp.jpg'
+import CubeLoading from '~/components/CubeLoading/index.vue'
+
 
 const isReadAll = ref<boolean>(false)
+const userInfo = ref<User.UserInfoByIdRes>()
 
 const props = defineProps<{
   id: number
@@ -26,6 +33,15 @@ const readAll = () => {
   isReadAll.value = true
 }
 
+const getUserInfo = () => {
+  if (!userInfo.value) {
+    getUserInfoById({id: props.userid}).then((res) => {
+      res.data.cover = `${env.VITE_APP_IMG_URL}${res.data.cover}`
+      userInfo.value = res.data
+    })
+  }
+}
+
 const toDetail = () => {
   router.push({
     path: '/user',
@@ -38,7 +54,7 @@ const toDetail = () => {
 </script>
 
 <template>
-  <div class="card-wrapper">
+  <div class="card-wrapper" id="card-wrapper">
     <div class="title-wrapper">
       <nuxt-link :to="`/detail/?id=${props.id}`" class="link">
         <div class="title">{{ props.title }}</div>
@@ -54,13 +70,58 @@ const toDetail = () => {
           class="avatar"
       >
         <client-only>
-          <nuxt-link class="link" :to="`/user/?id=${props.userid}`">
-            <n-avatar
-                :fallback-src="errImg"
-                :size="50"
-                :src="props.avatar"
-            ></n-avatar>
-          </nuxt-link>
+          <n-popover
+              trigger="hover"
+              placement="bottom"
+              display-directive="show"
+              @update:show="getUserInfo"
+          >
+            <template #trigger>
+              <nuxt-link
+                  class="link"
+                  :to="`/user/?id=${props.userid}`"
+              >
+                <n-avatar
+                    :fallback-src="errImg"
+                    :size="50"
+                    :src="props.avatar"
+                ></n-avatar>
+              </nuxt-link>
+            </template>
+            <div class="popover-wrapper">
+              <div class="user-cover" @click="toDetail">
+                <NImage
+                    class="img"
+                    :src="userInfo?.cover"
+                    :preview-disabled="true"
+                    lazy
+                    width="100%"
+                    object-fit="cover"
+                >
+                  <template #placeholder>
+                    <div class="loading">
+                      <CubeLoading></CubeLoading>
+                    </div>
+                  </template>
+                </NImage>
+              </div>
+              <div class="user-motto">
+                <span class="motto">
+                  {{ userInfo?.motto }}
+                </span>
+              </div>
+              <div class="infos" @click="toDetail">
+                <div class="info">
+                  <span class="text">博客</span>
+                  <span class="value">{{ userInfo?.blog_count }}</span>
+                </div>
+                <div class="info">
+                  <span class="text">壁纸</span>
+                  <span class="value">{{ userInfo?.wallpaper_count }}</span>
+                </div>
+              </div>
+            </div>
+          </n-popover>
         </client-only>
       </div>
       <div
@@ -211,6 +272,7 @@ const toDetail = () => {
 
     .img {
       box-sizing: border-box;
+      transition: all 0.45s linear;
       width: 200px;
       height: 125px;
       object-fit: cover;
@@ -332,6 +394,64 @@ const toDetail = () => {
       box-sizing: border-box;
       width: 100%;
       padding: 20px 0;
+    }
+  }
+}
+
+.popover-wrapper {
+  width: 220px;
+
+  .user-cover {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    cursor: pointer;
+    padding-top: 10px;
+
+    .img {
+      box-sizing: border-box;
+      border-radius: 3px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+      .loading {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .user-motto {
+    margin: 5px 0;
+    font-size: 13px;
+    color: var(--font-color-200);
+  }
+
+  .infos {
+    display: flex;
+
+    .info {
+      margin-right: 10px;
+      cursor: pointer;
+
+      .text {
+        color: var(--font-color);
+        font-size: 14px;
+      }
+
+      .value {
+        color: var(--font-color-200);
+        font-size: 13px;
+        margin-left: 5px;
+      }
     }
   }
 }

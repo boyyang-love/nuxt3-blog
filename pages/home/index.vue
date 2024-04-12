@@ -70,7 +70,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="home-wrapper">
+  <div class="home-wrapper" id="home-wrapper">
     <Head>
       <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>
       <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>

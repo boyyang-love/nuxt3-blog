@@ -65,7 +65,7 @@ const menus = computed(() => {
         text: '首页',
         path: '/home',
         routeName: 'home',
-        icon: markRaw(Home) ,
+        icon: markRaw(Home),
       },
       {
         name: 'blog',
@@ -207,15 +207,24 @@ const openSignModal = () => {
   userStore.isSignin = true
 }
 
+const toUserDetail = () => {
+  router.push({
+    path: '/user',
+    query: {
+      id: userStore.user_info.id,
+    },
+  })
+}
+
 </script>
 
 <template>
   <client-only>
     <div class="app-left">
-      <div class="signinup">
+      <div class="signinup" v-if="userStore.token">
         <n-icon
             class="icon"
-            @click="openSignModal"
+            @click="toUserDetail"
         >
           <Planet></Planet>
         </n-icon>
@@ -549,14 +558,14 @@ const openSignModal = () => {
       color: var(--font-color);
 
       background: var(--button-color);
-      box-shadow:  8px 8px 15px var(--button-shadow-one),
+      box-shadow: 8px 8px 15px var(--button-shadow-one),
         -8px -8px 15px var(--button-shadow-two);
     }
 
 
     .active {
       color: var(--button-active-color);
-      box-shadow:  4px 4px 10px var(--button-shadow-one),
+      box-shadow: 4px 4px 10px var(--button-shadow-one),
         -4px -4px 10px var(--button-shadow-two);
     }
   }

@@ -168,7 +168,7 @@ definePageMeta({
               <n-avatar
                   class="avatar"
                   :src="userInfo?.avatar"
-                  :size="100"
+                  :size="80"
                   :fallback-src="errAvatar"
               ></n-avatar>
             </div>
@@ -206,7 +206,7 @@ definePageMeta({
               <div class="empty" v-if="blogInfo.length === 0">
                 <n-empty></n-empty>
               </div>
-              <div class="blogs" v-else>
+              <div class="blogs">
                 <CardBlog
                     v-for="item in blogInfo"
                     :title="item.title"
@@ -218,7 +218,7 @@ definePageMeta({
               </div>
             </div>
 
-            <div class="pagination" v-if="imageList.length > 0">
+            <div class="pagination" v-if="blogInfo.length > 0">
               <n-pagination
                   :item-count="count"
                   :page-size="limit"
@@ -282,6 +282,7 @@ definePageMeta({
     width: 750px;
     height: 900px;
     padding: 0 10px;
+    border-radius: 5px;
     overflow-y: auto;
 
     .top-banner {
@@ -321,7 +322,7 @@ definePageMeta({
         height: 100%;
         display: flex;
         flex-direction: column;
-        padding-left: 140px;
+        padding-left: 120px;
 
         .username {
           font-size: 18px;
@@ -338,7 +339,7 @@ definePageMeta({
 
       .user-avatar {
         position: absolute;
-        top: -65px;
+        top: -40px;
         left: 20px;
         z-index: 999;
 
