@@ -465,7 +465,6 @@ definePageMeta({
         position: absolute;
         top: -40px;
         left: 20px;
-        z-index: 999;
 
         .avatar {
           border: 3px solid var(--border-color);
