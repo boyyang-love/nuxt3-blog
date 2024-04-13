@@ -47,8 +47,6 @@ const props = defineProps<{
   position: relative;
   padding: 10px 10px 4px;
   margin-bottom: 10px;
-  //border: 1px solid rgb(102, 211, 159);
-  //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4) inset, -2px -2px 2px rgba(0, 0, 0, 0.4) inset;
   background: var(--button-color);
   box-shadow: 3px 3px 5px var(--button-shadow-one),
     -3px -3px 5px var(--button-shadow-two);
@@ -59,14 +57,14 @@ const props = defineProps<{
     .top-cover {
       box-sizing: border-box;
       overflow: hidden;
-      height: 100px;
+      height: 120px;
 
       .img {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 2px;
+        border-radius: 3px;
         border: 2px solid var(--border-color);
       }
     }

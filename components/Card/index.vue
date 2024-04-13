@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import {h} from 'vue'
-import {NEllipsis, NAvatar, NIcon, NDropdown, NImage, NPopover} from 'naive-ui'
-import {CaretUp, CaretDown} from '@vicons/ionicons5'
+import {NEllipsis, NAvatar, NIcon, NImage, NPopover} from 'naive-ui'
+import {CaretUp, CaretDown, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {getUserInfoById, type User} from '@/api/user'
 import {env} from '~/utils/env'
-import errImage from '@/assets/image/wolp.jpg'
 import CubeLoading from '~/components/CubeLoading/index.vue'
 
 
@@ -128,10 +126,10 @@ const toDetail = () => {
           </n-popover>
         </client-only>
       </div>
-      <div
-          class="info"
-      >
-        <div class="name">{{ props.username }}</div>
+      <div class="info">
+        <div class="name">
+          {{ props.username }}
+        </div>
         <div class="motto">
           {{ props.motto }}
         </div>
@@ -171,7 +169,7 @@ const toDetail = () => {
           </span>
           <span class="down">
             <n-icon class="icon" size="20">
-              <CaretUp></CaretUp>
+              <ChevronUp></ChevronUp>
             </n-icon>
           </span>
         </div>
@@ -181,7 +179,7 @@ const toDetail = () => {
           </span>
           <span class="down">
             <n-icon class="icon" size="20">
-              <CaretDown></CaretDown>
+              <ChevronDown></ChevronDown>
             </n-icon>
           </span>
         </div>
@@ -198,8 +196,6 @@ const toDetail = () => {
   padding: 10px 20px;
   margin: 10px 0;
   border-radius: 3px;
-  //background: rgba(246,247,253, 1);
-  //box-shadow: 3px 3px 6px #6dd5ed inset, -3px -3px 6px #6dd5ed inset;
 
   .title-wrapper {
     display: flex;
@@ -211,7 +207,7 @@ const toDetail = () => {
     }
 
     .title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--font-color);
       cursor: pointer;
@@ -256,15 +252,15 @@ const toDetail = () => {
       margin-left: 10px;
 
       .name {
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: bolder;
         color: var(--font-color);
       }
 
       .motto {
         font-size: 13px;
         font-weight: 400;
-        color: var(--font-color);
+        color: var(--font-color-200);
       }
     }
   }
@@ -312,10 +308,9 @@ const toDetail = () => {
       }
 
       .sub-title {
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 400;
-        line-height: 24px;
-        text-align: left;
+        text-align: justify;
         vertical-align: top;
         color: var(--font-color);
       }
@@ -328,7 +323,7 @@ const toDetail = () => {
         .text {
           font-size: 13px;
           font-weight: bolder;
-          color: var(--font-color);
+          color: var(--font-color-200);
         }
 
         .down {
@@ -338,7 +333,7 @@ const toDetail = () => {
           padding-top: 7px;
           font-size: 13px;
           cursor: pointer;
-          color: var(--font-color);
+          color: var(--font-color-200);
         }
 
       }
@@ -351,14 +346,16 @@ const toDetail = () => {
         align-items: center;
 
         .text {
+          font-size: 13px;
           cursor: pointer;
-          color: var(--font-color);
+          color: var(--font-color-200);
         }
 
         .down {
           padding-top: 5px;
           cursor: pointer;
-          color: var(--font-color);
+          font-size: 13px;
+          color: var(--font-color-200);
         }
       }
 

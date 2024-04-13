@@ -3,7 +3,7 @@ import {NAvatar, NImage, NPagination, NIcon, NBackTop, NEmpty, NModal, NEllipsis
 import {Close, Home} from '@vicons/ionicons5'
 import {definePageMeta} from '#imports'
 import {getUserInfoById, type User} from '@/api/user'
-import {type Tag, tagList} from '@/api/tags'
+import {type Tag, tagListByUserId} from '@/api/tags'
 import {useRoute, useRouter} from 'vue-router'
 import CardBlog from '@/components/CardBlog/index.vue'
 import {env} from '@/utils/env'
@@ -129,7 +129,7 @@ const getList = () => {
 }
 
 const getTagsList = () => {
-  tagList({user_id: Number(route.query.id), type: 'article'}).then((res) => {
+  tagListByUserId({user_id: Number(route.query.id), type: 'article'}).then((res) => {
     tagsList.value = res.data.tags
   })
 }
@@ -294,7 +294,7 @@ definePageMeta({
 
           <div v-show="tab === 'tag'">
             <div class="tag-detail">
-              <div class="empty" v-if="tagList.length === 0">
+              <div class="empty" v-if="tagsList.length === 0">
                 <n-empty></n-empty>
               </div>
               <div class="tags-wrapper">
@@ -412,7 +412,7 @@ definePageMeta({
     .top-banner {
       box-sizing: border-box;
       width: 100%;
-      height: 320px;
+      max-height: 420px;
       overflow: hidden;
       background-color: var(--card-color);
 

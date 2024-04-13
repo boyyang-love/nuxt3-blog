@@ -55,7 +55,7 @@ const {data} = await useAsyncData(
       >
         <n-empty size="small"></n-empty>
       </div>
-      <div v-else>
+      <div v-else class="card-top-wrapper">
         <CardTop
             v-for="item in data?.data.list"
             :id="item.id"
@@ -82,6 +82,10 @@ const {data} = await useAsyncData(
       width: 100%;
       height: 50px;
     }
+  }
+
+  .card-top-wrapper {
+    padding-bottom: 20px;
   }
 }
 </style>

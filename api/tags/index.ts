@@ -11,13 +11,21 @@ export namespace Tag {
         uid: string
         tag_name: string
         user_id: number
-        articles: {id: number}[]
+        articles: { id: number }[]
     }
 }
 
-export const tagList = (params: { type: 'image' | 'article', user_id?: number }) => {
+export const tagList = (params: { type: 'image' | 'article' }) => {
     return http.request<Tag.ListTagRes>({
         url: '/tag/list',
+        method: 'GET',
+        params,
+    })
+}
+
+export const tagListByUserId = (params: { type: 'image' | 'article', user_id: number }) => {
+    return http.request<Tag.ListTagRes>({
+        url: '/tag/list/userid',
         method: 'GET',
         params,
     })
