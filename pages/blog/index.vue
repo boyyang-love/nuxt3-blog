@@ -128,14 +128,12 @@ const pageUpdate = (e: number) => {
   width: 100%;
   position: relative;
 
-
   .content {
     box-sizing: border-box;
     width: 100%;
     min-height: 805px;
     display: flex;
     padding: 10px 10px 0;
-
     flex-direction: column;
 
     .empty {
@@ -150,10 +148,7 @@ const pageUpdate = (e: number) => {
 
   .pagination {
     box-sizing: border-box;
-    //background-color: rgb(245 246 255 / 80%);
-    //background-color: rgb(241, 239, 254);
     background-color: var(--center-top-bg);
-
     padding: 10px 0;
     width: 100%;
     display: flex;

@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import {NAvatar, NImage, NPagination, NIcon, NBackTop, NEmpty} from 'naive-ui'
-import {Home} from '@vicons/ionicons5'
+import {NAvatar, NImage, NPagination, NIcon, NBackTop, NEmpty, NModal, NEllipsis, NCard} from 'naive-ui'
+import {Close, Home} from '@vicons/ionicons5'
 import {definePageMeta} from '#imports'
 import {getUserInfoById, type User} from '@/api/user'
-import {useRoute} from 'vue-router'
+import {type Tag, tagList} from '@/api/tags'
+import {useRoute, useRouter} from 'vue-router'
 import CardBlog from '@/components/CardBlog/index.vue'
 import {env} from '@/utils/env'
-import {type Blog, searchBlogByUserId} from '~/api/blog'
+import {type Blog, searchBlogByIds, searchBlogByUserId} from '~/api/blog'
 import errimg from '@/assets/image/wolp.jpg'
 import errAvatar from '@/assets/image/avatar_g.jpg'
 import WaterFlow from './components/waterFull/index.vue'
@@ -14,11 +15,16 @@ import {type Upload, uploadListPublic} from '~/api/upload'
 import {CubeLoading} from '#components'
 
 const route = useRoute()
+const router = useRouter()
 const wrapper = ref<HTMLElement | null>(null)
 const tab = ref<string>('blog')
 const userInfo = ref<User.UserInfoByIdRes>()
 const blogInfo = ref<Blog.ListBlogSearchByUserIdInfo[]>([])
 const imageList = ref<Upload.UploadListItem[]>([])
+const tagsList = ref<Tag.TagInfo[]>([])
+const isShowCard = ref<boolean>(false)
+const blogList = ref<Blog.ListBlogItemByids[]>([])
+
 // blog
 const count = ref<number>(0)
 const page = ref<number>(1)
@@ -54,6 +60,22 @@ const getBlogInfo = () => {
     blogInfo.value = res.data.infos
   })
 }
+
+const getBlogList = (ids: number[]) => {
+  window.$uploadProgress.begin()
+  searchBlogByIds({ids: ids}).then((res) => {
+    blogList.value = res.data.info
+    const t = setTimeout(() => {
+      t && clearTimeout(t)
+      isShowCard.value = true
+      window.$uploadProgress.end()
+    }, 500)
+
+  }).catch(() => {
+    window.$uploadProgress.end()
+  })
+}
+
 
 const pageSizes = [
   {
@@ -106,6 +128,12 @@ const getList = () => {
   })
 }
 
+const getTagsList = () => {
+  tagList({user_id: Number(route.query.id), type: 'article'}).then((res) => {
+    tagsList.value = res.data.tags
+  })
+}
+
 const handleScroll = () => {
   const w = wrapper.value as any
   const len = imageList.value.length
@@ -117,12 +145,28 @@ const handleScroll = () => {
   }
 }
 
+
 const tabChange = (t: string) => {
   tab.value = t
 
   if (t === 'wallpaper' && imageList.value.length === 0) {
     getList()
   }
+
+  if (t === 'tag' && tagsList.value.length === 0) {
+    getTagsList()
+  }
+}
+
+const toDetail = (id: number) => {
+  router.push({
+    path: '/details',
+    query: {
+      id: id,
+    },
+  }).then(() => {
+    isShowCard.value = false
+  })
 }
 
 definePageMeta({
@@ -192,6 +236,13 @@ definePageMeta({
               <span class="text">壁纸</span>
               <span class="value">{{ userInfo?.wallpaper_count }}</span>
             </div>
+            <div
+                :class="['item', tab === 'tag' ? 'active' : '']"
+                @click="tabChange('tag')"
+            >
+              <span class="text">标签</span>
+              <span class="value">{{ userInfo?.tags_count }}</span>
+            </div>
             <div class="home">
               <nuxt-link class="link" to="/home">
                 <n-icon :size="22" class="icon">
@@ -241,10 +292,83 @@ definePageMeta({
             </div>
           </div>
 
+          <div v-show="tab === 'tag'">
+            <div class="tag-detail">
+              <div class="empty" v-if="tagList.length === 0">
+                <n-empty></n-empty>
+              </div>
+              <div class="tags-wrapper">
+                <div
+                    class="tag-item"
+                    v-for="item in tagsList"
+                    @click="getBlogList(item.articles.map(a => a.id))"
+                >
+                  <span class="name">
+                    {{ item.tag_name }}
+                  </span>
+                  <span class="value">
+                    {{ item.articles.length || 0 }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <n-back-top :right="300" :bottom="55"></n-back-top>
 
         </div>
       </div>
+
+      <n-modal
+          v-model:show="isShowCard"
+          style="
+            max-width: 600px;
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+        "
+      >
+        <n-card>
+          <div class="blog-list">
+            <div class="search-result">
+              <div
+                  class="search-result-item"
+                  v-for="item in blogList"
+                  @click="toDetail(item.id)"
+              >
+                <div class="left-img">
+                  <img class="img" :src="item.cover" :alt="item.cover">
+                </div>
+                <div class="right-content">
+                  <n-ellipsis
+                      :line-clamp="1"
+                      :tooltip="false"
+                  >
+                    <span class="title">{{ item.title }}</span>
+                  </n-ellipsis>
+                  <n-ellipsis
+                      :line-clamp="2"
+                      :tooltip="false"
+                  >
+                    <span class="des">{{ item.des }}</span>
+                  </n-ellipsis>
+                </div>
+              </div>
+            </div>
+            <div class="close">
+              <n-icon
+                  :size="22"
+                  class="icon"
+                  @click="isShowCard = false"
+              >
+                <Close></Close>
+              </n-icon>
+            </div>
+          </div>
+        </n-card>
+      </n-modal>
+
     </client-only>
   </nuxt-layout>
 </template>
@@ -432,6 +556,112 @@ definePageMeta({
         padding: 150px 0;
         justify-content: center;
         align-items: center;
+      }
+    }
+
+    .tag-detail {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: var(--card-color);
+
+      .empty {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 150px 0;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .tags-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        .tag-item {
+          box-sizing: border-box;
+          background-color: var(--card-color);
+          border: 2px solid var(--border-color);
+          margin: 5px;
+          padding: 0 5px;
+          border-radius: 3px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+
+          .name {
+            font-size: 14px;
+            color: var(--font-color);
+          }
+
+          .value {
+            font-size: 13px;
+            color: var(--font-color-200);
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.blog-list {
+  display: flex;
+  max-height: 500px;
+  overflow-y: auto;
+
+  .search-result-item {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+
+    .left-img {
+      box-sizing: border-box;
+      width: 145px;
+      height: 75px;
+      border-radius: 5px;
+      overflow: hidden;
+      flex-shrink: 0;
+
+      .img {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .right-content {
+      display: flex;
+      flex-direction: column;
+      padding-left: 10px;
+
+      .title {
+        font-size: 15px;
+        font-weight: bolder;
+        color: var(--font-color);
+      }
+
+      .des {
+        font-size: 13px;
+        font-weight: bold;
+        color: var(--font-color-200);
+      }
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    .icon {
+      color: var(--font-color);
+      cursor: pointer;
+      transition: all 0.45s ease-in-out;
+      display: inline-block;
+
+      &:hover {
+        transform: rotateZ(90deg);
       }
     }
   }

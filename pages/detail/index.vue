@@ -15,7 +15,6 @@ import type {Result} from '~/utils/http/types'
 const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
-const isShowSkeleton = ref<boolean>(false)
 
 const {data, refresh} = await useAsyncData(
     'blog_detail',
@@ -69,15 +68,6 @@ watch(() => route.query.id, (newVal) => {
   if (newVal) {
     refresh()
   }
-})
-
-onMounted(() => {
-  isShowSkeleton.value = true
-  const t = setTimeout(() => {
-    isShowSkeleton.value = false
-    clearTimeout(t)
-  }, 300)
-
 })
 
 </script>

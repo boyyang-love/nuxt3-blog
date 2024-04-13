@@ -202,10 +202,6 @@ const openUpdateUserInfoModal = () => {
   }
 }
 
-const openSignModal = () => {
-  userStore.showSigninModal = true
-  userStore.isSignin = true
-}
 
 const toUserDetail = () => {
   router.push({

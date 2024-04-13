@@ -15,7 +15,7 @@ export namespace Tag {
     }
 }
 
-export const tagList = (params: { type: 'image' | 'article' }) => {
+export const tagList = (params: { type: 'image' | 'article', user_id?: number }) => {
     return http.request<Tag.ListTagRes>({
         url: '/tag/list',
         method: 'GET',

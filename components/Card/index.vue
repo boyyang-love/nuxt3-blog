@@ -119,6 +119,10 @@ const toDetail = () => {
                   <span class="text">壁纸</span>
                   <span class="value">{{ userInfo?.wallpaper_count }}</span>
                 </div>
+                <div class="info">
+                  <span class="text">标签</span>
+                  <span class="value">{{ userInfo?.tags_count }}</span>
+                </div>
               </div>
             </div>
           </n-popover>
