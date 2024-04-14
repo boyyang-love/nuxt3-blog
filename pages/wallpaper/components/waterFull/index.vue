@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {NEmpty} from 'naive-ui'
-import {type Upload, uploadList} from '~/api/upload'
+import {type Upload, uploadList, uploadStatus} from '~/api/upload'
 import Card from '../card/index.vue'
 import {env} from '~/utils/env'
 
@@ -111,6 +111,20 @@ const del = (id: number) => {
   getWrapperBox()
 }
 
+const wallpaperStatus = (id: number, status: boolean) => {
+  window.$uploadProgress.begin
+  uploadStatus({id: id, status: status}).then(() => {
+    const img = imgList.value.find(img => img.id === id)
+    if (img) {
+      img.status = status
+    }
+
+    window.$uploadProgress.end()
+  }).catch(() => {
+    window.$uploadProgress.end()
+  })
+}
+
 watch(() => props.type, () => {
   imgList.value = []
   list.value = []
@@ -152,10 +166,12 @@ onMounted(() => {
             :key="item.id"
             :id="item.id"
             :url="item.file_path"
+            :status="item.status"
             :type="props.type"
             :file-name="item.file_name"
             :path="item.path"
             @del="del"
+            @wallpaperStatus="wallpaperStatus"
         >
         </Card>
       </div>
@@ -182,6 +198,7 @@ onMounted(() => {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(56, 74, 82, 0.7);
 }
+
 .waterfall-wrapper {
   box-sizing: border-box;
   position: relative;

@@ -10,6 +10,7 @@ export namespace Upload {
         id: number
         file_name: string
         file_path: string
+        status: boolean
         w: number
         h: number
     }
@@ -80,5 +81,13 @@ export const uploadListPublic = (params: { page?: number, limit?: number, id: nu
         url: '/file/list/public',
         method: 'GET',
         params,
+    })
+}
+
+export const uploadStatus = (data: { id: number, status: boolean }) => {
+    return http.request({
+        url: '/file/status',
+        method: 'POST',
+        data,
     })
 }

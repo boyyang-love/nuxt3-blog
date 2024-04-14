@@ -35,7 +35,9 @@ const imgList = ref<ImageList[]>([])
 watch(
     () => props.list,
     () => {
-      getWrapperBox()
+      nextTick(() => {
+        getWrapperBox()
+      })
     },
     {
       deep: true,
@@ -44,7 +46,7 @@ watch(
 
 const getWrapperBox = () => {
   const w = wrapper.value?.clientWidth
-  const imgW = (Number(w || 1000) - ((props.col - 1) * props.gap)) / props.col
+  const imgW = (Number(w || 710) - ((props.col - 1) * props.gap)) / props.col
   getPos(imgW)
 }
 
@@ -85,7 +87,9 @@ const getPos = (imgW: number) => {
 }
 
 onMounted(() => {
-  getWrapperBox()
+  nextTick(() => {
+    getWrapperBox()
+  })
 })
 
 </script>
@@ -146,6 +150,7 @@ onMounted(() => {
 
   .out-wrapper {
     box-sizing: border-box;
+
     .img-wrapper {
       width: 100%;
       height: 100%;

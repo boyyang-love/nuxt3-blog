@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {NImage, NIcon, NPopconfirm} from 'naive-ui'
-import {Close, PaperPlane, CloudDownload} from '@vicons/ionicons5'
+import {Close, PaperPlane, CloudDownload, LockClosed, LockOpen} from '@vicons/ionicons5'
 import CubeLoading from '@/components/CubeLoading/index.vue'
 import {uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
@@ -13,11 +13,13 @@ interface Props {
   type: 'images' | 'blog' | 'bg' | 'avatar'
   path: string
   fileName: string
+  status: boolean
 }
 
 const props = defineProps<Props>()
 const emits = defineEmits<{
   del: [id: number]
+  wallpaperStatus: [id: number, status: boolean]
 }>()
 const userStore = useUserStore()
 
@@ -111,11 +113,28 @@ const downloadImage = () => {
     window.$message.success('图片下载成功')
   })
 }
+
+const changeWallpaprStatus = () => {
+  emits('wallpaperStatus', props.id, !props.status)
+}
 </script>
 
 <template>
   <div class="image-card-wrapper" id="image-card-wrapper">
     <div class="icon-wrapper">
+      <n-popconfirm
+          positive-text="确定"
+          negative-text="取消"
+          @positive-click="changeWallpaprStatus"
+          v-if="props.type === 'images'"
+      >
+        <template #trigger>
+          <n-icon size="18" class="desktop icon">
+            <component :is="props.status ? LockOpen : LockClosed "></component>
+          </n-icon>
+        </template>
+        <div class="text" style="max-width: 150px">{{ props.status ? '是否隐藏该图片' : '是否公开该图片' }}</div>
+      </n-popconfirm>
       <n-popconfirm
           positive-text="确定"
           negative-text="取消"
