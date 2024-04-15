@@ -9,7 +9,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  padding: '10px 20px',
+  padding: '10px 0px',
   more: true,
   title: '最新文章',
 })
@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
   padding: v-bind("props.padding");
 
   .title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--font-color);
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);

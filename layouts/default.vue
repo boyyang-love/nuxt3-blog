@@ -112,7 +112,6 @@ const toTop = (show: boolean) => {
     background-color: var(--content-center);
     width: calc(100% - (@w * 2));
     overflow-y: auto;
-    //position: relative;
     transition: all .45s linear;
 
     .content-top {
@@ -156,8 +155,8 @@ const toTop = (show: boolean) => {
 
     .more-menu {
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: 30px;
+      right: 10px;
     }
   }
 }

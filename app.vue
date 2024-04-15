@@ -66,19 +66,33 @@ useHead({
 
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.45s ease-in-out;
+  transition: all 0.45s linear;
+  position: relative;
 }
 
 .page-enter-from,
 .page-leave-to {
-  //transform: scale(0.5);
-  opacity: 0;
+  transform: translateY(-100%);
 }
 
 .page-enter-to,
 .page-leave-from {
-  //transform: scale(1);
-  opacity: 1;
+  transform: translateY(0);
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: all 0.4s ease-in-out;
+  position: relative;
+}
+.layout-enter-from,
+.layout-leave-to {
+  transform: translateY(100%);
+}
+
+.layout-enter-to,
+.layout-leave-from {
+  transform: translateY(0);
 }
 
 body {

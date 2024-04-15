@@ -101,7 +101,6 @@ onMounted(() => {
       </div>
     </client-only>
     <div class="content">
-      <TitleText :more="false"></TitleText>
       <div class="empty" v-if="data?.data.list.length === 0">
         <n-empty></n-empty>
       </div>
@@ -170,7 +169,7 @@ onMounted(() => {
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 50px;
+    padding-top: 10px;
     position: relative;
 
     .empty {

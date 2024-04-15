@@ -53,6 +53,7 @@ export const uploadFile = (data: { file_name: string, file: File, dir: string })
             method: 'POST',
             url: '/file/upload',
             data: formData,
+            timeout: 1000 * 60 * 3
         },
         {
             serializeParams: false,

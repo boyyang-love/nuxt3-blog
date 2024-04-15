@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {NEllipsis, NAvatar, NIcon, NImage, NPopover} from 'naive-ui'
-import {CaretUp, CaretDown, ChevronUp, ChevronDown} from '@vicons/ionicons5'
+import {ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {getUserInfoById, type User} from '@/api/user'
 import {env} from '~/utils/env'
 import CubeLoading from '~/components/CubeLoading/index.vue'
+import WaterTitle from '~/components/AniText/index.vue'
 
 
 const isReadAll = ref<boolean>(false)
@@ -55,7 +56,7 @@ const toDetail = () => {
   <div class="card-wrapper" id="card-wrapper">
     <div class="title-wrapper">
       <nuxt-link :to="`/detail/?id=${props.id}`" class="link">
-        <div class="title">{{ props.title }}</div>
+        <WaterTitle :text="props.title"></WaterTitle>
       </nuxt-link>
       <div class="time">
         <span>{{ moment(props.created).format('YYYY-MM-DD') }}</span>
@@ -194,7 +195,6 @@ const toDetail = () => {
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
-  margin: 10px 0;
   border-radius: 3px;
 
   .title-wrapper {
@@ -202,8 +202,7 @@ const toDetail = () => {
     justify-content: space-between;
 
     .link {
-      text-decoration-color: var(--font-color);
-      text-underline-offset: 5px;
+      position: relative;
     }
 
     .title {

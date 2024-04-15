@@ -3,12 +3,13 @@ import {NSpace, NAvatar, NIcon} from 'naive-ui'
 import {useUserStore} from '@/store/modules/user'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {definePageMeta} from '#imports'
-import {Home, Cube, Images} from '@vicons/ionicons5'
+import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
+const isShowThemeBtn = ref<boolean>(false)
 
 const menus = computed(() => {
   const token = userStore.token
@@ -116,13 +117,20 @@ definePageMeta({
             <Cat></Cat>
           </div>
         </div>
-        <div class="theme-circle-wrapper">
-          <div
-              class="item"
-              :style="{'--color': item}"
-              @click="themeStore.setTheme(item)"
-              v-for="item in themeStore.themeSelectArray"
-          ></div>
+        <div class="theme-circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '-40px'}">
+          <div class="icon">
+            <n-icon :size="24" @click="isShowThemeBtn = !isShowThemeBtn">
+              <component :is="isShowThemeBtn ? ChevronDown : ChevronUp"></component>
+            </n-icon>
+          </div>
+          <div class="circle-wrapper">
+            <div
+                class="item"
+                :style="{'--color': item}"
+                @click="themeStore.setTheme(item)"
+                v-for="item in themeStore.themeSelectArray"
+            ></div>
+          </div>
         </div>
       </div>
     </client-only>
@@ -134,9 +142,11 @@ definePageMeta({
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   //background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
   background-color: var(--bg-color);
 
@@ -253,26 +263,37 @@ definePageMeta({
 
   .theme-circle-wrapper {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    transition: all 0.45s linear;
+    bottom: var(--p);
     display: flex;
+    justify-content: center;
+    flex-direction: column;
     padding: 2px 5px;
-    border: 2px solid var(--border-color);
-    background-color: var(--card-color);
-    backdrop-filter: blur(5px);
-    --webkit-backdrop-filter: blur(5px);
-    border-radius: 20px;
 
-    .item {
-      box-sizing: border-box;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background-color: var(--color);
-      margin: 5px;
+    .icon {
+      margin: 10px auto;
       cursor: pointer;
-      box-shadow: 1px 1px 3px rgba(0, 0, 0,0.3), -1px -1px 3px rgba(0, 0, 0,0.3);
+      color: var(--font-color);
     }
+
+    .circle-wrapper {
+      background-color: #23d69b;
+      border-radius: 20px;
+      padding: 2px 10px;
+      display: flex;
+
+      .item {
+        box-sizing: border-box;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: var(--color);
+        margin: 5px;
+        cursor: pointer;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), -1px -1px 3px rgba(0, 0, 0, 0.3);
+      }
+    }
+
   }
 }
 
@@ -296,8 +317,8 @@ definePageMeta({
     }
 
     .cat {
-      bottom: 0 !important;
-      right: 350px !important;
+      bottom: 30px !important;
+      right: 270px !important;
     }
 
   }
@@ -305,16 +326,6 @@ definePageMeta({
   .index-wrapper {
     box-sizing: border-box;
     display: flex;
-    .theme-circle-wrapper {
-      background-color: var(--card-color);
-      border: 2px solid var(--border-color);
-      backdrop-filter: blur(5px) saturate(200%);
-      --webkit-backdrop-filter: blur(5px);
-      display: flex;
-      left: 10px;
-      bottom: 10px;
-      width: 115px;
-    }
   }
 }
 </style>
