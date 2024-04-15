@@ -20,11 +20,11 @@ const tabChange = () => {
 const changeCol = () => {
   if (document.body.offsetWidth < 700) {
     col.value = 2
-    childrenComp.value.getWrapperBox()
   } else {
     col.value = 3
-    childrenComp.value.getWrapperBox()
   }
+
+  childrenComp.value.getWrapperBox()
 }
 
 onMounted(() => {
@@ -35,9 +35,7 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     if (t) clearTimeout(t)
     t = setTimeout(() => {
-      nextTick(() => {
         changeCol()
-      })
     }, 500)
   })
 })

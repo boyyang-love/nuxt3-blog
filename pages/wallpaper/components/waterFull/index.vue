@@ -133,6 +133,9 @@ watch([() => props.type], () => {
   count.value = 0
   getList()
 })
+watch([() => props.col], () => {
+  getWrapperBox()
+})
 
 onMounted(() => {
   getList()
@@ -226,6 +229,7 @@ defineExpose({
       width: 100%;
       height: 100%;
       position: absolute;
+      transition: all 0.45s ease-in-out;
     }
   }
 }

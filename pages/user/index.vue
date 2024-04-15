@@ -148,9 +148,7 @@ const tabChange = (t: string) => {
 
   if (t === 'wallpaper' && imageList.value.length === 0) {
     getList()
-    nextTick(() => {
-      changeCol()
-    })
+    changeCol()
   }
 
   if (t === 'tag' && tagsList.value.length === 0) {
@@ -171,12 +169,11 @@ const toDetail = (id: number) => {
 
 const changeCol = () => {
   if (tab.value !== 'wallpaper') return
-  if (document.body.offsetWidth < 900) {
+  const bodyW = document.body.offsetWidth
+  if (bodyW <= 800) {
     col.value = 2
-    childrenComp.value.getWrapperBox()
   } else {
     col.value = 3
-    childrenComp.value.getWrapperBox()
   }
 }
 
@@ -187,9 +184,7 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     if (t) clearTimeout(t)
     t = setTimeout(() => {
-      nextTick(() => {
-        changeCol()
-      })
+      changeCol()
     }, 500)
 
   })

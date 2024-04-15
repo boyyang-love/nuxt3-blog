@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { NImage} from 'naive-ui'
-import {type Upload, uploadList} from '~/api/upload'
+import {NImage} from 'naive-ui'
+import {type Upload} from '~/api/upload'
 import errimg from 'assets/image/wolp.jpg'
 import {CubeLoading} from '#components'
 
@@ -34,14 +34,16 @@ const imgList = ref<ImageList[]>([])
 watch(
     () => props.list,
     () => {
-      nextTick(() => {
-        getWrapperBox()
-      })
+      getWrapperBox()
     },
     {
       deep: true,
     },
 )
+
+watch(() => props.col, () => {
+  getWrapperBox()
+})
 
 const getWrapperBox = () => {
   const w = wrapper.value?.clientWidth
@@ -92,7 +94,7 @@ onMounted(() => {
 })
 
 defineExpose({
-  getWrapperBox
+  getWrapperBox,
 })
 
 </script>
@@ -158,6 +160,8 @@ defineExpose({
       width: 100%;
       height: 100%;
       position: absolute;
+      transition: all 0.45s ease-in-out;
+
 
       .img {
         box-sizing: border-box;
