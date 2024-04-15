@@ -469,7 +469,7 @@ const searchByHistory = (word: string) => {
     .search-result {
       box-sizing: border-box;
       border-radius: 5px;
-      height: 350px;
+      max-height: 350px;
       overflow-y: auto;
 
       .search-result-item {
