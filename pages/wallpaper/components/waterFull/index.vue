@@ -125,7 +125,7 @@ const wallpaperStatus = (id: number, status: boolean) => {
   })
 }
 
-watch(() => props.type, () => {
+watch([() => props.type], () => {
   imgList.value = []
   list.value = []
   page.value = 1
@@ -136,6 +136,10 @@ watch(() => props.type, () => {
 
 onMounted(() => {
   getList()
+})
+
+defineExpose({
+  getWrapperBox,
 })
 
 </script>

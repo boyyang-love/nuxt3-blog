@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import {NEmpty, NImage} from 'naive-ui'
+import { NImage} from 'naive-ui'
 import {type Upload, uploadList} from '~/api/upload'
-import {env} from '~/utils/env'
 import errimg from 'assets/image/wolp.jpg'
 import {CubeLoading} from '#components'
 
@@ -90,6 +89,10 @@ onMounted(() => {
   nextTick(() => {
     getWrapperBox()
   })
+})
+
+defineExpose({
+  getWrapperBox
 })
 
 </script>

@@ -4,6 +4,10 @@ import WaterFull from './components/waterFull/index.vue'
 
 const tabValue = ref<'images' | 'blog' | 'bg' | 'avatar'>('images')
 const more = ref<boolean>(false)
+const col = ref<number>(3)
+const wallpaperWrapper = ref<HTMLElement | null>()
+const childrenComp = ref()
+
 
 const isNoMore = (noMore: boolean) => {
   more.value = noMore
@@ -13,12 +17,42 @@ const tabChange = () => {
   more.value = false
 }
 
+const changeCol = () => {
+  if (document.body.offsetWidth < 700) {
+    col.value = 2
+    childrenComp.value.getWrapperBox()
+  } else {
+    col.value = 3
+    childrenComp.value.getWrapperBox()
+  }
+}
+
+onMounted(() => {
+  nextTick(() => {
+    changeCol()
+  })
+  let t: NodeJS.Timeout | null = null
+  window.addEventListener('resize', () => {
+    if (t) clearTimeout(t)
+    t = setTimeout(() => {
+      nextTick(() => {
+        changeCol()
+      })
+    }, 500)
+  })
+})
+
+onUnmounted(() => {
+  document.removeEventListener('resize', () => null)
+})
+
 </script>
 
 <template>
   <div
       class="wallpaper-wrapper"
       id="wallpaper-wrapper"
+      ref="wallpaperWrapper"
   >
     <div class="tab-wrapper">
       <n-tabs
@@ -43,6 +77,8 @@ const tabChange = () => {
     </div>
     <div class="water">
       <WaterFull
+          ref="childrenComp"
+          :col="col"
           :type="tabValue"
           @isNoMore="isNoMore"
       ></WaterFull>

@@ -234,4 +234,22 @@ onMounted(() => {
     }
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .home-wrapper {
+    padding: 0;
+
+    .banner {
+      border-radius: 0;
+
+      .img {
+        border-radius: 0;
+      }
+    }
+
+    .content {
+      padding: 10px;
+    }
+  }
+}
 </style>

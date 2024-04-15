@@ -24,6 +24,8 @@ const imageList = ref<Upload.UploadListItem[]>([])
 const tagsList = ref<Tag.TagInfo[]>([])
 const isShowCard = ref<boolean>(false)
 const blogList = ref<Blog.ListBlogItemByids[]>([])
+const col = ref<number>(3)
+const childrenComp = ref()
 
 // blog
 const count = ref<number>(0)
@@ -107,11 +109,6 @@ const pageUpdate = (e: number) => {
 }
 
 
-onMounted(() => {
-  getUserInfo()
-  getBlogInfo()
-})
-
 const getList = () => {
   uploadListPublic({
     page: imagePage.value,
@@ -151,6 +148,9 @@ const tabChange = (t: string) => {
 
   if (t === 'wallpaper' && imageList.value.length === 0) {
     getList()
+    nextTick(() => {
+      changeCol()
+    })
   }
 
   if (t === 'tag' && tagsList.value.length === 0) {
@@ -168,6 +168,36 @@ const toDetail = (id: number) => {
     isShowCard.value = false
   })
 }
+
+const changeCol = () => {
+  if (tab.value !== 'wallpaper') return
+  if (document.body.offsetWidth < 900) {
+    col.value = 2
+    childrenComp.value.getWrapperBox()
+  } else {
+    col.value = 3
+    childrenComp.value.getWrapperBox()
+  }
+}
+
+onMounted(() => {
+  getUserInfo()
+  getBlogInfo()
+  let t: NodeJS.Timeout | null = null
+  window.addEventListener('resize', () => {
+    if (t) clearTimeout(t)
+    t = setTimeout(() => {
+      nextTick(() => {
+        changeCol()
+      })
+    }, 500)
+
+  })
+})
+
+onUnmounted(() => {
+  document.removeEventListener('resize', () => null)
+})
 
 definePageMeta({
   layout: false,
@@ -192,13 +222,13 @@ definePageMeta({
                 :fallback-src="errimg"
                 :preview-disabled="true"
                 :img-props="{
-                width: '100%'
-              }"
+                    width: '100%'
+                }"
                 object-fit="cover"
                 :style="{
-                width: '100%',
-                height: '100%'
-              }"
+                    width: '100%',
+                    height: '100%'
+                }"
             >
               <template #placeholder>
                 <div class="loading">
@@ -287,7 +317,9 @@ definePageMeta({
                 <n-empty></n-empty>
               </div>
               <WaterFlow
+                  ref="childrenComp"
                   :list="imageList"
+                  :col="col"
               ></WaterFlow>
             </div>
           </div>
@@ -576,6 +608,7 @@ definePageMeta({
       .tags-wrapper {
         display: flex;
         flex-wrap: wrap;
+
         .tag-item {
           box-sizing: border-box;
           background-color: var(--card-color);
@@ -672,10 +705,15 @@ definePageMeta({
       width: 100%;
       height: 100%;
       padding: 0;
+      border-radius: 0;
 
       .top-banner {
         width: 100%;
         height: auto;
+
+        .img {
+          border-radius: 0;
+        }
       }
 
       .user-info {
