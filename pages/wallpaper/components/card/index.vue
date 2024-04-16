@@ -14,6 +14,8 @@ interface Props {
   path: string
   fileName: string
   status: boolean
+  w: number
+  h: number
 }
 
 const props = defineProps<Props>()
@@ -176,6 +178,9 @@ const changeWallpaprStatus = () => {
         </div>
       </n-popconfirm>
     </div>
+    <div class="w-h-wrapper">
+      <span class="text">{{ props.w }}x{{ props.h }}</span>
+    </div>
     <NImage
         class="n-img"
         :src="props.url"
@@ -222,11 +227,12 @@ const changeWallpaprStatus = () => {
   }
 
   .icon-wrapper {
+    transition: all 0.45s ease-in-out;
     box-sizing: border-box;
     //width: 120px;
     position: absolute;
-    top: 3px;
-    right: 3px;
+    top: -30px;
+    right: -30px;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
     --webkit-backdrop-filter: blur(2px);
@@ -249,6 +255,34 @@ const changeWallpaprStatus = () => {
       cursor: pointer;
       color: whitesmoke;
       margin: 2px 3px;
+    }
+  }
+
+  &:hover {
+    .w-h-wrapper {
+      top: 0;
+    }
+
+    .icon-wrapper {
+      top: 50%;
+      right: 50%;
+      transform: translateX(50%) translateY(-50%);
+    }
+  }
+
+  .w-h-wrapper {
+    transition: all 0.45s ease-in-out;
+    position: absolute;
+    left: 0;
+    top: -30px;
+    padding: 0 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    --webkit-backdrop-filter: blur(2px);
+
+    .text {
+      font-size: 12px;
+      color: whitesmoke;
     }
   }
 }

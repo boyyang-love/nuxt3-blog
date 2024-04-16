@@ -170,6 +170,8 @@ defineExpose({
       >
         <Card
             class="img"
+            :w="item.w"
+            :h="item.h"
             :key="item.id"
             :id="item.id"
             :url="item.file_path"
