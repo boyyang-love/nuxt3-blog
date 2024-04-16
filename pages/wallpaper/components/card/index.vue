@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {NImage, NIcon, NPopconfirm} from 'naive-ui'
-import {Close, PaperPlane, CloudDownload, LockClosed, LockOpen} from '@vicons/ionicons5'
+import {Close, PaperPlane, CloudDownload, LockClosed, LockOpen, ChevronForward, ChevronBack, EyeOff} from '@vicons/ionicons5'
 import CubeLoading from '@/components/CubeLoading/index.vue'
 import {uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
@@ -19,6 +19,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const isShowMenu = ref<boolean>(false)
+
 const emits = defineEmits<{
   del: [id: number]
   wallpaperStatus: [id: number, status: boolean]
@@ -123,7 +125,10 @@ const changeWallpaprStatus = () => {
 
 <template>
   <div class="image-card-wrapper" id="image-card-wrapper">
-    <div class="icon-wrapper">
+    <div
+        :class="['icon-wrapper', isShowMenu ? 'show' : '']"
+        :style="{'--tx': props.type === 'blog' ? '-66%' : '-75%' }"
+    >
       <n-popconfirm
           positive-text="确定"
           negative-text="取消"
@@ -149,7 +154,6 @@ const changeWallpaprStatus = () => {
         </template>
         <div class="text" style="max-width: 150px">下载图片到本地？</div>
       </n-popconfirm>
-
       <n-popconfirm
           positive-text="确定"
           negative-text="取消"
@@ -177,9 +181,21 @@ const changeWallpaprStatus = () => {
           {{ delText }}
         </div>
       </n-popconfirm>
+      <n-icon
+          :size="18"
+          class="icon arrow"
+          @click="isShowMenu = !isShowMenu"
+      >
+        <component :is="isShowMenu ? ChevronBack : ChevronForward "></component>
+      </n-icon>
     </div>
     <div class="w-h-wrapper">
       <span class="text">{{ props.w }}x{{ props.h }}</span>
+    </div>
+    <div class="lock" v-if="!props.status && props.type === 'images' ">
+      <n-icon size="18" class="icon">
+        <EyeOff></EyeOff>
+      </n-icon>
     </div>
     <NImage
         class="n-img"
@@ -211,6 +227,7 @@ const changeWallpaprStatus = () => {
   position: relative;
 
   .n-img {
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -227,12 +244,12 @@ const changeWallpaprStatus = () => {
   }
 
   .icon-wrapper {
-    transition: all 0.45s ease-in-out;
+    transition: all 0.25s ease-in-out;
     box-sizing: border-box;
-    //width: 120px;
     position: absolute;
-    top: -30px;
-    right: -30px;
+    top: 50%;
+    left: 0;
+    transform: translateX(var(--tx)) translateY(-50%);
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
     --webkit-backdrop-filter: blur(2px);
@@ -253,20 +270,19 @@ const changeWallpaprStatus = () => {
 
     .icon {
       cursor: pointer;
-      color: whitesmoke;
+      color: #23d69b;
       margin: 2px 3px;
     }
+  }
+
+  .show {
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 
   &:hover {
     .w-h-wrapper {
       top: 0;
-    }
-
-    .icon-wrapper {
-      top: 50%;
-      right: 50%;
-      transform: translateX(50%) translateY(-50%);
     }
   }
 
@@ -283,6 +299,24 @@ const changeWallpaprStatus = () => {
     .text {
       font-size: 12px;
       color: whitesmoke;
+    }
+  }
+
+  .lock {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    border-radius:0 0 0 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    --webkit-backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      color: #ff8a14;
     }
   }
 }

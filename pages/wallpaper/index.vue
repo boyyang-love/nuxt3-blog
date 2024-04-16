@@ -24,7 +24,7 @@ const changeCol = () => {
     col.value = 3
   }
 
-  childrenComp.value.getWrapperBox()
+  childrenComp.value && childrenComp.value.getWrapperBox()
 }
 
 onMounted(() => {
@@ -35,7 +35,7 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     if (t) clearTimeout(t)
     t = setTimeout(() => {
-        changeCol()
+      changeCol()
     }, 500)
   })
 })
