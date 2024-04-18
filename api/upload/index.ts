@@ -20,7 +20,7 @@ export namespace Upload {
         infos: UploadListItem[]
     }
 
-    export type FileType = 'images' | 'blog' | 'bg' | 'avatar'
+    export type FileType = 'images' | 'blog' | 'bg' | 'avatar' | 'categories'
 
     export interface UploadDeleteReq {
         id: number
@@ -61,7 +61,7 @@ export const uploadFile = (data: { file_name: string, file: File, dir: string })
     )
 }
 
-export const uploadList = (params: { page?: number, limit?: number, type: 'blog' | 'images' | 'avatar' | 'bg' }) => {
+export const uploadList = (params: { page?: number, limit?: number, type: Upload.FileType}) => {
     return http.request<Upload.UploadListRes>({
         url: '/file/list',
         method: 'GET',

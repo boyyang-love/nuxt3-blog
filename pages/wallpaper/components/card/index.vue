@@ -2,7 +2,7 @@
 import {NImage, NIcon, NPopconfirm} from 'naive-ui'
 import {Close, PaperPlane, CloudDownload, LockClosed, LockOpen, ChevronForward, ChevronBack, EyeOff} from '@vicons/ionicons5'
 import CubeLoading from '@/components/CubeLoading/index.vue'
-import {uploadDelete} from '@/api/upload'
+import {type Upload, uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
 import {useUserStore} from '@/store/modules/user'
 import {imageDownload} from '@/utils/fileDownload'
@@ -10,7 +10,7 @@ import {imageDownload} from '@/utils/fileDownload'
 interface Props {
   id: number
   url: string
-  type: 'images' | 'blog' | 'bg' | 'avatar'
+  type: Upload.FileType
   path: string
   fileName: string
   status: boolean
@@ -55,6 +55,10 @@ const delText = computed<string>(() => {
 
   if (props.type === 'avatar') {
     return '删除当前图片有可能导致当前头像引用失败，是否确定？'
+  }
+
+  if (props.type === 'categories'){
+    return '删除当前图片有可能导致分类图片引用失败，是否确定？'
   }
 
   return ''

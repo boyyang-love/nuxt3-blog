@@ -6,12 +6,13 @@ import {useRoute, useRouter} from 'vue-router'
 import {deleteBlog, type Blog} from '@/api/blog'
 import moment from 'moment'
 import {env} from '~/utils/env'
-import {TrashBin, Create, ArrowUndo} from '@vicons/ionicons5'
+import {TrashBin, Create, ArrowUndo, Time, Person, Library} from '@vicons/ionicons5'
 import {useUserStore} from '@/store/modules/user'
 import {useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
 import {definePageMeta} from '#imports'
+import AniText from '~/components/AniText/index.vue'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -107,14 +108,46 @@ definePageMeta({
           <div class="info">
             <div class="blog-title">
             <span class="title">
-              {{ data?.data.info?.title }}
+              <AniText :text="data?.data.info?.title || ''"></AniText>
             </span>
-              <span
-                  class="time"
-              >
-              {{ moment(data?.data.info?.created).format('YYYY-MM-DD HH:mm:ss') }}
-            </span>
+              <div class="title-label">
+              <span class="label">
+                <n-icon class="icon" size="17">
+                  <Person></Person>
+                </n-icon>
+                作者:
+              </span>
+                <span class="text">{{ data?.data.info.user.username }}</span>
+              </div>
+              <div class="title-label">
+              <span class="label">
+                <n-icon class="icon" size="17">
+                  <Library></Library>
+                </n-icon>
+                分类:
+              </span>
+                <span class="text">{{ data?.data.info.categories.name || '暂无分类' }}</span>
+              </div>
+              <div class="title-label">
+              <span class="label">
+                <n-icon class="icon" size="17">
+                  <Create></Create>
+                </n-icon>
+                发布:
+              </span>
+                <span class="text">{{ moment(data?.data.info?.created).format('YYYY-MM-DD HH:mm:ss') }}</span>
+              </div>
+              <div class="title-label">
+              <span class="label">
+                <n-icon class="icon" size="17">
+                  <Time></Time>
+                </n-icon>
+                更新:
+              </span>
+                <span class="text">{{ moment(data?.data.info?.updated).format('YYYY-MM-DD HH:mm:ss') }}</span>
+              </div>
             </div>
+
             <div class="inner-info-wrapper">
               <div
                   class="inner-html"
@@ -306,17 +339,38 @@ definePageMeta({
 
       .blog-title {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+
+        .title-label {
+          display: flex;
+          align-items: center;
+          margin: 5px 0;
+
+          .label {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 15px;
+            font-weight: bolder;
+            color: var(--font-color);
+
+            .icon {
+              color: var(--font-color);
+              margin-right: 5px;
+            }
+          }
+
+          .text {
+            color: var(--font-color-200);
+            font-size: 14px;
+          }
+        }
 
         .title {
           font-size: 18px;
           font-weight: bolder;
           color: var(--font-color);
-        }
-
-        .time {
-          color: var(--font-color-200);
-          font-size: 13px;
+          margin-bottom: 10px;
         }
       }
 

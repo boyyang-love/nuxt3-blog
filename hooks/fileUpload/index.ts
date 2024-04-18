@@ -37,7 +37,6 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
         }
     }
 
-
     const submit = () => {
         if (uploadFileInfo) {
             const file = uploadFileInfo.value?.file as File

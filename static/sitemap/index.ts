@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-let baseUrl = 'http://www.boyyang.cn:9527/blog/list'
-let hostUrl = 'http://www.boyyang.cn'
+let baseUrl = 'https://backend.boyyang.cn/blog/list'
+let hostUrl = 'https://www.boyyang.cn'
 const sitemap = {
     hostname: hostUrl,
     path: '/sitemap.xml',

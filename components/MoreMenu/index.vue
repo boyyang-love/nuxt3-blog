@@ -38,6 +38,9 @@ const menuItemClick = (id: number) => {
   if (id === 1) {
     router.push('/tags')
   }
+  if (id === 2) {
+    router.push('/categories')
+  }
   if (id === 3) {
     backTopStore.setShow(false)
   }

@@ -1,13 +1,14 @@
 <script setup lang="ts">
-// import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import {NSpace, NUpload, NInput, NSelect, NIcon} from 'naive-ui'
 import {Add, Close} from '@vicons/ionicons5'
 import {type Blog, createBlog, updateBlog} from '~/api/blog'
+import {type Category, categoryList} from '@/api/categories'
 import {useConfig} from '@/hooks/useConfig'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {useTags} from '@/hooks/useTags'
 import {useRouter} from 'vue-router'
 import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
+import {useUserStore} from '@/store/modules/user'
 
 
 const props = defineProps<{
@@ -19,13 +20,15 @@ const {toolbarConfig, editorConfig} = useConfig()
 const {imgUrl, uploadRef, customRequest} = useFileUpload()
 const {list, createNewTag} = useTags('article')
 const router = useRouter()
+const userStore = useUserStore()
 
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
-// 内容 HTML
 const valueHtml = ref('')
 const selectValues = ref<number[] | string[]>([])
 const keywords = ref<string>('')
+const categories = ref<Category.CategoryInfo[]>([])
+const categoryValue = ref<string | number>('')
 const blogInfo = reactive({
   title: '',
   des: '',
@@ -44,6 +47,7 @@ watch(() => props.editInfo, (value) => {
     imgUrl.value = value.cover
     selectValues.value = value.tag.map(t => Number(t.id))
     keywords.value = value.keywords
+    categoryValue.value = value.categories.id
     window.$uploadProgress.end()
   }
 })
@@ -80,11 +84,14 @@ const submit = () => {
         return Number(s)
       }),
       keywords: keywords.value,
+      category_id: Number(categoryValue.value),
+
     }).then(res => {
       window.$uploadProgress.end()
       valueHtml.value = ''
       blogInfo.title = ''
       imgUrl.value = ''
+      keywords.value = ''
       router.back()
     })
   } else {
@@ -98,11 +105,13 @@ const submit = () => {
         return Number(s)
       }),
       keywords: keywords.value,
+      category_id: Number(categoryValue.value),
     }).then(res => {
       window.$uploadProgress.end()
       valueHtml.value = ''
       blogInfo.title = ''
       imgUrl.value = ''
+      keywords.value = ''
       selectValues.value = []
     })
   }
@@ -112,6 +121,15 @@ const delCover = () => {
   imgUrl.value = ''
 }
 
+const getCategoryList = () => {
+  categoryList({user_id: userStore.user_info.id}).then((res) => {
+    categories.value = res.data.info
+  })
+}
+
+onMounted(() => {
+  getCategoryList()
+})
 </script>
 
 <template>
@@ -179,6 +197,33 @@ const delCover = () => {
                 multiple
                 :options="list.map(l => {return {label: l.tag_name, value: l.id}})"
                 placeholder="请选择文章标签"
+                filterable
+            >
+              <template #header>
+                <div
+                    class="add-wrapper"
+                    style="width: 100%;
+                  display: flex;
+                  justify-content: center"
+                >
+                  <n-icon
+                      size="22"
+                      style="cursor: pointer"
+                      @click="createNewTag('article')"
+                  >
+                    <Add></Add>
+                  </n-icon>
+                </div>
+              </template>
+            </n-select>
+          </div>
+
+          <div class="tags">
+            <div class="title">分类标签</div>
+            <n-select
+                v-model:value="categoryValue"
+                :options="categories.map(c => {return {label: c.name, value: c.id}})"
+                placeholder="请选择文章分类标签"
                 filterable
             >
               <template #header>

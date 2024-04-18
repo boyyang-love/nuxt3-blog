@@ -122,6 +122,10 @@ const toDetail = () => {
                   <span class="text">标签</span>
                   <span class="value">{{ userInfo?.tags_count }}</span>
                 </div>
+                <div class="info">
+                  <span class="text">分类</span>
+                  <span class="value">{{ userInfo?.categories_count }}</span>
+                </div>
               </div>
             </div>
           </n-popover>

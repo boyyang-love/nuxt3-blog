@@ -22,3 +22,11 @@ export const searchBykeyword = (params: { keyword: string, type: 'article' | 'im
         params,
     })
 }
+
+export const searchByCategoriesId = (params: {id: number, user_id: number}) => {
+    return http.request<SearchApi.SearchRes>({
+        url: '/search/category/id',
+        method: 'GET',
+        params,
+    })
+}

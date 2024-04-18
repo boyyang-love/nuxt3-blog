@@ -66,7 +66,7 @@ window.$uploadProgress = useUploadProgress()
   border-radius: 5px;
   background: rgba(17, 17, 17, 0.7);
   border: 2px solid rgb(170, 176, 194);
-  z-index: 99;
+  z-index: 99999;
   position: absolute;
 
   .loader {

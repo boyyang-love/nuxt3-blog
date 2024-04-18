@@ -2,7 +2,9 @@
 import {NTabs, NTabPane} from 'naive-ui'
 import WaterFull from './components/waterFull/index.vue'
 
-const tabValue = ref<'images' | 'blog' | 'bg' | 'avatar'>('images')
+type TabValue = 'images' | 'blog' | 'bg' | 'avatar' | 'categories'
+
+const tabValue = ref<TabValue>('images')
 const more = ref<boolean>(false)
 const col = ref<number>(3)
 const wallpaperWrapper = ref<HTMLElement | null>()
@@ -59,18 +61,11 @@ onUnmounted(() => {
           v-model:value="tabValue"
           @update:value="tabChange"
       >
-        <n-tab-pane tab="壁纸" name="images">
-
-        </n-tab-pane>
-        <n-tab-pane tab="博客" name="blog">
-
-        </n-tab-pane>
-        <n-tab-pane tab="背景" name="bg">
-
-        </n-tab-pane>
-        <n-tab-pane tab="头像" name="avatar">
-
-        </n-tab-pane>
+        <n-tab-pane tab="壁纸" name="images"></n-tab-pane>
+        <n-tab-pane tab="博客" name="blog"></n-tab-pane>
+        <n-tab-pane tab="背景" name="bg"></n-tab-pane>
+        <n-tab-pane tab="头像" name="avatar"></n-tab-pane>
+        <n-tab-pane tab="分类" name="categories"></n-tab-pane>
       </n-tabs>
     </div>
     <div class="water">

@@ -13,15 +13,20 @@ import errAvatar from '@/assets/image/avatar_g.jpg'
 import WaterFlow from './components/waterFull/index.vue'
 import {type Upload, uploadListPublic} from '~/api/upload'
 import {CubeLoading} from '#components'
+import {type Category, categoryList} from '~/api/categories'
+import CategoriesCard from '@/components/CategoriesCard/index.vue'
+import {useSearchResStore} from '@/store/modules/searchRes'
 
 const route = useRoute()
 const router = useRouter()
+const searchResStore = useSearchResStore()
 const wrapper = ref<HTMLElement | null>(null)
 const tab = ref<string>('blog')
 const userInfo = ref<User.UserInfoByIdRes>()
 const blogInfo = ref<Blog.ListBlogSearchByUserIdInfo[]>([])
 const imageList = ref<Upload.UploadListItem[]>([])
 const tagsList = ref<Tag.TagInfo[]>([])
+const categories = ref<Category.CategoryInfo[]>([])
 const isShowCard = ref<boolean>(false)
 const blogList = ref<Blog.ListBlogItemByids[]>([])
 const col = ref<number>(3)
@@ -131,6 +136,17 @@ const getTagsList = () => {
   })
 }
 
+const getCategoriyList = () => {
+  categoryList({user_id: Number(route.query.id)}).then((res) => {
+    categories.value = res.data.info.map(info => {
+      return {
+        ...info,
+        cover: `${env.VITE_APP_IMG_URL}${info.cover}`,
+      }
+    })
+  })
+}
+
 const handleScroll = () => {
   const w = wrapper.value as any
   const len = imageList.value.length
@@ -142,7 +158,6 @@ const handleScroll = () => {
   }
 }
 
-
 const tabChange = (t: string) => {
   tab.value = t
 
@@ -153,6 +168,10 @@ const tabChange = (t: string) => {
 
   if (t === 'tag' && tagsList.value.length === 0) {
     getTagsList()
+  }
+
+  if (t === 'categories') {
+    getCategoriyList()
   }
 }
 
@@ -189,6 +208,12 @@ onMounted(() => {
 
   })
 })
+
+const toCategoriesDetail = (id: number) => {
+  searchResStore.setToType('details')
+  searchResStore.search(id, Number(route.query.id))
+  searchResStore.show = true
+}
 
 onUnmounted(() => {
   document.removeEventListener('resize', () => null)
@@ -268,6 +293,14 @@ definePageMeta({
               <span class="text">标签</span>
               <span class="value">{{ userInfo?.tags_count }}</span>
             </div>
+
+            <div
+                :class="['item', tab === 'categories' ? 'active' : '']"
+                @click="tabChange('categories')"
+            >
+              <span class="text">分类</span>
+              <span class="value">{{ userInfo?.categories_count }}</span>
+            </div>
             <div class="home">
               <nuxt-link class="link" to="/home">
                 <n-icon :size="22" class="icon">
@@ -336,6 +369,25 @@ definePageMeta({
                   <span class="value">
                     {{ item.articles.length || 0 }}
                   </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-show="tab === 'categories'">
+            <div class="categories-detail">
+              <div class="empty" v-if="categories.length === 0">
+                <n-empty></n-empty>
+              </div>
+              <div class="categories-wrapper">
+                <div class="categories-item" v-for="item in categories">
+                  <CategoriesCard
+                      :id="item.id"
+                      :title="item.name"
+                      :des="item.des"
+                      :cover="item.cover"
+                      @detail="toCategoriesDetail"
+                  ></CategoriesCard>
                 </div>
               </div>
             </div>
@@ -452,7 +504,7 @@ definePageMeta({
         .loading {
           box-sizing: border-box;
           width: 100%;
-          height: 100%;
+          min-height: 450px;
           margin: auto;
           display: flex;
           justify-content: center;
@@ -464,8 +516,10 @@ definePageMeta({
     .user-info {
       box-sizing: border-box;
       width: 100%;
+      height: 55px;
       background-color: var(--card-color);
       position: relative;
+      z-index: 9;
 
       .info {
         box-sizing: border-box;
@@ -628,6 +682,34 @@ definePageMeta({
         }
       }
     }
+
+    .categories-detail {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: var(--card-color);
+
+      .empty {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 150px 0;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .categories-wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+
+        .categories-item {
+          box-sizing: border-box;
+          width: 100%;
+          height: 120px;
+        }
+      }
+    }
   }
 }
 
@@ -717,6 +799,15 @@ definePageMeta({
           padding: 45px 0 0 20px;
         }
       }
+
+
+      .categories-detail {
+
+        .categories-wrapper {
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+
     }
   }
 }

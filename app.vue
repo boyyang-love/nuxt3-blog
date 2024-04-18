@@ -11,6 +11,7 @@
                 <message-content></message-content>
                 <notification-content></notification-content>
                 <upload-progress></upload-progress>
+                <search-res></search-res>
               </client-only>
               <NuxtLayout>
                 <NuxtPage/>
@@ -38,6 +39,7 @@ import DialogContent from '@/components/DialogContent/index.vue'
 import NotificationContent from '@/components/NotificationContent/index.vue'
 import LoadingBarContent from '@/components/LoadingBarContent/index.vue'
 import UploadProgress from '@/components/uploadProgress/index.vue'
+import SearchRes from '@/components/SearchRes/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
 
 const themeStore = useThemeStore()

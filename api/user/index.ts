@@ -24,6 +24,7 @@ export namespace User {
         blog_count: number
         wallpaper_count: number
         tags_count: number
+        categories_count: number
     }
 }
 export const updateUserInfo = (data: Partial<User.UpdateUserInfoReq>) => {

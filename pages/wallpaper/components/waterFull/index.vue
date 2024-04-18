@@ -7,7 +7,7 @@ import {env} from '~/utils/env'
 interface Props {
   gap?: number
   col?: number
-  type: 'images' | 'blog' | 'bg' | 'avatar'
+  type: Upload.FileType
 }
 
 type List = Upload.UploadListItem & { path: string }

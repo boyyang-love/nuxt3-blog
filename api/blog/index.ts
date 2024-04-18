@@ -1,6 +1,6 @@
 import {http} from '~/utils/http'
 import {type Comment} from '@/api/comment'
-import type {List} from 'postcss/lib/list'
+import type {Category} from '~/api/categories'
 
 export namespace Blog {
     export interface CreateBlogReq {
@@ -10,6 +10,7 @@ export namespace Blog {
         content: string
         keywords: string
         tags?: string[] | number[]
+        category_id: number
     }
 
     export interface UpdateBlogReq {
@@ -20,6 +21,7 @@ export namespace Blog {
         content: string
         keywords: string
         tags?: string[] | number[]
+        category_id: number
     }
 
     export interface UpdateBlogRes {
@@ -63,6 +65,8 @@ export namespace Blog {
         user: UserInfo
         tag: Tag[]
         comment: Comment.CommentInfo[]
+        categories_id: number
+        categories: Category.CategoryInfo
     }
 
     export interface UserInfo {
