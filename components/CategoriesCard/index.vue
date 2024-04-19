@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import {NIcon} from 'naive-ui'
+import {NIcon, NImage} from 'naive-ui'
 import {Cog} from '@vicons/ionicons5'
+import errImg from 'assets/image/avatar_g.jpg'
+import {PinwheelLoading} from '#components'
+
 const props = defineProps<
     {
       id: number
@@ -23,7 +26,25 @@ const emits = defineEmits<
       class="categories-card-wrapper"
   >
     <div class="img-wrapper">
-      <img class="img" :src="cover" alt="wolp">
+      <n-image
+          class="img"
+          :fallback-src="errImg"
+          :src="cover"
+          :preview-disabled="true"
+          lazy
+          style="height: 100%;width: 100%;"
+          object-fit="cover"
+          :img-props="{
+                  width: '100%',
+                  height: '100%'
+                }"
+      >
+        <template #placeholder>
+          <div class="loading">
+            <PinwheelLoading></PinwheelLoading>
+          </div>
+        </template>
+      </n-image>
       <div class="inner-wrapper">
         <div class="title">
           <p class="text" @click="emits('detail', props.id)"> {{title}} </p>
@@ -66,6 +87,14 @@ const emits = defineEmits<
       width: 100%;
       height: 100%;
       object-fit: cover;
+
+      .loading {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .inner-wrapper {

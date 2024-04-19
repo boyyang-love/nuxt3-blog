@@ -554,15 +554,13 @@ const toUserDetail = () => {
       color: var(--font-color);
 
       background: var(--button-color);
-      box-shadow: 8px 8px 15px var(--button-shadow-one),
-        -8px -8px 15px var(--button-shadow-two);
+      box-shadow:  var(--button-shadow-one), var(--button-shadow-two);
     }
 
 
     .active {
       color: var(--button-active-color);
-      box-shadow: 4px 4px 10px var(--button-shadow-one),
-        -4px -4px 10px var(--button-shadow-two);
+      box-shadow: var(--button-shadow-one-active), var(--button-shadow-two-active);
     }
   }
 

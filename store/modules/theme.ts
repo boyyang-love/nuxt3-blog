@@ -13,10 +13,10 @@ const useThemeStore = defineStore({
     id: 'app-theme',
     state: (): ThemeState => ({
         theme: '#f2f0fd',
-        themeSelectArray: ['#101625', '#3B5998', '#f2f0fd', '#1E1E1E'],
+        themeSelectArray: ['#101625', '#3B5998', '#f2f0fd', '#454545', ],
         naiveTheme: 'light',
-        dark: ['#101625', '#3B5998', '#1E1E1E'],
-        light: ['#f2f0fd'],
+        dark: ['#101625', '#3B5998', '#454545', ],
+        light: ['#f2f0fd',],
     }),
     actions: {
         setTheme(theme: string) {

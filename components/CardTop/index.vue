@@ -48,8 +48,7 @@ const props = defineProps<{
   padding: 10px 10px 4px;
   margin-bottom: 10px;
   background: var(--button-color);
-  box-shadow: 3px 3px 5px var(--button-shadow-one),
-    -3px -3px 5px var(--button-shadow-two);
+  box-shadow: var(--button-shadow-one), var(--button-shadow-two);
 
   .nuxt-link {
     text-decoration: none;

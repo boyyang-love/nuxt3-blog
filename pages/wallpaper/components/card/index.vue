@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {NImage, NIcon, NPopconfirm} from 'naive-ui'
 import {Close, PaperPlane, CloudDownload, LockClosed, LockOpen, ChevronForward, ChevronBack, EyeOff} from '@vicons/ionicons5'
-import CubeLoading from '@/components/CubeLoading/index.vue'
+import BottleLoading from '@/components/BottleLoading/index.vue'
 import {type Upload, uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
 import {useUserStore} from '@/store/modules/user'
@@ -214,7 +214,7 @@ const changeWallpaprStatus = () => {
     >
       <template #placeholder>
         <div class="loading">
-          <CubeLoading></CubeLoading>
+          <BottleLoading></BottleLoading>
         </div>
       </template>
     </NImage>

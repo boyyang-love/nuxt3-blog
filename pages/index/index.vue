@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {NSpace, NAvatar, NIcon} from 'naive-ui'
+import {NSpace, NAvatar, NIcon, NImage} from 'naive-ui'
 import {useUserStore} from '@/store/modules/user'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {definePageMeta} from '#imports'
 import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
+import {MouseLoading} from '#components'
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
@@ -68,15 +69,25 @@ definePageMeta({
       <div class="index-wrapper ">
         <div class="index-content">
           <div class="left-img">
-            <n-avatar
+            <n-image
                 class="img"
                 :fallback-src="errImg"
                 :src="userStore.user_info.cover"
+                :preview-disabled="true"
+                lazy
+                style="height: 100%;width: 100%;"
                 object-fit="cover"
                 :img-props="{
-                  alt: userStore.user_info.cover
+                  width: '100%',
+                  height: '100%'
                 }"
-            ></n-avatar>
+            >
+              <template #placeholder>
+                <div class="loading">
+                  <MouseLoading></MouseLoading>
+                </div>
+              </template>
+            </n-image>
           </div>
           <div class="right-content">
             <div class="user-info">
@@ -148,7 +159,7 @@ definePageMeta({
   align-items: center;
   position: relative;
   //background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
-  background-color: var(--bg-color);
+  //background-color: var(--bg-color);
 
   .index-content {
     box-sizing: border-box;
@@ -162,6 +173,9 @@ definePageMeta({
     position: relative;
 
     .left-img {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
       flex: 1;
 
       .img {
@@ -170,6 +184,14 @@ definePageMeta({
         height: 100%;
         object-fit: cover;
         border-radius: 10px 0 0 10px;
+
+        .loading {
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
 

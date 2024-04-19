@@ -226,22 +226,6 @@ onMounted(() => {
                 placeholder="请选择文章分类标签"
                 filterable
             >
-              <template #header>
-                <div
-                    class="add-wrapper"
-                    style="width: 100%;
-                  display: flex;
-                  justify-content: center"
-                >
-                  <n-icon
-                      size="22"
-                      style="cursor: pointer"
-                      @click="createNewTag('article')"
-                  >
-                    <Add></Add>
-                  </n-icon>
-                </div>
-              </template>
             </n-select>
           </div>
         </div>

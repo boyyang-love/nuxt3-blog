@@ -207,6 +207,9 @@ const toDetail = () => {
 
     .link {
       position: relative;
+      //text-decoration: none;
+      text-decoration-color: var(--font-color);
+      text-underline-offset: 5px;
     }
 
     .title {

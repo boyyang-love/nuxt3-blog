@@ -12,7 +12,7 @@ import errimg from '@/assets/image/wolp.jpg'
 import errAvatar from '@/assets/image/avatar_g.jpg'
 import WaterFlow from './components/waterFull/index.vue'
 import {type Upload, uploadListPublic} from '~/api/upload'
-import {CubeLoading} from '#components'
+import {CubeLoading, MouseLoading} from '#components'
 import {type Category, categoryList} from '~/api/categories'
 import CategoriesCard from '@/components/CategoriesCard/index.vue'
 import {useSearchResStore} from '@/store/modules/searchRes'
@@ -252,7 +252,7 @@ definePageMeta({
             >
               <template #placeholder>
                 <div class="loading">
-                  <CubeLoading></CubeLoading>
+                  <MouseLoading></MouseLoading>
                 </div>
               </template>
             </n-image>
@@ -499,7 +499,6 @@ definePageMeta({
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 5px 5px 2px 2px;
 
         .loading {
           box-sizing: border-box;

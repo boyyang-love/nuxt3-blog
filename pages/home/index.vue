@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import {NEmpty, NUpload, NAvatar, NButton, NIcon} from 'naive-ui'
+import {NEmpty, NUpload, NImage, NButton, NIcon} from 'naive-ui'
 import {Camera} from '@vicons/ionicons5'
 import {useUserStore} from '@/store/modules/user'
 import Card from '@/components/Card/index.vue'
-import TitleText from '~/components/TitleText/index.vue'
 import {type Blog} from '@/api/blog'
 import {env} from '~/utils/env'
 import {useFileUpload} from '@/hooks/fileUpload'
@@ -11,6 +10,7 @@ import {updateUserInfo} from '@/api/user'
 import errImg from 'assets/image/wolp.jpg'
 import type {Result} from '~/utils/http/types'
 import {useFetch} from '#app'
+import CubeLoading from '~/components/CubeLoading/index.vue'
 
 const userStore = useUserStore()
 const {customRequest, uploadRef} = useFileUpload('bg', (info) => {
@@ -78,13 +78,23 @@ onMounted(() => {
     </Head>
     <client-only>
       <div class="banner">
-        <NAvatar
+        <n-image
             :src="userStore.user_info.cover"
             :fallback-src="errImg"
             object-fit="cover"
             :alt="userStore.user_info.cover"
+            :preview-disabled="true"
+            :img-props="{
+              width: '100%'
+            }"
             class="img"
-        ></NAvatar>
+        >
+          <template #placeholder>
+            <div class="loading">
+              <MouseLoading></MouseLoading>
+            </div>
+          </template>
+        </n-image>
         <div class="edit-userinfo-icon" v-if="userStore.token">
           <n-upload
               :show-file-list="false"
@@ -132,8 +142,12 @@ onMounted(() => {
   .banner {
     box-sizing: border-box;
     width: 100%;
+    min-height: 250px;
     border-radius: 3px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .img {
       box-sizing: border-box;
@@ -141,6 +155,14 @@ onMounted(() => {
       height: 100%;
       object-fit: cover;
       border-radius: 3px;
+
+      .loading {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .edit-userinfo-icon {

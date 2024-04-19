@@ -101,5 +101,6 @@ body {
   margin: 0;
   font-family: AlimamaDaoLiTi, serif;
   background-color: var(--bg-color);
+  position: relative;
 }
 </style>
