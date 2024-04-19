@@ -516,7 +516,7 @@ definePageMeta({
     .user-info {
       box-sizing: border-box;
       width: 100%;
-      height: 55px;
+      min-height: 55px;
       background-color: var(--card-color);
       position: relative;
       z-index: 9;
