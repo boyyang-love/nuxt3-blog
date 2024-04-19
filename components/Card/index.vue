@@ -444,20 +444,22 @@ const toDetail = () => {
 
   .infos {
     display: flex;
-
+    justify-content: space-between;
     .info {
-      margin-right: 10px;
+      display: flex;
+      flex-direction: column;
       cursor: pointer;
 
       .text {
         color: var(--font-color);
-        font-size: 14px;
+        font-size: 15px;
       }
 
       .value {
         color: var(--font-color-200);
         font-size: 13px;
-        margin-left: 5px;
+        text-align: center;
+        font-weight: bolder;
       }
     }
   }
