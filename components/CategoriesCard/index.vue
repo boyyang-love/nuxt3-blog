@@ -35,9 +35,8 @@ const emits = defineEmits<
           style="height: 100%;width: 100%;"
           object-fit="cover"
           :img-props="{
-                  width: '100%',
-                  height: '100%'
-                }"
+            width: '100%',
+          }"
       >
         <template #placeholder>
           <div class="loading">
@@ -76,8 +75,9 @@ const emits = defineEmits<
   border: 2px solid var(--border-color);
 
   .img-wrapper {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
+    display: flex;
     overflow: hidden;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     position: relative;

@@ -136,7 +136,7 @@ defineExpose({
         >
           <template #placeholder>
             <div class="loading">
-              <CubeLoading></CubeLoading>
+              <BottleLoading></BottleLoading>
             </div>
           </template>
         </n-image>
@@ -159,6 +159,7 @@ defineExpose({
     .img-wrapper {
       width: 100%;
       height: 100%;
+      display: flex;
       position: absolute;
       transition: all 0.45s ease-in-out;
 

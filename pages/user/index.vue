@@ -489,6 +489,7 @@ definePageMeta({
     overflow-y: auto;
 
     .top-banner {
+      display: flex;
       box-sizing: border-box;
       width: 100%;
       max-height: 420px;

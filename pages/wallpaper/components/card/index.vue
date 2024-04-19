@@ -229,6 +229,7 @@ const changeWallpaprStatus = () => {
   border-radius: 5px;
   overflow: hidden;
   position: relative;
+  display: flex;
 
   .n-img {
     box-sizing: border-box;

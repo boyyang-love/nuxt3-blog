@@ -10,7 +10,6 @@ import {updateUserInfo} from '@/api/user'
 import errImg from 'assets/image/wolp.jpg'
 import type {Result} from '~/utils/http/types'
 import {useFetch} from '#app'
-import CubeLoading from '~/components/CubeLoading/index.vue'
 
 const userStore = useUserStore()
 const {customRequest, uploadRef} = useFileUpload('bg', (info) => {
