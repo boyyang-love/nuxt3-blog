@@ -34,7 +34,7 @@ const {customRequest} = useFileUpload('categories', (info) => {
 
 const openModal = (type: ModalType) => {
   modelType.value = type
-  type === 'create' ? modalTitle.value = '新增分类' : '修改分类'
+  modalTitle.value = type === 'create' ? '新增分类' : '修改分类'
   isShowModal.value = true
 }
 
