@@ -98,6 +98,25 @@ useHead({
 }
 
 body {
+  ::-webkit-scrollbar {
+    width: 0 !important;
+    height: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 74, 82, 0.7);
+  }
+
   margin: 0;
   font-family: AlimamaDaoLiTi, serif;
   background-color: var(--bg-color);
