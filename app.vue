@@ -102,5 +102,6 @@ body {
   font-family: AlimamaDaoLiTi, serif;
   background-color: var(--bg-color);
   position: relative;
+  overflow: hidden;
 }
 </style>

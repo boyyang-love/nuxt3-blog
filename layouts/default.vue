@@ -31,29 +31,31 @@ const toTop = (show: boolean) => {
 </script>
 
 <template>
-  <div class="layout-wrapper container m-auto">
-    <div class="left">
-      <AppLeft/>
-    </div>
-    <div class="content" id="content" ref="domRef">
-      <n-back-top
-          style="display: none"
-          @update:show="toTop"
-          ref="backTopDomRef"
-      ></n-back-top>
-      <div class="content-top">
-        <ContentTop></ContentTop>
+  <div class="layout-wrapper m-auto">
+    <div class="container">
+      <div class="left">
+        <AppLeft/>
       </div>
-      <slot/>
-    </div>
-    <div class="right">
-      <AppRight/>
-    </div>
-    <client-only>
-      <div class="more-menu">
-        <MoreMenu></MoreMenu>
+      <div class="content" id="content" ref="domRef">
+        <n-back-top
+            style="display: none"
+            @update:show="toTop"
+            ref="backTopDomRef"
+        ></n-back-top>
+        <div class="content-top">
+          <ContentTop></ContentTop>
+        </div>
+        <slot/>
       </div>
-    </client-only>
+      <div class="right">
+        <AppRight/>
+      </div>
+      <client-only>
+        <div class="more-menu">
+          <MoreMenu></MoreMenu>
+        </div>
+      </client-only>
+    </div>
   </div>
 </template>
 
@@ -78,13 +80,20 @@ const toTop = (show: boolean) => {
 }
 
 @w: 260px;
+
 .layout-wrapper {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+}
+.container {
   box-sizing: border-box;
   display: flex;
   width: 1250px;
   height: 1000px;
   padding: 50px 0;
-  margin: 0 auto;
+  margin:  0 auto;
   position: relative;
 
   .left,
@@ -92,17 +101,16 @@ const toTop = (show: boolean) => {
     box-sizing: border-box;
     background-color: var(--content-left-right);
     width: @w;
-    //height: 90vh;
     height: 100%;
     overflow-y: auto;
   }
 
   .left {
-    border-radius: 10px 0 0 0;
+    border-radius: 10px 0 0 5px;
   }
 
   .right {
-    border-radius: 0 10px 0 0;
+    border-radius: 0 10px 5px 0;
   }
 
   .content {

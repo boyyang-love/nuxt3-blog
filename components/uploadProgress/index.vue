@@ -63,11 +63,12 @@ window.$uploadProgress = useUploadProgress()
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
   background: rgba(17, 17, 17, 0.7);
-  border: 2px solid rgb(170, 176, 194);
   z-index: 99999;
   position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
 
   .loader {
     --path: #23d69b;
