@@ -73,7 +73,8 @@ onMounted(() => {
     <Head>
       <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>
       <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
-      <Meta name="keywords" :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
+      <Meta name="keywords"
+            :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
     </Head>
     <client-only>
       <div class="banner">
@@ -84,7 +85,8 @@ onMounted(() => {
             :alt="userStore.user_info.cover"
             :preview-disabled="true"
             :img-props="{
-              width: '100%'
+              width: '100%',
+              height: '100%'
             }"
             class="img"
         >
@@ -141,17 +143,18 @@ onMounted(() => {
   .banner {
     box-sizing: border-box;
     width: 100%;
-    min-height: 250px;
     border-radius: 3px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 400px;
 
     .img {
       box-sizing: border-box;
       width: 100%;
       height: 100%;
+      display: flex;
       object-fit: cover;
       border-radius: 3px;
 
@@ -166,7 +169,7 @@ onMounted(() => {
 
     .edit-userinfo-icon {
       position: absolute;
-      bottom: 20px;
+      bottom: 10px;
       right: 15px;
       border-radius: 3px;
       display: flex;
@@ -261,6 +264,7 @@ onMounted(() => {
     padding: 0;
 
     .banner {
+      height: 250px;
       border-radius: 0;
 
       .img {

@@ -40,7 +40,6 @@ const getWrapperBox = () => {
   getPos(imgW)
 }
 
-
 const getPos = (imgW: number) => {
   const boxArr = Array.from({length: props.col}, () => 0)
   const gap = props.gap

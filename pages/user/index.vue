@@ -492,7 +492,7 @@ definePageMeta({
       display: flex;
       box-sizing: border-box;
       width: 100%;
-      max-height: 420px;
+      height: 400px;
       overflow: hidden;
       background-color: var(--card-color);
 
@@ -504,7 +504,6 @@ definePageMeta({
         .loading {
           box-sizing: border-box;
           width: 100%;
-          min-height: 450px;
           margin: auto;
           display: flex;
           justify-content: center;
@@ -785,8 +784,8 @@ definePageMeta({
       border-radius: 0;
 
       .top-banner {
+        height: 250px;
         width: 100%;
-        height: auto;
 
         .img {
           border-radius: 0;

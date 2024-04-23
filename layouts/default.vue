@@ -144,6 +144,10 @@ const toTop = (show: boolean) => {
     padding: 0;
     flex-direction: column;
 
+    .container {
+      width: 100%;
+    }
+
     .left,
     .right {
       display: none;
