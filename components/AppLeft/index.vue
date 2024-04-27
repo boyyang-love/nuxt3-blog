@@ -488,11 +488,8 @@ const toUserDetail = () => {
         border: 3px solid var(--border-color);
         border-radius: 5px;
 
-        .img {
-          box-sizing: border-box;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+        :deep(.n-avatar) {
+          border-radius: 0;
         }
       }
 

@@ -97,8 +97,9 @@ definePageMeta({
                     :src="userStore.user_info.avatar"
                     :fallback-src="errImg"
                     :img-props="{
-                      alt: userStore.user_info.avatar
+                      alt: userStore.user_info.avatar,
                     }"
+                    object-fit="cover"
                 >
                 </n-avatar>
               </div>
@@ -217,11 +218,8 @@ definePageMeta({
           border: 4px solid var(--border-color);
           overflow: hidden;
 
-          .img {
-            box-sizing: border-box;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+          :deep(.n-avatar) {
+            border-radius: 0;
           }
         }
 
