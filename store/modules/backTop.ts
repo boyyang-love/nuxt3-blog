@@ -3,18 +3,23 @@ import {useNuxtApp} from '#app'
 
 export interface BackTopState {
     show: boolean
+    domRef: HTMLElement | null
 }
 
 const useBackTopStore = defineStore({
     id: 'app-back-top',
     state: (): BackTopState => ({
         show: false,
+        domRef: null,
     }),
 
     actions: {
         setShow(show: boolean) {
             this.show = show
         },
+        setTop(){
+            this.domRef && (this.domRef as any).handleClick()
+        }
     },
 
     //开启持久化

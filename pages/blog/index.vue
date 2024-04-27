@@ -4,6 +4,9 @@ import {type Blog} from '~/api/blog'
 import {NEmpty, NPagination} from 'naive-ui'
 import {env} from '~/utils/env'
 import type {Result} from '~/utils/http/types'
+import {useBackTopStore} from '@/store/modules/backTop'
+
+const backTopStore = useBackTopStore()
 
 const count = ref<number>(0)
 const page = ref<number>(1)
@@ -65,11 +68,13 @@ const {data, refresh} = await useAsyncData(
 
 const pageSizeChange = (e: number) => {
   limit.value = e
+  backTopStore.setTop()
   refresh()
 }
 
 const pageUpdate = (e: number) => {
   page.value = e
+  backTopStore.setTop()
   refresh()
 }
 </script>
@@ -91,6 +96,7 @@ const pageUpdate = (e: number) => {
           v-for="item in data?.data.list"
           :avatar="item.user.avatar"
           :id="item.id"
+          :key="item.id"
           :userid="item.user.id"
           :title="item.title"
           :created="item.created"

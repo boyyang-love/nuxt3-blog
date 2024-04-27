@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import {NEmpty} from 'naive-ui'
+import {NBackTop, NEmpty} from 'naive-ui'
 import {type Upload, uploadList, uploadStatus} from '~/api/upload'
 import Card from '../card/index.vue'
 import {env} from '~/utils/env'
+import {useBackTopStore} from '@/store/modules/backTop'
 
 interface Props {
   gap?: number
@@ -26,7 +27,9 @@ const emits = defineEmits<{
   isNoMore: [noMore: boolean]
 }>()
 
+const backTopStore = useBackTopStore()
 
+const backTopDomRef = ref<HTMLElement | null>(null)
 const list = ref<List[]>([])
 const imgList = ref<ImageList[]>([])
 const wrapper = ref<HTMLElement | null>(null)
@@ -132,9 +135,21 @@ watch([() => props.type], () => {
   count.value = 0
   getList()
 })
+
 watch([() => props.col], () => {
   getWrapperBox()
 })
+
+watch(() => backTopStore.show, (value) => {
+  if (!value) {
+    backTopDomRef.value?.handleClick()
+  }
+})
+
+const toTop = (show: boolean) => {
+  backTopStore.setShow(show)
+  backTopStore.domRef = backTopDomRef.value
+}
 
 onMounted(() => {
   getList()
@@ -183,6 +198,12 @@ defineExpose({
         >
         </Card>
       </div>
+
+      <n-back-top
+          style="display: none"
+          @update:show="toTop"
+          ref="backTopDomRef"
+      ></n-back-top>
     </div>
   </div>
 </template>

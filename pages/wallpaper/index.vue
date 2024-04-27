@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {NTabs, NTabPane} from 'naive-ui'
+import {NTabs, NTabPane, NBackTop} from 'naive-ui'
 import WaterFull from './components/waterFull/index.vue'
 
 type TabValue = 'images' | 'blog' | 'bg' | 'avatar' | 'categories'

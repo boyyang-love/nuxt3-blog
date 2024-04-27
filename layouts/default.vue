@@ -27,6 +27,7 @@ watch(() => backTopStore.show, (value) => {
 
 const toTop = (show: boolean) => {
   backTopStore.setShow(show)
+  backTopStore.domRef = backTopDomRef.value
 }
 </script>
 
@@ -87,13 +88,14 @@ const toTop = (show: boolean) => {
   height: 100vh;
   overflow-y: auto;
 }
+
 .container {
   box-sizing: border-box;
   display: flex;
   width: 1250px;
   height: 1000px;
   padding: 50px 0;
-  margin:  0 auto;
+  margin: 0 auto;
   position: relative;
 
   .left,
