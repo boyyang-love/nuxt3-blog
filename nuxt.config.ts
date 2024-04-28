@@ -3,6 +3,12 @@ import {sitemap} from './static/sitemap'
 
 export default defineNuxtConfig({
     ssr: true,
+    nitro: {
+        compressPublicAssets: true,        // 启动压缩
+        prerender: {
+            routes: ['/index', '/create', '/upload', '/tags', '/user', '/categories', '/wallpaper'],
+        },
+    },
     routeRules: {
         '/index': {
             ssr: false,
@@ -14,6 +20,15 @@ export default defineNuxtConfig({
             ssr: false,
         },
         '/wallpaper': {
+            ssr: false,
+        },
+        '/tags': {
+            ssr: false,
+        },
+        '/user': {
+            ssr: false,
+        },
+        '/categories': {
             ssr: false,
         },
     },

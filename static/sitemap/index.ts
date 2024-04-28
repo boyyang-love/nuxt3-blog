@@ -57,14 +57,14 @@ const sitemap = {
             list.forEach((item: any) => {
                 detailList.push(
                     {
-                        loc: `${hostUrl}/detail/?id=${item.id}`,
+                        loc: `${hostUrl}/details/?id=${item.id}`,
                         changefreq: 'daily',
                         priority: 0.9,
                     },
                 )
                 detailList.push(
                     {
-                        loc: `${hostUrl}/details/?id=${item.id}`,
+                        loc: `${hostUrl}/detail/?id=${item.id}`,
                         changefreq: 'daily',
                         priority: 0.9,
                     },

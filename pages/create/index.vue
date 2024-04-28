@@ -1,15 +1,16 @@
 <template>
   <nuxt-layout name="custom">
-    <div class="create-wrapper">
-      <div class="inner">
-        <client-only>
+    <client-only>
+
+      <div class="create-wrapper">
+        <div class="inner">
           <Editor
               :editInfo="editInfo"
               :is-edit="isEdit"
           ></Editor>
-        </client-only>
+        </div>
       </div>
-    </div>
+    </client-only>
   </nuxt-layout>
 </template>
 

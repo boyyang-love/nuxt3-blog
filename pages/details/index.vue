@@ -170,6 +170,8 @@ definePageMeta({
                 <div class="left">
                   <div class="avatar">
                     <n-avatar
+                        class="img"
+                        object-fit="cover"
                         :size="50"
                         :src="data?.data.info?.user.avatar"
                         :fallback-src="errImg"
@@ -380,17 +382,13 @@ definePageMeta({
 
         .left {
           .avatar {
-            box-sizing: border-box;
-            width: 50px;
-            height: 50px;
-            overflow: hidden;
-            border-radius: 4px;
-            border: 3px solid var(--border-color);
-
             .img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
+              border: 3px solid var(--border-color);
+              border-radius: 4px;
+
+              :deep(.n-avatar) {
+                border-radius: 0;
+              }
             }
           }
         }

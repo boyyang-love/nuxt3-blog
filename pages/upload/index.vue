@@ -15,40 +15,42 @@ const {
 </script>
 
 <template>
-  <div class="upload-wrapper">
-    <div class="upload-content">
-      <n-input
-          class="input"
-          placeholder="请输入壁纸名称"
-          v-model:value="fileInfo.file_name"
-      ></n-input>
-      <img class="img" :src="imgBase64" alt="" v-if="imgBase64">
-      <n-upload
-          v-else
-          ref="uploadRef"
-          @change="onChange"
-      >
-        <n-upload-dragger>
-          <div class="upload-icon">
-            <n-icon class="icon">
-              <CloudUpload></CloudUpload>
-            </n-icon>
+  <client-only>
+    <div class="upload-wrapper">
+      <div class="upload-content">
+        <n-input
+            class="input"
+            placeholder="请输入壁纸名称"
+            v-model:value="fileInfo.file_name"
+        ></n-input>
+        <img class="img" :src="imgBase64" alt="" v-if="imgBase64">
+        <n-upload
+            v-else
+            ref="uploadRef"
+            @change="onChange"
+        >
+          <n-upload-dragger>
+            <div class="upload-icon">
+              <n-icon class="icon">
+                <CloudUpload></CloudUpload>
+              </n-icon>
+            </div>
+            <n-text style="font-size: 16px">
+              点击或者拖动文件到该区域来上传
+            </n-text>
+            <n-p depth="3" style="margin: 8px 0 0 0">
+              请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码
+            </n-p>
+          </n-upload-dragger>
+        </n-upload>
+        <div class="upload-btn">
+          <div class="btn" @click="submit">
+            上传
           </div>
-          <n-text style="font-size: 16px">
-            点击或者拖动文件到该区域来上传
-          </n-text>
-          <n-p depth="3" style="margin: 8px 0 0 0">
-            请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码
-          </n-p>
-        </n-upload-dragger>
-      </n-upload>
-      <div class="upload-btn">
-        <div class="btn" @click="submit">
-          上传
         </div>
       </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <style scoped lang="less">

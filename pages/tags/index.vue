@@ -139,89 +139,91 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="tags-wrapper">
-    <div class="tag-item-wrapper">
-      <div class="add" @click="addNewTag">
-        <n-icon size="20">
-          <Add></Add>
-        </n-icon>
-      </div>
-      <div class="tag-item" v-for="item in list">
+  <client-only>
+    <div class="tags-wrapper">
+      <div class="tag-item-wrapper">
+        <div class="add" @click="addNewTag">
+          <n-icon size="20">
+            <Add></Add>
+          </n-icon>
+        </div>
+        <div class="tag-item" v-for="item in list">
         <span class="name" @click="getBlogList(item.articles.map(a => a.id))">
           {{ item.tag_name }}
         </span>
-        <span class="value">
+          <span class="value">
           {{ item.articles.length || 0 }}
         </span>
-        <div class="edit">
-          <n-icon
-              :size="18"
-              class="icon edit"
-              @click="eidtTag(item)"
-          >
-            <Create></Create>
-          </n-icon>
-          <n-icon
-              :size="18"
-              class="icon close"
-              @click="delTag(item)"
-          >
-            <Close></Close>
-          </n-icon>
+          <div class="edit">
+            <n-icon
+                :size="18"
+                class="icon edit"
+                @click="eidtTag(item)"
+            >
+              <Create></Create>
+            </n-icon>
+            <n-icon
+                :size="18"
+                class="icon close"
+                @click="delTag(item)"
+            >
+              <Close></Close>
+            </n-icon>
+          </div>
         </div>
       </div>
-    </div>
 
-    <n-modal
-        v-model:show="isShowCard"
-        style="
+      <n-modal
+          v-model:show="isShowCard"
+          style="
             max-width: 600px;
             position: fixed;
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
         "
-    >
-      <n-card>
-        <div class="blog-list">
-          <div class="search-result">
-            <div
-                class="search-result-item"
-                v-for="item in blogList"
-                @click="toDetail(item.id)"
-            >
-              <div class="left-img">
-                <img class="img" :src="item.cover" :alt="item.cover">
-              </div>
-              <div class="right-content">
-                <n-ellipsis
-                    :line-clamp="1"
-                    :tooltip="false"
-                >
-                  <span class="title">{{ item.title }}</span>
-                </n-ellipsis>
-                <n-ellipsis
-                    :line-clamp="2"
-                    :tooltip="false"
-                >
-                  <span class="des">{{ item.des }}</span>
-                </n-ellipsis>
+      >
+        <n-card>
+          <div class="blog-list">
+            <div class="search-result">
+              <div
+                  class="search-result-item"
+                  v-for="item in blogList"
+                  @click="toDetail(item.id)"
+              >
+                <div class="left-img">
+                  <img class="img" :src="item.cover" :alt="item.cover">
+                </div>
+                <div class="right-content">
+                  <n-ellipsis
+                      :line-clamp="1"
+                      :tooltip="false"
+                  >
+                    <span class="title">{{ item.title }}</span>
+                  </n-ellipsis>
+                  <n-ellipsis
+                      :line-clamp="2"
+                      :tooltip="false"
+                  >
+                    <span class="des">{{ item.des }}</span>
+                  </n-ellipsis>
+                </div>
               </div>
             </div>
+            <div class="close">
+              <n-icon
+                  :size="22"
+                  class="icon"
+                  @click="isShowCard = false"
+              >
+                <Close></Close>
+              </n-icon>
+            </div>
           </div>
-          <div class="close">
-            <n-icon
-                :size="22"
-                class="icon"
-                @click="isShowCard = false"
-            >
-              <Close></Close>
-            </n-icon>
-          </div>
-        </div>
-      </n-card>
-    </n-modal>
-  </div>
+        </n-card>
+      </n-modal>
+    </div>
+  </client-only>
 </template>
 
 <style scoped lang="less">

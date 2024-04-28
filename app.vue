@@ -99,7 +99,7 @@ useHead({
 
 body {
   ::-webkit-scrollbar {
-    width: 0 !important;
+    width: 0;
     height: 2px;
   }
 
@@ -118,7 +118,7 @@ body {
   }
 
   margin: 0;
-  font-family: AlimamaDaoLiTi, serif;
+  font-family: AlimamaDaoLiTi, system-ui, DM Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
   background-color: var(--bg-color);
   position: relative;
   overflow: hidden;

@@ -49,36 +49,37 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-      class="wallpaper-wrapper"
-      id="wallpaper-wrapper"
-      ref="wallpaperWrapper"
-  >
-    <div class="tab-wrapper">
-      <n-tabs
-          type="line"
-          default-value="images"
-          v-model:value="tabValue"
-          @update:value="tabChange"
-      >
-        <n-tab-pane tab="壁纸" name="images"></n-tab-pane>
-        <n-tab-pane tab="博客" name="blog"></n-tab-pane>
-        <n-tab-pane tab="背景" name="bg"></n-tab-pane>
-        <n-tab-pane tab="头像" name="avatar"></n-tab-pane>
-        <n-tab-pane tab="分类" name="categories"></n-tab-pane>
-      </n-tabs>
+  <client-only>
+    <div
+        class="wallpaper-wrapper"
+        id="wallpaper-wrapper"
+        ref="wallpaperWrapper"
+    >
+      <div class="tab-wrapper">
+        <n-tabs
+            type="line"
+            default-value="images"
+            v-model:value="tabValue"
+            @update:value="tabChange"
+        >
+          <n-tab-pane tab="壁纸" name="images"></n-tab-pane>
+          <n-tab-pane tab="博客" name="blog"></n-tab-pane>
+          <n-tab-pane tab="背景" name="bg"></n-tab-pane>
+          <n-tab-pane tab="头像" name="avatar"></n-tab-pane>
+          <n-tab-pane tab="分类" name="categories"></n-tab-pane>
+        </n-tabs>
+      </div>
+      <div class="water">
+        <WaterFull
+            ref="childrenComp"
+            :col="col"
+            :type="tabValue"
+            @isNoMore="isNoMore"
+        ></WaterFull>
+      </div>
+      <div class="no-more" v-if="more">没有更多了</div>
     </div>
-    <div class="water">
-      <WaterFull
-          ref="childrenComp"
-          :col="col"
-          :type="tabValue"
-          @isNoMore="isNoMore"
-      ></WaterFull>
-    </div>
-    <div class="no-more" v-if="more">没有更多了</div>
-
-  </div>
+  </client-only>
 </template>
 
 <style scoped lang="less">

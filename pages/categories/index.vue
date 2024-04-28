@@ -130,114 +130,116 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="categories-wrapper">
-    <div class="categories-content">
-      <div class="crate-wrapper">
-        <n-icon
-            class="icon"
-            size="22"
-            @click="openModal('create')"
-        >
-          <Add></Add>
-        </n-icon>
+  <client-only>
+    <div class="categories-wrapper">
+      <div class="categories-content">
+        <div class="crate-wrapper">
+          <n-icon
+              class="icon"
+              size="22"
+              @click="openModal('create')"
+          >
+            <Add></Add>
+          </n-icon>
+        </div>
+        <div class="categories-items" v-for="item in list">
+          <CategoriesCard
+              :id="item.id"
+              :title="item.name"
+              :cover="item.cover"
+              :des="item.des"
+              @update="update(item)"
+              @detail="toDetail"
+          ></CategoriesCard>
+        </div>
       </div>
-      <div class="categories-items" v-for="item in list">
-        <CategoriesCard
-            :id="item.id"
-            :title="item.name"
-            :cover="item.cover"
-            :des="item.des"
-            @update="update(item)"
-            @detail="toDetail"
-        ></CategoriesCard>
-      </div>
-    </div>
 
-    <div class="card">
-      <n-modal
-          v-model:show="isShowModal"
-      >
-        <div class="modal-wrapper">
-          <div :class="['top-img', imgUrl ? 'show-trash' : '']">
-            <div class="img-wrapper">
-              <n-upload
-                  :show-file-list="false"
-                  :custom-request="customRequest"
-                  class="upload"
-                  v-if="!imgUrl"
+      <div class="card">
+        <n-modal
+            v-model:show="isShowModal"
+        >
+          <div class="modal-wrapper">
+            <div :class="['top-img', imgUrl ? 'show-trash' : '']">
+              <div class="img-wrapper">
+                <n-upload
+                    :show-file-list="false"
+                    :custom-request="customRequest"
+                    class="upload"
+                    v-if="!imgUrl"
+                >
+                  <div class="upload-wrapper">
+                    <n-icon size="26">
+                      <Add></Add>
+                    </n-icon>
+                  </div>
+                </n-upload>
+                <img
+                    class="img"
+                    :src="imgUrl"
+                    alt=""
+                    v-else
+                >
+              </div>
+              <div class="box" v-if="imgUrl"></div>
+              <div
+                  class="del-wrapper"
+                  v-if="imgUrl"
+                  @click="imgUrl = ''"
               >
-                <div class="upload-wrapper">
-                  <n-icon size="26">
-                    <Add></Add>
-                  </n-icon>
-                </div>
-              </n-upload>
-              <img
-                  class="img"
-                  :src="imgUrl"
-                  alt=""
-                  v-else
-              >
+                <n-icon
+                    size="20"
+                    class="icon"
+                >
+                  <TrashBin></TrashBin>
+                </n-icon>
+              </div>
             </div>
-            <div class="box" v-if="imgUrl"></div>
-            <div
-                class="del-wrapper"
-                v-if="imgUrl"
-                @click="imgUrl = ''"
-            >
-              <n-icon
-                  size="20"
-                  class="icon"
-              >
-                <TrashBin></TrashBin>
-              </n-icon>
-            </div>
-          </div>
-          <div class="input-wrapper">
-            <n-space vertical>
-              <n-input
-                  placeholder="请输入分类名称"
-                  maxlength="10"
-                  show-count
-                  v-model:value="title"
-              ></n-input>
-              <n-input
-                  placeholder="请输入描述"
-                  type="textarea"
-                  maxlength="30"
-                  :autosize="{
+            <div class="input-wrapper">
+              <n-space vertical>
+                <n-input
+                    placeholder="请输入分类名称"
+                    maxlength="10"
+                    show-count
+                    v-model:value="title"
+                ></n-input>
+                <n-input
+                    placeholder="请输入描述"
+                    type="textarea"
+                    maxlength="30"
+                    :autosize="{
                       minRows: 2,
                       maxRows: 3,
                   }"
-                  show-count
-                  v-model:value="des"
-              ></n-input>
-            </n-space>
+                    show-count
+                    v-model:value="des"
+                ></n-input>
+              </n-space>
+            </div>
+            <div class="sub-btn">
+              <n-button
+                  type="error"
+                  size="small"
+                  :loading="loading"
+                  @click="sub"
+              >
+                提交
+              </n-button>
+            </div>
+            <div class="close">
+              <n-icon
+                  class="icon"
+                  size="20"
+                  @click="closeModal"
+              >
+                <Close></Close>
+              </n-icon>
+            </div>
+            <div class="title">{{ modalTitle }}</div>
           </div>
-          <div class="sub-btn">
-            <n-button
-                type="error"
-                size="small"
-                :loading="loading"
-                @click="sub"
-            >
-              提交
-            </n-button>
-          </div>
-          <div class="close">
-            <n-icon
-                class="icon"
-                size="20"
-                @click="closeModal"
-            >
-              <Close></Close>
-            </n-icon>
-          </div>
-          <div class="title">{{ modalTitle }}</div>
-        </div>
-      </n-modal>
+        </n-modal>
+      </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <style scoped lang="less">
