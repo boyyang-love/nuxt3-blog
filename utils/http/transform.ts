@@ -65,13 +65,14 @@ const transForm: TransForm = {
                 title: '提示',
                 content: '图片过大',
             })
-            window.$uploadProgress.end()
         }
 
 
         if (e.response?.data && e.response.data.msg) {
             window.$message.error(e.response.data.msg)
         }
+
+        window.$uploadProgress.end()
 
         return e.response?.data as ResultErr
     },

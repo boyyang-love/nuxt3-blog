@@ -6,14 +6,12 @@ import {useFileUpload} from '@/hooks/fileUpload'
 import {type Category, categoryCreate, categoryList, categoryUpdate} from '@/api/categories'
 import {useUserStore} from '@/store/modules/user'
 import {env} from '~/utils/env'
-import {useRouter} from 'vue-router'
 import {useSearchResStore} from '@/store/modules/searchRes'
 
 type ModalType = 'create' | 'edit'
 type List = Category.CategoryInfo & { path: string }
 
 const userStore = useUserStore()
-const router = useRouter()
 const searchResStore = useSearchResStore()
 
 const list = ref<List[]>([])
