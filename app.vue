@@ -122,5 +122,6 @@ body {
   background-color: var(--bg-color);
   position: relative;
   overflow: hidden;
+  padding-bottom:env(safe-area-inset-bottom);
 }
 </style>

@@ -2,6 +2,7 @@ import type {RequestOptions, Result, TransForm, ResultErr} from './types'
 import type {AxiosError, AxiosResponse} from 'axios'
 import qs from 'qs'
 import {useUserStore} from '@/store/modules/user'
+import {emit} from '@/utils/emit'
 
 const transForm: TransForm = {
     beforeRequestHook(config, opt) {
@@ -43,6 +44,7 @@ const transForm: TransForm = {
         if (res.data.code === 1 && res.data.msg !== "ok" && res.data.msg) {
             window.$message.success(res.data.msg)
         }
+
         return res
     },
 

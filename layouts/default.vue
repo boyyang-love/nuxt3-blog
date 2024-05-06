@@ -143,7 +143,7 @@ const toTop = (show: boolean) => {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom);
     flex-direction: column;
 
     .container {
