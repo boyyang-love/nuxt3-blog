@@ -809,5 +809,13 @@ definePageMeta({
 
     }
   }
+
+  .blog-list {
+    .search-result-item {
+      .left-img {
+        width: 80px;
+      }
+    }
+  }
 }
 </style>

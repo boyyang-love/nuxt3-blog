@@ -140,7 +140,7 @@ const changeWallpaprStatus = () => {
           v-if="props.type === 'images'"
       >
         <template #trigger>
-          <n-icon size="18" class="desktop icon">
+          <n-icon  class="desktop icon">
             <component :is="props.status ? LockOpen : LockClosed "></component>
           </n-icon>
         </template>
@@ -152,7 +152,7 @@ const changeWallpaprStatus = () => {
           @positive-click="downloadImage"
       >
         <template #trigger>
-          <n-icon size="18" class="desktop icon">
+          <n-icon  class="desktop icon">
             <CloudDownload></CloudDownload>
           </n-icon>
         </template>
@@ -165,7 +165,7 @@ const changeWallpaprStatus = () => {
           v-if="props.type === 'bg' || props.type === 'avatar' "
       >
         <template #trigger>
-          <n-icon size="18" class="desktop icon">
+          <n-icon class="desktop icon">
             <PaperPlane></PaperPlane>
           </n-icon>
         </template>
@@ -177,7 +177,7 @@ const changeWallpaprStatus = () => {
           @positive-click="delImage"
       >
         <template #trigger>
-          <n-icon size="18" class="close icon">
+          <n-icon  class="close icon">
             <Close></Close>
           </n-icon>
         </template>
@@ -186,7 +186,6 @@ const changeWallpaprStatus = () => {
         </div>
       </n-popconfirm>
       <n-icon
-          :size="18"
           class="icon arrow"
           @click="isShowMenu = !isShowMenu"
       >
@@ -277,6 +276,7 @@ const changeWallpaprStatus = () => {
       cursor: pointer;
       color: #23d69b;
       margin: 2px 3px;
+      font-size: 18px;
     }
   }
 
@@ -322,6 +322,17 @@ const changeWallpaprStatus = () => {
 
     .icon {
       color: #ff8a14;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .image-card-wrapper {
+    .icon-wrapper {
+
+      .icon {
+        font-size: 25px;
+      }
     }
   }
 }

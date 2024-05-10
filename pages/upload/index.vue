@@ -56,12 +56,14 @@ const {
 <style scoped lang="less">
 .upload-wrapper {
   box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
   display: flex;
   justify-content: center;
 
   .upload-content {
     box-sizing: border-box;
-    padding-top: 50px;
     width: 60%;
 
     .img {
@@ -71,13 +73,15 @@ const {
     }
 
     .input {
-      margin-bottom: 10px;
+      margin: 50px 0 10px;
     }
 
     .upload-btn {
       //background-color: #1f2b3e;
       display: flex;
       justify-content: flex-end;
+      padding-bottom: 45px;
+
 
       .btn {
         box-sizing: border-box;

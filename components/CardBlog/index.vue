@@ -146,6 +146,7 @@ const props = defineProps<Props>()
 
       .card-left-img {
         width: 100%;
+        height: 100%;
       }
     }
 
