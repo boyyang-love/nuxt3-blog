@@ -7,6 +7,7 @@ import {useRouter} from 'vue-router'
 export interface SearchState {
     toType: ToType
     show: boolean
+    user_id: number
     searchRes: SearchApi.SearchInfo[]
 }
 
@@ -17,6 +18,7 @@ const useSearchResStore = defineStore({
     state: (): SearchState => ({
         toType: 'detail',
         show: false,
+        user_id: 0,
         searchRes: [],
     }),
 
@@ -27,6 +29,7 @@ const useSearchResStore = defineStore({
                 user_id: user_id,
             })
 
+            this.user_id = user_id
             this.searchRes = res.data.infos
         },
         setToType(type: ToType) {

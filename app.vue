@@ -56,8 +56,53 @@ useHead({
   htmlAttrs: {
     'data-theme': themeStore.theme,
   },
+  meta: [
+    {
+      name: 'apple-mobile-web-app-capable',
+      content: 'yes',
+    },
+    {
+      name: 'apple-mobile-web-app-status-bar-style',
+      content: 'black-translucent',
+    },
+    {
+      name: 'browsermode',
+      content: 'application',
+    },
+    {
+      name: 'x5-page-mode',
+      content: 'app',
+    },
+  ],
 })
 
+onMounted(() => {
+  let element = document.documentElement
+  requestFullScreen(element)
+
+  let isScrolling: NodeJS.Timeout | null = null
+
+  window.onscroll = function () {
+    // 清除计时器
+    isScrolling && clearTimeout(isScrolling)
+
+    // 设置计时器，在页面停止滚动后250毫秒执行
+    isScrolling = setTimeout(function () {
+      // 隐藏或显示地址栏
+      window.scrollTo(0, 0)
+    }, 250)
+  }
+})
+
+const requestFullScreen = (element: any) => {
+  if (element.requestFullScreen) {
+    element.requestFullScreen()
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen()
+  } else if (element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen()
+  }
+}
 </script>
 <style lang="less">
 @import "@/font/font.less";
@@ -87,6 +132,7 @@ useHead({
   transition: all 0.4s ease-in-out;
   position: relative;
 }
+
 .layout-enter-from,
 .layout-leave-to {
   transform: translateY(100%);
@@ -122,6 +168,6 @@ body {
   background-color: var(--bg-color);
   position: relative;
   overflow: hidden;
-  padding-bottom:env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

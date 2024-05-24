@@ -12,6 +12,7 @@ const toDetail = (id: number) => {
     path: `/${searchResStore.toType}`,
     query: {
       id: id,
+      user_id: searchResStore.user_id
     },
   }).then(() => {
     searchResStore.show = false

@@ -2,6 +2,10 @@
 import {sitemap} from './static/sitemap'
 
 export default defineNuxtConfig({
+    devServer: {
+        host: '0.0.0.0',
+        port: 3000,
+    },
     ssr: true,
     nitro: {
         compressPublicAssets: true,        // 启动压缩
@@ -99,6 +103,10 @@ export default defineNuxtConfig({
                 {
                     name: 'baidu-site-verification',
                     content: 'codeva-5PhqvbeMY2',
+                },
+                {
+                    name: 'msvalidate.01',
+                    content: '8707B7AA5CBE39158EA6D66ACB808FA8',
                 },
             ],
         },

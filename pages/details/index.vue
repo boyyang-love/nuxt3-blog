@@ -66,6 +66,15 @@ const delBlog = () => {
   })
 }
 
+const backToUser = () => {
+  router.replace({
+    path: '/user',
+    query: {
+      id: route.query.user_id
+    }
+  })
+}
+
 watch(() => route.query.id, (newVal) => {
   if (newVal) {
     refresh()
@@ -90,7 +99,7 @@ definePageMeta({
         <n-icon
             :size="22"
             class="icon"
-            @click="router.back()"
+            @click="backToUser"
         >
           <ArrowUndo></ArrowUndo>
         </n-icon>

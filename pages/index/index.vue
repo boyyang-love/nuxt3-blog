@@ -61,6 +61,13 @@ const menus = computed(() => {
 definePageMeta({
   layout: false,
 })
+
+onMounted(() => {
+  nextTick(() => {
+    window.scrollTo(0, 0)
+  })
+})
+
 </script>
 
 <template>

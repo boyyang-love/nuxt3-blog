@@ -180,6 +180,7 @@ const toDetail = (id: number) => {
     path: '/details',
     query: {
       id: id,
+      user_id: route.query.id
     },
   }).then(() => {
     isShowCard.value = false
@@ -320,6 +321,7 @@ definePageMeta({
                     v-for="item in blogInfo"
                     :title="item.title"
                     :id="item.id"
+                    :user_id="route.query.id as unknown as number"
                     :des="item.des"
                     :cover="item.cover"
                     :time="item.created"

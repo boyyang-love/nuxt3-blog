@@ -55,7 +55,11 @@ const toDetail = () => {
 <template>
   <div class="card-wrapper" id="card-wrapper">
     <div class="title-wrapper">
-      <nuxt-link :to="`/detail/?id=${props.id}`" class="link">
+      <nuxt-link
+          :to="`/detail/?id=${props.id}`"
+          class="link"
+          target="_blank"
+      >
         <WaterTitle :text="props.title"></WaterTitle>
       </nuxt-link>
       <div class="time">

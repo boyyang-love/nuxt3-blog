@@ -6,6 +6,7 @@ import CubeLoading from '~/components/CubeLoading/index.vue'
 
 interface Props {
   id: number
+  user_id: number
   title: string
   des: string
   cover: string
@@ -18,7 +19,10 @@ const props = defineProps<Props>()
 <template>
   <div class="card-wrapper">
     <div class="card-info">
-      <nuxt-link :to="`/details/?id=${props.id}`">
+      <nuxt-link
+          :to="`/details/?id=${props.id}&user_id=${props.user_id}`"
+          target="_blank"
+      >
         <div class="card-left-img">
           <n-image
               class="img"
@@ -49,7 +53,11 @@ const props = defineProps<Props>()
       </nuxt-link>
       <div class="card-right-info">
         <div class="title">
-          <nuxt-link :to="`/details/?id=${props.id}`" class="link">
+          <nuxt-link
+              :to="`/details/?id=${props.id}&user_id=${props.user_id}`"
+              target="_blank"
+              class="link"
+          >
             <n-ellipsis
                 :line-clamp="1"
                 :tooltip="false"
