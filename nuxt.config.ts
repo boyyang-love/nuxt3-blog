@@ -3,7 +3,7 @@ import {sitemap} from './static/sitemap'
 
 export default defineNuxtConfig({
     devServer: {
-        host: '0.0.0.0',
+        // host: '0.0.0.0',
         port: 3000,
     },
     ssr: true,

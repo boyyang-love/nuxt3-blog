@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {NEllipsis} from 'naive-ui'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const props = defineProps<{
   id: number
@@ -13,7 +14,7 @@ const props = defineProps<{
   <div class="card-wrapper">
     <nuxt-link :to="`/detail/?id=${id}`" class="nuxt-link">
       <div class="top-cover">
-        <img class="img" :src="props.cover" alt="">
+        <img class="img" :src="addImagePrefix(props.cover)" :alt="props.cover">
       </div>
       <div class="bottom-wrapper">
         <div class="title">

@@ -51,7 +51,7 @@ export const uploadFile = (data: { file_name: string, file: File, dir: string })
     return http.request<Upload.UploadRes>(
         {
             method: 'POST',
-            url: '/file/upload',
+            url: 'minio/file/upload',
             data: formData,
             timeout: 1000 * 60 * 3
         },

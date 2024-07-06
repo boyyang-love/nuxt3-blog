@@ -8,6 +8,7 @@ import {getUserInfoById, type User} from '@/api/user'
 import {env} from '~/utils/env'
 import CubeLoading from '~/components/CubeLoading/index.vue'
 import WaterTitle from '~/components/AniText/index.vue'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 
 const isReadAll = ref<boolean>(false)
@@ -58,7 +59,6 @@ const toDetail = () => {
       <nuxt-link
           :to="`/detail/?id=${props.id}`"
           class="link"
-          target="_blank"
       >
         <WaterTitle :text="props.title"></WaterTitle>
       </nuxt-link>
@@ -95,7 +95,7 @@ const toDetail = () => {
               <div class="user-cover" @click="toDetail">
                 <NImage
                     class="img"
-                    :src="userInfo?.cover"
+                    :src="addImagePrefix(userInfo?.cover as string)"
                     :preview-disabled="true"
                     lazy
                     width="100%"
@@ -148,7 +148,7 @@ const toDetail = () => {
       <slot name="cover"></slot>
       <img
           class="img"
-          :src="props.cover"
+          :src="addImagePrefix(props.cover)"
           :alt="props.cover"
       >
       <div class="bottom">

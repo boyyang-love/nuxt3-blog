@@ -13,6 +13,7 @@ import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
 import {definePageMeta} from '#imports'
 import AniText from '~/components/AniText/index.vue'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -110,7 +111,7 @@ definePageMeta({
           <div class="top-cover">
             <img
                 class="img"
-                :src="data?.data.info?.cover"
+                :src="addImagePrefix(data?.data.info?.cover as string)"
                 :alt="data?.data.info?.title"
             >
           </div>

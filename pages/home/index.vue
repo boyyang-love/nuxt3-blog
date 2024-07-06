@@ -80,7 +80,6 @@ onMounted(() => {
       <div class="banner">
         <n-image
             :src="userStore.user_info.cover"
-            :fallback-src="errImg"
             object-fit="cover"
             :alt="userStore.user_info.cover"
             :preview-disabled="true"

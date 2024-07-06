@@ -100,7 +100,7 @@ const getList = () => {
     list.value = res.data.info.map(info => {
       return {
         ...info,
-        cover: `${env.VITE_APP_IMG_URL}${info.cover}`,
+        cover: info.cover,
         path: info.cover,
       }
     })

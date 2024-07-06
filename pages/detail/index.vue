@@ -12,6 +12,7 @@ import {useUserStore} from '@/store/modules/user'
 import {useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -86,7 +87,7 @@ watch(() => route.query.id, (newVal) => {
         <div class="top-cover">
           <img
               class="img"
-              :src="data?.data.info?.cover"
+              :src="addImagePrefix(data?.data.info?.cover as string)"
               :alt="data?.data.info?.title"
           >
         </div>

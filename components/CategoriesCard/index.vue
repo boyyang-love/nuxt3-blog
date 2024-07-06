@@ -3,6 +3,7 @@ import {NIcon, NImage} from 'naive-ui'
 import {Cog} from '@vicons/ionicons5'
 import errImg from 'assets/image/avatar_g.jpg'
 import {PinwheelLoading} from '#components'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const props = defineProps<
     {
@@ -29,7 +30,7 @@ const emits = defineEmits<
       <n-image
           class="img"
           :fallback-src="errImg"
-          :src="cover"
+          :src="addImagePrefix(cover)"
           :preview-disabled="true"
           lazy
           style="height: 100%;width: 100%;"

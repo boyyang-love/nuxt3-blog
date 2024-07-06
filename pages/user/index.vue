@@ -16,6 +16,7 @@ import {MouseLoading} from '#components'
 import {type Category, categoryList} from '~/api/categories'
 import CategoriesCard from '@/components/CategoriesCard/index.vue'
 import {useSearchResStore} from '@/store/modules/searchRes'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const route = useRoute()
 const router = useRouter()
@@ -141,7 +142,7 @@ const getCategoriyList = () => {
     categories.value = res.data.info.map(info => {
       return {
         ...info,
-        cover: `${env.VITE_APP_IMG_URL}${info.cover}`,
+        cover: info.cover,
       }
     })
   })
@@ -419,7 +420,7 @@ definePageMeta({
                   @click="toDetail(item.id)"
               >
                 <div class="left-img">
-                  <img class="img" :src="item.cover" :alt="item.cover">
+                  <img class="img" :src="addImagePrefix(item.cover)" :alt="item.cover">
                 </div>
                 <div class="right-content">
                   <n-ellipsis

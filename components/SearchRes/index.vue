@@ -3,6 +3,7 @@ import {NCard, NEllipsis, NIcon, NModal, NEmpty} from 'naive-ui'
 import {Close} from '@vicons/ionicons5'
 import {useSearchResStore} from '@/store/modules/searchRes'
 import {useRouter} from 'vue-router'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const searchResStore = useSearchResStore()
 const router = useRouter()
@@ -43,7 +44,7 @@ const toDetail = (id: number) => {
               @click="toDetail(item.id)"
           >
             <div class="left-img">
-              <img class="img" :src="item.cover" :alt="item.cover">
+              <img class="img" :src="addImagePrefix(item.cover)" :alt="item.cover">
             </div>
             <div class="right-content">
               <n-ellipsis

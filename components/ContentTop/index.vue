@@ -25,6 +25,7 @@ import {useUserStore} from '@/store/modules/user'
 import {updateUserPassword} from '@/api/user'
 import {searchBykeyword, type SearchApi} from '@/api/search'
 import {useSearchStore} from '@/store/modules/search'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -364,7 +365,7 @@ const searchByHistory = (word: string) => {
                 @click="toDeatil(item.id)"
             >
               <div class="left-img">
-                <img class="img" :src="item.cover" :alt="item.cover">
+                <img class="img" :src="addImagePrefix(item.cover)" :alt="item.cover">
               </div>
               <div class="right-content">
                 <n-ellipsis

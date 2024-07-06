@@ -3,6 +3,7 @@ import {NEllipsis, NImage} from 'naive-ui'
 import errimg from '@/assets/image/wolp.jpg'
 import moment from 'moment'
 import CubeLoading from '~/components/CubeLoading/index.vue'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 interface Props {
   id: number
@@ -26,7 +27,7 @@ const props = defineProps<Props>()
         <div class="card-left-img">
           <n-image
               class="img"
-              :src="props.cover"
+              :src="addImagePrefix(props.cover)"
               :alt="props.cover"
               :fallback-src="errimg"
               :preview-disabled="true"

@@ -9,7 +9,7 @@ import {useTags} from '@/hooks/useTags'
 import {useRouter} from 'vue-router'
 import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
 import {useUserStore} from '@/store/modules/user'
-
+import {addImagePrefix} from '@/utils/addImagePrefix'
 
 const props = defineProps<{
   isEdit: boolean
@@ -178,7 +178,7 @@ onMounted(() => {
                   <Close></Close>
                 </n-icon>
               </div>
-              <img class="img" :src="imgUrl" :alt="imgUrl"/>
+              <img class="img" :src="addImagePrefix(imgUrl)" :alt="imgUrl"/>
             </div>
             <n-upload
                 :custom-request="customRequest"
