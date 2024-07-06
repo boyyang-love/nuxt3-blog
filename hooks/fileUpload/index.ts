@@ -47,7 +47,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
                 file: file,
                 dir: dir,
             }).then(res => {
-                imgUrl.value = `${env.VITE_APP_IMG_URL}${res.data.path}`
+                imgUrl.value = res.data.path
                 success?.({
                     FileInfo: {
                         file_name: file.name,
@@ -68,13 +68,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
     const customRequest = (
         {
             file,
-            data,
-            headers,
-            withCredentials,
-            action,
             onFinish,
-            onError,
-            onProgress,
         }: UploadCustomRequestOptions) => {
         window.$loadingBar.start()
         window.$uploadProgress.begin()
@@ -83,7 +77,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
             file: file.file as File,
             dir: dir,
         }).then(res => {
-            imgUrl.value = `${env.VITE_APP_IMG_URL}${res.data.path}`
+            imgUrl.value = res.data.path
             onFinish()
             success?.({
                 FileInfo: {

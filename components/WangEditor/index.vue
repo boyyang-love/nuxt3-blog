@@ -74,7 +74,7 @@ const submit = () => {
 
   if (props.isEdit) {
     window.$uploadProgress.begin()
-    updateBlog({
+    const data = {
       id: Number(props.editInfo?.id),
       title: blogInfo.title,
       des: des?.slice(0, 250) || '',
@@ -85,8 +85,10 @@ const submit = () => {
       }),
       keywords: keywords.value,
       category_id: Number(categoryValue.value),
+    }
 
-    }).then(res => {
+    debugger
+    updateBlog(data).then(res => {
       window.$uploadProgress.end()
       valueHtml.value = ''
       blogInfo.title = ''
