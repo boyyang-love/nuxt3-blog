@@ -7,6 +7,7 @@ import {type Category, categoryCreate, categoryList, categoryUpdate} from '@/api
 import {useUserStore} from '@/store/modules/user'
 import {env} from '~/utils/env'
 import {useSearchResStore} from '@/store/modules/searchRes'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 type ModalType = 'create' | 'edit'
 type List = Category.CategoryInfo & { path: string }
@@ -173,7 +174,7 @@ onMounted(() => {
                 </n-upload>
                 <img
                     class="img"
-                    :src="imgUrl"
+                    :src="addImagePrefix(imgUrl)"
                     alt=""
                     v-else
                 >
