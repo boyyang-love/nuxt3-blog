@@ -41,16 +41,6 @@ const {data} = useFetch<Result<Blog.ListBlogRes>>('/blog/list', {
         return new Promise((resolve) => {
           const {_data} = ctx.response
           const {data} = _data as Result<Blog.ListBlogRes>
-
-          data.list = data.list.map(l => {
-            return {
-              ...l,
-              user: {
-                ...l.user,
-                avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
-              },
-            }
-          })
           isShowSkeleton.value = false
           resolve(ctx)
         })

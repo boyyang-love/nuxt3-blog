@@ -5,7 +5,6 @@ import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {getUserInfoById, type User} from '@/api/user'
-import {env} from '~/utils/env'
 import CubeLoading from '~/components/CubeLoading/index.vue'
 import WaterTitle from '~/components/AniText/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
@@ -86,7 +85,7 @@ const toDetail = () => {
                 <n-avatar
                     :fallback-src="errImg"
                     :size="50"
-                    :src="props.avatar"
+                    :src="addImagePrefix(props.avatar)"
                 ></n-avatar>
               </nuxt-link>
             </template>
@@ -94,7 +93,7 @@ const toDetail = () => {
               <div class="user-cover" @click="toDetail">
                 <NImage
                     class="img"
-                    :src="addImagePrefix(userInfo?.cover as string)"
+                    :src="userInfo?.cover && addImagePrefix(userInfo?.cover as string)"
                     :preview-disabled="true"
                     lazy
                     width="100%"
@@ -145,11 +144,24 @@ const toDetail = () => {
     </div>
     <div :class="['top-img',isReadAll ? 'all' : '']">
       <slot name="cover"></slot>
-      <img
+      <NImage
           class="img"
           :src="addImagePrefix(props.cover)"
-          :alt="props.cover"
+          :preview-disabled="true"
+          lazy
+          width="100%"
+          object-fit="cover"
+          :intersection-observer-options="{
+            root: '#content'
+          }"
       >
+        <template #placeholder>
+          <div class="loading">
+            <CubeLoading></CubeLoading>
+          </div>
+        </template>
+      </NImage>
+
       <div class="bottom">
         <div class="sub-title" v-show="!isReadAll">
           <n-ellipsis :line-clamp="4" :tooltip="false">
@@ -384,6 +396,15 @@ const toDetail = () => {
         }
       }
     }
+
+    .loading {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .all {
@@ -448,6 +469,7 @@ const toDetail = () => {
   .infos {
     display: flex;
     justify-content: space-between;
+
     .info {
       display: flex;
       flex-direction: column;
