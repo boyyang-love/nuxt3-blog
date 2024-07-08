@@ -36,7 +36,6 @@ const readAll = () => {
 const getUserInfo = () => {
   if (!userInfo.value) {
     getUserInfoById({id: props.userid}).then((res) => {
-      res.data.cover = `${env.VITE_APP_IMG_URL}${res.data.cover}`
       userInfo.value = res.data
     })
   }

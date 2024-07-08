@@ -10,6 +10,7 @@ import {updateUserInfo} from '@/api/user'
 import errImg from 'assets/image/wolp.jpg'
 import type {Result} from '~/utils/http/types'
 import {useFetch} from '#app'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const userStore = useUserStore()
 const {customRequest, uploadRef} = useFileUpload('bg', (info) => {
@@ -79,7 +80,7 @@ onMounted(() => {
     <client-only>
       <div class="banner">
         <n-image
-            :src="userStore.user_info.cover"
+            :src="addImagePrefix(userStore.user_info.cover)"
             object-fit="cover"
             :alt="userStore.user_info.cover"
             :preview-disabled="true"

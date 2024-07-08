@@ -7,6 +7,7 @@ import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
 import {MouseLoading} from '#components'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
@@ -79,7 +80,7 @@ onMounted(() => {
             <n-image
                 class="img"
                 :fallback-src="errImg"
-                :src="userStore.user_info.cover"
+                :src="addImagePrefix(userStore.user_info.cover)"
                 :preview-disabled="true"
                 lazy
                 style="height: 100%;width: 100%;"
@@ -101,7 +102,7 @@ onMounted(() => {
               <div class="user-avatar">
                 <n-avatar
                     :size="112"
-                    :src="userStore.user_info.avatar"
+                    :src="addImagePrefix(userStore.user_info.avatar)"
                     :fallback-src="errImg"
                     :img-props="{
                       alt: userStore.user_info.avatar,

@@ -21,6 +21,7 @@ import {updateUserInfo} from '@/api/user'
 import {useUserStore} from '@/store/modules/user'
 import {env} from '@/utils/env'
 import errImg from '@/assets/image/avatar_g.jpg'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const route = useRoute()
 const router = useRouter()
@@ -231,7 +232,7 @@ const toUserDetail = () => {
             <client-only>
               <n-avatar
                   :size="74"
-                  :src="userStore.user_info.avatar"
+                  :src="addImagePrefix(userStore.user_info.avatar)"
                   :fallback-src="errImg"
                   v-if="!userStore.token"
               ></n-avatar>
@@ -239,7 +240,7 @@ const toUserDetail = () => {
                 <template #avatar>
                   <n-avatar
                       :size="74"
-                      :src="userStore.user_info.avatar"
+                      :src="addImagePrefix(userStore.user_info.avatar)"
                       :fallback-src="errImg"
                   ></n-avatar>
                 </template>

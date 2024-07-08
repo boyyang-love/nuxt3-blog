@@ -3,7 +3,7 @@ import {AppLeft} from '#components'
 import {AppRight} from '#components'
 import {ContentTop} from '#components'
 import {MoreMenu} from '#components'
-import {NBackTop, type BackTopProps} from 'naive-ui'
+import {NBackTop} from 'naive-ui'
 import {useRouter} from 'vue-router'
 import {useBackTopStore} from '@/store/modules/backTop'
 

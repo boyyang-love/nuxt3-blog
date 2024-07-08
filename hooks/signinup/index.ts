@@ -36,8 +36,6 @@ export const useSigninup = () => {
                     password: data.password,
                 },
             ).then((res) => {
-                res.data.user_info.avatar = `${env.VITE_APP_IMG_URL}${res.data.user_info.avatar}`
-                res.data.user_info.cover = `${env.VITE_APP_IMG_URL}${res.data.user_info.cover}`
                 userStore.setToken(res.data.token)
                 userStore.setUserInfo(res.data.user_info)
                 window.$uploadProgress.end()
