@@ -6,6 +6,7 @@ import {type Upload, uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
 import {useUserStore} from '@/store/modules/user'
 import {imageDownload} from '@/utils/fileDownload'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 interface Props {
   id: number
@@ -116,7 +117,7 @@ const delImage = () => {
 
 const downloadImage = () => {
   window.$uploadProgress.begin()
-  imageDownload(props.url, props.fileName).then(() => {
+  imageDownload(addImagePrefix(props.url), props.fileName).then(() => {
     window.$uploadProgress.end()
     window.$message.success('图片下载成功')
   })
@@ -202,7 +203,7 @@ const changeWallpaprStatus = () => {
     </div>
     <NImage
         class="n-img"
-        :src="props.url"
+        :src="addImagePrefix(props.url)"
         :show-toolbar="false"
         lazy
         :intersection-observer-options="{

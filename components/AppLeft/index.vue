@@ -159,7 +159,7 @@ const submit = (info: { file: File, blob: Blob }) => {
     }).then(() => {
       userStore.$patch({
         user_info: {
-          avatar: `${env.VITE_APP_IMG_URL}${resFile.data.path}`,
+          avatar: resFile.data.path,
         },
       })
       window.$uploadProgress.end()

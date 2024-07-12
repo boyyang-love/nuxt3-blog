@@ -84,7 +84,6 @@ const getList = () => {
     res.data.infos.forEach((e) => {
       list.value.push({
         ...e,
-        file_path: `${env.VITE_APP_IMG_URL}/${e.file_path}`,
         path: e.file_path,
       })
     })
