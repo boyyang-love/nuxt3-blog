@@ -2,7 +2,6 @@
 import {NBackTop, NEmpty} from 'naive-ui'
 import {type Upload, uploadList, uploadStatus} from '~/api/upload'
 import Card from '../card/index.vue'
-import {env} from '~/utils/env'
 import {useBackTopStore} from '@/store/modules/backTop'
 
 interface Props {

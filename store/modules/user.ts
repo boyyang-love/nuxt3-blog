@@ -1,9 +1,6 @@
 import {defineStore} from 'pinia'
 import {useNuxtApp} from '#app'
 import type {Signinup} from '~/api/signinup'
-import defaultAvatar from '@/assets/image/avatar_g.jpg'
-import defaultCover from '@/assets/image/wolp.jpg'
-
 
 export interface UserState {
     token: string
@@ -20,8 +17,8 @@ const useUserStore = defineStore({
         user_info: {
             username: 'boyyang',
             motto: '第一行没有你，第二行没有你，第三行没有也罢！',
-            avatar: defaultAvatar,
-            cover: defaultCover,
+            avatar: 'BOYYANG/default/default_avatar.jpg',
+            cover: 'BOYYANG/default/default_avatar.jpg',
         } as Signinup.UserInfo,
         showUserInfoModal: false,
         isSignin: true,

@@ -28,15 +28,6 @@ const {data} = await useAsyncData(
               const {_data} = ctx.response
               const {data} = _data as Result<Blog.ListBlogRes>
 
-              data.list = data.list.map(l => {
-                return {
-                  ...l,
-                  user: {
-                    ...l.user,
-                    avatar: `${env.VITE_APP_IMG_URL}${l.user.avatar}`,
-                  },
-                }
-              })
               resolve(ctx)
             })
           },

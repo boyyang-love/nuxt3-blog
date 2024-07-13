@@ -5,7 +5,6 @@ import {Add, Close, TrashBin} from '@vicons/ionicons5'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {type Category, categoryCreate, categoryList, categoryUpdate} from '@/api/categories'
 import {useUserStore} from '@/store/modules/user'
-import {env} from '~/utils/env'
 import {useSearchResStore} from '@/store/modules/searchRes'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 

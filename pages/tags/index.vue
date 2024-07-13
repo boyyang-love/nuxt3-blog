@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import {h} from 'vue'
-import {NEllipsis, NIcon, NInput, NModal, NCard} from 'naive-ui'
+import {NEllipsis, NIcon, NInput, NModal, NCard, NEmpty, NImage} from 'naive-ui'
 import {Close, Create, Add} from '@vicons/ionicons5'
 import {type Tag, tagList, tagUpdate, tagCreate, tagDelete} from '@/api/tags'
 import {type Blog, searchBlogByIds} from '~/api/blog'
 import {useRouter} from 'vue-router'
+import {addImagePrefix} from '~/utils/addImagePrefix'
+import NumberLoading from '~/components/Loadings/NumberLoading/index.vue'
 
 const router = useRouter()
 const list = ref<Tag.TagInfo[]>([])
@@ -192,7 +194,22 @@ onMounted(() => {
                   @click="toDetail(item.id)"
               >
                 <div class="left-img">
-                  <img class="img" :src="item.cover" :alt="item.cover">
+                  <NImage
+                      class="img"
+                      :src="addImagePrefix(item.cover)"
+                      :show-toolbar="false"
+                      lazy
+                      :intersection-observer-options="{
+                        root: '.blog-list'
+                      }"
+                      object-fit="cover"
+                  >
+                    <template #placeholder>
+                      <div>
+                        <NumberLoading></NumberLoading>
+                      </div>
+                    </template>
+                  </NImage>
                 </div>
                 <div class="right-content">
                   <n-ellipsis
@@ -208,6 +225,12 @@ onMounted(() => {
                     <span class="des">{{ item.des }}</span>
                   </n-ellipsis>
                 </div>
+              </div>
+              <div
+                  class="empty"
+                  v-if="blogList.length <= 0"
+              >
+                <n-empty></n-empty>
               </div>
             </div>
             <div class="close">
@@ -297,8 +320,21 @@ onMounted(() => {
 
 .blog-list {
   display: flex;
+  width: 100%;
   max-height: 500px;
   overflow-y: auto;
+
+  .search-result {
+    box-sizing: border-box;
+    width: 100%;
+
+    .empty {
+      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
 
   .search-result-item {
     display: flex;
@@ -313,11 +349,15 @@ onMounted(() => {
       overflow: hidden;
       flex-shrink: 0;
 
-      .img {
+      :deep(.img) {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
         object-fit: cover;
+
+        img {
+          width: 100%;
+        }
       }
     }
 

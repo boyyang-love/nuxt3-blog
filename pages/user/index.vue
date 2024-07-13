@@ -12,11 +12,12 @@ import errimg from '@/assets/image/wolp.jpg'
 import errAvatar from '@/assets/image/avatar_g.jpg'
 import WaterFlow from './components/waterFull/index.vue'
 import {type Upload, uploadListPublic} from '~/api/upload'
-import {MouseLoading} from '#components'
+import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {type Category, categoryList} from '~/api/categories'
 import CategoriesCard from '@/components/CategoriesCard/index.vue'
 import {useSearchResStore} from '@/store/modules/searchRes'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import SunMoonLoading from '~/components/Loadings/SunMoonLoading/index.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -125,7 +126,6 @@ const getList = () => {
     res.data.infos.forEach((e) => {
       imageList.value.push({
         ...e,
-        file_path: `${env.VITE_APP_IMG_URL}/${e.file_path}`,
       })
     })
   })
@@ -420,7 +420,23 @@ definePageMeta({
                   @click="toDetail(item.id)"
               >
                 <div class="left-img">
-                  <img class="img" :src="addImagePrefix(item.cover)" :alt="item.cover">
+                  <NImage
+                      class="img"
+                      :src="addImagePrefix(item.cover)"
+                      :show-toolbar="false"
+                      lazy
+                      :intersection-observer-options="{
+                        root: '.search-result'
+                      }"
+                      style="height: 100%"
+                      object-fit="cover"
+                  >
+                    <template #placeholder>
+                      <div>
+                        <SunMoonLoading></SunMoonLoading>
+                      </div>
+                    </template>
+                  </NImage>
                 </div>
                 <div class="right-content">
                   <n-ellipsis
@@ -436,6 +452,10 @@ definePageMeta({
                     <span class="des">{{ item.des }}</span>
                   </n-ellipsis>
                 </div>
+              </div>
+
+              <div class="empty">
+                <n-empty v-if="blogList.length <= 0"></n-empty>
               </div>
             </div>
             <div class="close">
@@ -507,6 +527,7 @@ definePageMeta({
         .loading {
           box-sizing: border-box;
           width: 100%;
+          height: 100%;
           margin: auto;
           display: flex;
           justify-content: center;
@@ -720,6 +741,14 @@ definePageMeta({
   max-height: 500px;
   overflow-y: auto;
 
+  .search-result {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .search-result-item {
     display: flex;
     padding: 10px;
@@ -733,11 +762,27 @@ definePageMeta({
       overflow: hidden;
       flex-shrink: 0;
 
-      .img {
+      :deep(.img) {
         box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 100%;
         object-fit: cover;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+
+        .loading {
+          box-sizing: border-box;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
 

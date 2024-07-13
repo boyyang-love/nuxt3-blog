@@ -19,9 +19,9 @@ import {useSigninup} from '@/hooks/signinup'
 import {uploadFile} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
 import {useUserStore} from '@/store/modules/user'
-import {env} from '@/utils/env'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import TarsLoading from '@/components/Loadings/TarsLoading/index.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -269,6 +269,10 @@ const toUserDetail = () => {
             </div>
           </nuxt-link>
         </div>
+      </div>
+
+      <div class="tars">
+        <TarsLoading></TarsLoading>
       </div>
 
       <div class="beian">
@@ -552,7 +556,7 @@ const toUserDetail = () => {
       color: var(--font-color);
 
       background: var(--button-color);
-      box-shadow:  var(--button-shadow-one), var(--button-shadow-two);
+      box-shadow: var(--button-shadow-one), var(--button-shadow-two);
     }
 
 

@@ -2,7 +2,8 @@
 import {NImage} from 'naive-ui'
 import {type Upload} from '~/api/upload'
 import errimg from 'assets/image/wolp.jpg'
-import {CubeLoading} from '#components'
+import PlanetLoading from '@/components/Loadings/PlanetLoading/index.vue'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 interface Props {
   gap?: number
@@ -119,7 +120,7 @@ defineExpose({
         <n-image
             class="img"
             :alt="item.file_path"
-            :src="item.file_path"
+            :src="addImagePrefix(item.file_path)"
             :fallback-src="errimg"
             :img-props="{
               width: '100%'
@@ -136,7 +137,7 @@ defineExpose({
         >
           <template #placeholder>
             <div class="loading">
-              <BottleLoading></BottleLoading>
+              <PlanetLoading></PlanetLoading>
             </div>
           </template>
         </n-image>

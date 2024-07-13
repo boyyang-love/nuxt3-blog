@@ -2,7 +2,7 @@
 import {NIcon, NImage} from 'naive-ui'
 import {Cog} from '@vicons/ionicons5'
 import errImg from 'assets/image/avatar_g.jpg'
-import {PinwheelLoading} from '#components'
+import PinwheelLoading from '@/components/Loadings/PinwheelLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const props = defineProps<

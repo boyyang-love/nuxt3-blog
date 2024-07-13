@@ -7,10 +7,10 @@ import {type Blog} from '@/api/blog'
 import {env} from '~/utils/env'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {updateUserInfo} from '@/api/user'
-import errImg from 'assets/image/wolp.jpg'
 import type {Result} from '~/utils/http/types'
 import {useFetch} from '#app'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 
 const userStore = useUserStore()
 const {customRequest, uploadRef} = useFileUpload('bg', (info) => {

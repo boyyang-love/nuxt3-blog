@@ -2,7 +2,7 @@
 import {NEllipsis, NImage} from 'naive-ui'
 import errimg from '@/assets/image/wolp.jpg'
 import moment from 'moment'
-import CubeLoading from '~/components/CubeLoading/index.vue'
+import CubeLoading from '~/components/Loadings/CubeLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 
 interface Props {

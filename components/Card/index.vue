@@ -5,7 +5,7 @@ import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {getUserInfoById, type User} from '@/api/user'
-import CubeLoading from '~/components/CubeLoading/index.vue'
+import CubeLoading from '~/components/Loadings/CubeLoading/index.vue'
 import WaterTitle from '~/components/AniText/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 

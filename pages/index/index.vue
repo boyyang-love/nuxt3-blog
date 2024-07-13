@@ -6,8 +6,10 @@ import {definePageMeta} from '#imports'
 import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
-import {MouseLoading} from '#components'
+import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import PlanetLoading from '@/components/Loadings/PlanetLoading/index.vue'
+
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
@@ -75,6 +77,9 @@ onMounted(() => {
   <nuxt-layout name="custom">
     <client-only>
       <div class="index-wrapper ">
+        <div class="planet">
+          <PlanetLoading></PlanetLoading>
+        </div>
         <div class="index-content">
           <div class="left-img">
             <n-image
@@ -167,8 +172,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   position: relative;
-  //background: linear-gradient(45deg, #f6f7fe, #F0F5F9);
-  //background-color: var(--bg-color);
 
   .index-content {
     box-sizing: border-box;
@@ -322,6 +325,12 @@ onMounted(() => {
       }
     }
 
+  }
+
+  .planet {
+    position: absolute;
+    top: 20px;
+    right: 40px;
   }
 }
 
