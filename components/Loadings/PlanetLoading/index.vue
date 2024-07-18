@@ -6,12 +6,11 @@
 <style scoped lang="less">
 .planet {
   display: block;
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
   position: relative;
   transform-style: preserve-3d;
   border-radius: 50%;
-  background: #fcc96b;
   background: #fcc96b;
   background: linear-gradient(180deg,
   #fcc96b 0%,

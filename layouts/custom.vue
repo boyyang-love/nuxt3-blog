@@ -5,9 +5,9 @@ export default {
 </script>
 
 <template>
-  <div class="custom-wrapper">
-    <slot/>
-  </div>
+    <div class="custom-wrapper">
+      <slot/>
+    </div>
 </template>
 
 <style scoped lang="less">

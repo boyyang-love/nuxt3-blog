@@ -21,9 +21,10 @@ const props = defineProps<{
           <n-ellipsis
               :line-clamp="1"
               :tooltip="false"
-              style="max-width: 220px"
           >
+            <span>
             {{ props.title }}
+            </span>
           </n-ellipsis>
         </div>
         <div class="sub-title">
@@ -31,7 +32,9 @@ const props = defineProps<{
               :line-clamp="2"
               :tooltip="false"
           >
-            {{ props.subTitle }}
+            <div style="word-break: break-all">
+              {{ props.subTitle }}
+            </div>
           </n-ellipsis>
         </div>
       </div>
@@ -88,6 +91,7 @@ const props = defineProps<{
         font-size: 12px;
         font-weight: 300;
         color: var(--font-color-200);
+        overflow: hidden;
       }
     }
 

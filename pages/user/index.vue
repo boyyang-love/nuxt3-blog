@@ -228,250 +228,251 @@ definePageMeta({
 
 <template>
   <nuxt-layout name="custom">
-    <client-only>
-      <div class="user-wrapper">
-        <div
-            class="user-info-wrapper"
-            id="user-info-wrapper"
-            ref="wrapper"
-            @scroll="handleScroll"
-        >
-          <div class="top-banner">
-            <n-image
-                class="img"
-                :src="userInfo?.cover"
-                :alt="userInfo?.cover"
-                :fallback-src="errimg"
-                :preview-disabled="true"
-                :img-props="{
+    <Welcome>
+      <client-only>
+        <div class="user-wrapper">
+          <div
+              class="user-info-wrapper"
+              id="user-info-wrapper"
+              ref="wrapper"
+              @scroll="handleScroll"
+          >
+            <div class="top-banner">
+              <n-image
+                  class="img"
+                  :src="userInfo?.cover"
+                  :alt="userInfo?.cover"
+                  :fallback-src="errimg"
+                  :preview-disabled="true"
+                  :img-props="{
                     width: '100%'
                 }"
-                object-fit="cover"
-                :style="{
+                  object-fit="cover"
+                  :style="{
                     width: '100%',
                     height: '100%'
                 }"
-            >
-              <template #placeholder>
-                <div class="loading">
-                  <MouseLoading></MouseLoading>
+              >
+                <template #placeholder>
+                  <div class="loading">
+                    <MouseLoading></MouseLoading>
+                  </div>
+                </template>
+              </n-image>
+            </div>
+            <div class="user-info">
+              <div class="user-avatar">
+                <n-avatar
+                    class="avatar"
+                    :src="userInfo?.avatar"
+                    :size="80"
+                    :fallback-src="errAvatar"
+                ></n-avatar>
+              </div>
+              <div class="info">
+                <span class="username">{{ userInfo?.username }}</span>
+                <span class="motto">{{ userInfo?.motto }}</span>
+              </div>
+            </div>
+            <div class="user-mes">
+              <div
+                  :class="['item', tab === 'blog' ? 'active' : '']"
+                  @click="tabChange('blog')"
+              >
+                <span class="text">博客</span>
+                <span class="value">{{ userInfo?.blog_count }}</span>
+              </div>
+              <div
+                  :class="['item', tab === 'wallpaper' ? 'active' : '']"
+                  @click="tabChange('wallpaper')"
+              >
+                <span class="text">壁纸</span>
+                <span class="value">{{ userInfo?.wallpaper_count }}</span>
+              </div>
+              <div
+                  :class="['item', tab === 'tag' ? 'active' : '']"
+                  @click="tabChange('tag')"
+              >
+                <span class="text">标签</span>
+                <span class="value">{{ userInfo?.tags_count }}</span>
+              </div>
+
+              <div
+                  :class="['item', tab === 'categories' ? 'active' : '']"
+                  @click="tabChange('categories')"
+              >
+                <span class="text">分类</span>
+                <span class="value">{{ userInfo?.categories_count }}</span>
+              </div>
+              <div class="home">
+                <nuxt-link class="link" to="/home">
+                  <n-icon :size="22" class="icon">
+                    <Home></Home>
+                  </n-icon>
+                </nuxt-link>
+              </div>
+            </div>
+
+            <div v-show="tab === 'blog'">
+              <div class="detail-wrapper">
+                <div class="empty" v-if="blogInfo.length === 0">
+                  <n-empty></n-empty>
                 </div>
-              </template>
-            </n-image>
-          </div>
-          <div class="user-info">
-            <div class="user-avatar">
-              <n-avatar
-                  class="avatar"
-                  :src="userInfo?.avatar"
-                  :size="80"
-                  :fallback-src="errAvatar"
-              ></n-avatar>
-            </div>
-            <div class="info">
-              <span class="username">{{ userInfo?.username }}</span>
-              <span class="motto">{{ userInfo?.motto }}</span>
-            </div>
-          </div>
-          <div class="user-mes">
-            <div
-                :class="['item', tab === 'blog' ? 'active' : '']"
-                @click="tabChange('blog')"
-            >
-              <span class="text">博客</span>
-              <span class="value">{{ userInfo?.blog_count }}</span>
-            </div>
-            <div
-                :class="['item', tab === 'wallpaper' ? 'active' : '']"
-                @click="tabChange('wallpaper')"
-            >
-              <span class="text">壁纸</span>
-              <span class="value">{{ userInfo?.wallpaper_count }}</span>
-            </div>
-            <div
-                :class="['item', tab === 'tag' ? 'active' : '']"
-                @click="tabChange('tag')"
-            >
-              <span class="text">标签</span>
-              <span class="value">{{ userInfo?.tags_count }}</span>
-            </div>
-
-            <div
-                :class="['item', tab === 'categories' ? 'active' : '']"
-                @click="tabChange('categories')"
-            >
-              <span class="text">分类</span>
-              <span class="value">{{ userInfo?.categories_count }}</span>
-            </div>
-            <div class="home">
-              <nuxt-link class="link" to="/home">
-                <n-icon :size="22" class="icon">
-                  <Home></Home>
-                </n-icon>
-              </nuxt-link>
-            </div>
-          </div>
-
-          <div v-show="tab === 'blog'">
-            <div class="detail-wrapper">
-              <div class="empty" v-if="blogInfo.length === 0">
-                <n-empty></n-empty>
+                <div class="blogs">
+                  <CardBlog
+                      v-for="item in blogInfo"
+                      :title="item.title"
+                      :id="item.id"
+                      :user_id="route.query.id as unknown as number"
+                      :des="item.des"
+                      :cover="item.cover"
+                      :time="item.created"
+                  ></CardBlog>
+                </div>
               </div>
-              <div class="blogs">
-                <CardBlog
-                    v-for="item in blogInfo"
-                    :title="item.title"
-                    :id="item.id"
-                    :user_id="route.query.id as unknown as number"
-                    :des="item.des"
-                    :cover="item.cover"
-                    :time="item.created"
-                ></CardBlog>
+
+              <div class="pagination" v-if="blogInfo.length > 0">
+                <n-pagination
+                    :item-count="count"
+                    :page-size="limit"
+                    :page-sizes="pageSizes"
+                    @update:page="pageUpdate"
+                    @update:pageSize="pageSizeChange"
+                    show-size-picker
+                />
               </div>
             </div>
 
-            <div class="pagination" v-if="blogInfo.length > 0">
-              <n-pagination
-                  :item-count="count"
-                  :page-size="limit"
-                  :page-sizes="pageSizes"
-                  @update:page="pageUpdate"
-                  @update:pageSize="pageSizeChange"
-                  show-size-picker
-              />
-            </div>
-          </div>
-
-          <div v-show="tab === 'wallpaper'">
-            <div class="wallpepr-detail">
-              <div class="empty" v-if="imageList.length === 0">
-                <n-empty></n-empty>
+            <div v-show="tab === 'wallpaper'">
+              <div class="wallpepr-detail">
+                <div class="empty" v-if="imageList.length === 0">
+                  <n-empty></n-empty>
+                </div>
+                <WaterFlow
+                    ref="childrenComp"
+                    :list="imageList"
+                    :col="col"
+                ></WaterFlow>
               </div>
-              <WaterFlow
-                  ref="childrenComp"
-                  :list="imageList"
-                  :col="col"
-              ></WaterFlow>
             </div>
-          </div>
 
-          <div v-show="tab === 'tag'">
-            <div class="tag-detail">
-              <div class="empty" v-if="tagsList.length === 0">
-                <n-empty></n-empty>
-              </div>
-              <div class="tags-wrapper">
-                <div
-                    class="tag-item"
-                    v-for="item in tagsList"
-                    @click="getBlogList(item.articles.map(a => a.id))"
-                >
+            <div v-show="tab === 'tag'">
+              <div class="tag-detail">
+                <div class="empty" v-if="tagsList.length === 0">
+                  <n-empty></n-empty>
+                </div>
+                <div class="tags-wrapper">
+                  <div
+                      class="tag-item"
+                      v-for="item in tagsList"
+                      @click="getBlogList(item.articles.map(a => a.id))"
+                  >
                   <span class="name">
                     {{ item.tag_name }}
                   </span>
-                  <span class="value">
+                    <span class="value">
                     {{ item.articles.length || 0 }}
                   </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div v-show="tab === 'categories'">
-            <div class="categories-detail">
-              <div class="empty" v-if="categories.length === 0">
-                <n-empty></n-empty>
-              </div>
-              <div class="categories-wrapper">
-                <div class="categories-item" v-for="item in categories">
-                  <CategoriesCard
-                      :id="item.id"
-                      :title="item.name"
-                      :des="item.des"
-                      :cover="item.cover"
-                      @detail="toCategoriesDetail"
-                  ></CategoriesCard>
+            <div v-show="tab === 'categories'">
+              <div class="categories-detail">
+                <div class="empty" v-if="categories.length === 0">
+                  <n-empty></n-empty>
+                </div>
+                <div class="categories-wrapper">
+                  <div class="categories-item" v-for="item in categories">
+                    <CategoriesCard
+                        :id="item.id"
+                        :title="item.name"
+                        :des="item.des"
+                        :cover="item.cover"
+                        @detail="toCategoriesDetail"
+                    ></CategoriesCard>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <n-back-top :right="300" :bottom="55"></n-back-top>
+
           </div>
-
-          <n-back-top :right="300" :bottom="55"></n-back-top>
-
         </div>
-      </div>
 
-      <n-modal
-          v-model:show="isShowCard"
-          style="
+        <n-modal
+            v-model:show="isShowCard"
+            style="
             max-width: 600px;
             position: fixed;
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
         "
-      >
-        <n-card>
-          <div class="blog-list">
-            <div class="search-result">
-              <div
-                  class="search-result-item"
-                  v-for="item in blogList"
-                  @click="toDetail(item.id)"
-              >
-                <div class="left-img">
-                  <NImage
-                      class="img"
-                      :src="addImagePrefix(item.cover)"
-                      :show-toolbar="false"
-                      lazy
-                      :intersection-observer-options="{
+        >
+          <n-card>
+            <div class="blog-list">
+              <div class="search-result">
+                <div
+                    class="search-result-item"
+                    v-for="item in blogList"
+                    @click="toDetail(item.id)"
+                >
+                  <div class="left-img">
+                    <NImage
+                        class="img"
+                        :src="addImagePrefix(item.cover)"
+                        :show-toolbar="false"
+                        lazy
+                        :intersection-observer-options="{
                         root: '.search-result'
                       }"
-                      style="height: 100%"
-                      object-fit="cover"
-                  >
-                    <template #placeholder>
-                      <div>
-                        <SunMoonLoading></SunMoonLoading>
-                      </div>
-                    </template>
-                  </NImage>
+                        style="height: 100%"
+                        object-fit="cover"
+                    >
+                      <template #placeholder>
+                        <div>
+                          <SunMoonLoading></SunMoonLoading>
+                        </div>
+                      </template>
+                    </NImage>
+                  </div>
+                  <div class="right-content">
+                    <n-ellipsis
+                        :line-clamp="1"
+                        :tooltip="false"
+                    >
+                      <span class="title">{{ item.title }}</span>
+                    </n-ellipsis>
+                    <n-ellipsis
+                        :line-clamp="2"
+                        :tooltip="false"
+                    >
+                      <span class="des">{{ item.des }}</span>
+                    </n-ellipsis>
+                  </div>
                 </div>
-                <div class="right-content">
-                  <n-ellipsis
-                      :line-clamp="1"
-                      :tooltip="false"
-                  >
-                    <span class="title">{{ item.title }}</span>
-                  </n-ellipsis>
-                  <n-ellipsis
-                      :line-clamp="2"
-                      :tooltip="false"
-                  >
-                    <span class="des">{{ item.des }}</span>
-                  </n-ellipsis>
+
+                <div class="empty">
+                  <n-empty v-if="blogList.length <= 0"></n-empty>
                 </div>
               </div>
-
-              <div class="empty">
-                <n-empty v-if="blogList.length <= 0"></n-empty>
+              <div class="close">
+                <n-icon
+                    :size="22"
+                    class="icon"
+                    @click="isShowCard = false"
+                >
+                  <Close></Close>
+                </n-icon>
               </div>
             </div>
-            <div class="close">
-              <n-icon
-                  :size="22"
-                  class="icon"
-                  @click="isShowCard = false"
-              >
-                <Close></Close>
-              </n-icon>
-            </div>
-          </div>
-        </n-card>
-      </n-modal>
-
-    </client-only>
+          </n-card>
+        </n-modal>
+      </client-only>
+    </Welcome>
   </nuxt-layout>
 </template>
 

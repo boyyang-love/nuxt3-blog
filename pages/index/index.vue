@@ -8,7 +8,7 @@ import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
-import PlanetLoading from '@/components/Loadings/PlanetLoading/index.vue'
+import Welcome from '@/components/Welcome/index.vue'
 
 
 const userStore = useUserStore()
@@ -76,88 +76,87 @@ onMounted(() => {
 <template>
   <nuxt-layout name="custom">
     <client-only>
-      <div class="index-wrapper ">
-        <div class="planet">
-          <PlanetLoading></PlanetLoading>
-        </div>
-        <div class="index-content">
-          <div class="left-img">
-            <n-image
-                class="img"
-                :fallback-src="errImg"
-                :src="addImagePrefix(userStore.user_info.cover)"
-                :preview-disabled="true"
-                lazy
-                style="height: 100%;width: 100%;"
-                object-fit="cover"
-                :img-props="{
+      <Welcome>
+        <div class="index-wrapper ">
+          <div class="index-content">
+            <div class="left-img">
+              <n-image
+                  class="img"
+                  :fallback-src="errImg"
+                  :src="addImagePrefix(userStore.user_info.cover)"
+                  :preview-disabled="true"
+                  lazy
+                  style="height: 100%;width: 100%;"
+                  object-fit="cover"
+                  :img-props="{
                   width: '100%',
                   height: '100%'
                 }"
-            >
-              <template #placeholder>
-                <div class="loading">
-                  <MouseLoading></MouseLoading>
-                </div>
-              </template>
-            </n-image>
-          </div>
-          <div class="right-content">
-            <div class="user-info">
-              <div class="user-avatar">
-                <n-avatar
-                    :size="112"
-                    :src="addImagePrefix(userStore.user_info.avatar)"
-                    :fallback-src="errImg"
-                    :img-props="{
+              >
+                <template #placeholder>
+                  <div class="loading">
+                    <MouseLoading></MouseLoading>
+                  </div>
+                </template>
+              </n-image>
+            </div>
+            <div class="right-content">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <n-avatar
+                      :size="112"
+                      :src="addImagePrefix(userStore.user_info.avatar)"
+                      :fallback-src="errImg"
+                      :img-props="{
                       alt: userStore.user_info.avatar,
                     }"
-                    object-fit="cover"
-                >
-                </n-avatar>
-              </div>
-              <div class="user-name-motto">
-                <span class="name">{{ userStore.user_info.username }}</span>
-                <span class="motto">{{ userStore.user_info.motto }}</span>
-              </div>
+                      object-fit="cover"
+                  >
+                  </n-avatar>
+                </div>
+                <div class="user-name-motto">
+                  <span class="name">{{ userStore.user_info.username }}</span>
+                  <span class="motto">{{ userStore.user_info.motto }}</span>
+                </div>
 
+              </div>
+              <div class="menu">
+                <n-space>
+                  <nuxt-link :to="item.path" class="link" v-for="item in menus">
+                    <div class="menu-item">
+                      <n-icon
+                          :size="22"
+                          class="icon"
+                      >
+                        <component :is="item.icon"></component>
+                      </n-icon>
+                      <span class="text">{{ item.text }}</span>
+                    </div>
+                  </nuxt-link>
+                </n-space>
+              </div>
             </div>
-            <div class="menu">
-              <n-space>
-                <nuxt-link :to="item.path" class="link" v-for="item in menus">
-                  <div class="menu-item">
-                    <n-icon
-                        :size="22"
-                        class="icon"
-                    >
-                      <component :is="item.icon"></component>
-                    </n-icon>
-                    <span class="text">{{ item.text }}</span>
-                  </div>
-                </nuxt-link>
-              </n-space>
+            <div class="cat">
+              <Cat></Cat>
             </div>
           </div>
-          <div class="cat">
-            <Cat></Cat>
+          <div class="theme-circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '-40px'}">
+            <div class="icon">
+              <n-icon :size="24" @click="isShowThemeBtn = !isShowThemeBtn">
+                <component :is="isShowThemeBtn ? ChevronDown : ChevronUp"></component>
+              </n-icon>
+            </div>
+            <div class="circle-wrapper">
+              <div
+                  class="item"
+                  :style="{'--color': item}"
+                  @click="themeStore.setTheme(item)"
+                  v-for="item in themeStore.themeSelectArray"
+              ></div>
+            </div>
           </div>
         </div>
-        <div class="theme-circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '-40px'}">
-          <div class="icon">
-            <n-icon :size="24" @click="isShowThemeBtn = !isShowThemeBtn">
-              <component :is="isShowThemeBtn ? ChevronDown : ChevronUp"></component>
-            </n-icon>
-          </div>
-          <div class="circle-wrapper">
-            <div
-                class="item"
-                :style="{'--color': item}"
-                @click="themeStore.setTheme(item)"
-                v-for="item in themeStore.themeSelectArray"
-            ></div>
-          </div>
-        </div>
-      </div>
+      </Welcome>
     </client-only>
   </nuxt-layout>
 </template>
@@ -325,12 +324,6 @@ onMounted(() => {
       }
     }
 
-  }
-
-  .planet {
-    position: absolute;
-    top: 20px;
-    right: 40px;
   }
 }
 

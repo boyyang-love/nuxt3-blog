@@ -77,7 +77,7 @@ const submit = () => {
     const data = {
       id: Number(props.editInfo?.id),
       title: blogInfo.title,
-      des: des?.slice(0, 250) || '',
+      des: des?.slice(0, 50) || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
@@ -87,7 +87,6 @@ const submit = () => {
       category_id: Number(categoryValue.value),
     }
 
-    debugger
     updateBlog(data).then(res => {
       window.$uploadProgress.end()
       valueHtml.value = ''

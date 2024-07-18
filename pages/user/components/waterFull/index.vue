@@ -2,7 +2,7 @@
 import {NImage} from 'naive-ui'
 import {type Upload} from '~/api/upload'
 import errimg from 'assets/image/wolp.jpg'
-import PlanetLoading from '@/components/Loadings/PlanetLoading/index.vue'
+import SunMoonLoading from '@/components/Loadings/SunMoonLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 
 interface Props {
@@ -125,6 +125,7 @@ defineExpose({
             :img-props="{
               width: '100%'
             }"
+            :show-toolbar="false"
             :intersection-observer-options="{
                 root: '#user-info-wrapper'
             }"
@@ -137,7 +138,7 @@ defineExpose({
         >
           <template #placeholder>
             <div class="loading">
-              <PlanetLoading></PlanetLoading>
+              <SunMoonLoading></SunMoonLoading>
             </div>
           </template>
         </n-image>
