@@ -18,10 +18,12 @@ import CategoriesCard from '@/components/CategoriesCard/index.vue'
 import {useSearchResStore} from '@/store/modules/searchRes'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 import SunMoonLoading from '~/components/Loadings/SunMoonLoading/index.vue'
+import {useSysStore} from '~/store/modules/system'
 
 const route = useRoute()
 const router = useRouter()
 const searchResStore = useSearchResStore()
+const sysStore = useSysStore()
 const wrapper = ref<HTMLElement | null>(null)
 const tab = ref<string>('blog')
 const userInfo = ref<User.UserInfoByIdRes>()
@@ -181,7 +183,7 @@ const toDetail = (id: number) => {
     path: '/details',
     query: {
       id: id,
-      user_id: route.query.id
+      user_id: route.query.id,
     },
   }).then(() => {
     isShowCard.value = false
@@ -208,6 +210,9 @@ onMounted(() => {
       changeCol()
     }, 500)
 
+    setTimeout(() => {
+      sysStore.setShowWelcome(false, 'user')
+    }, 3000)
   })
 })
 
@@ -228,7 +233,7 @@ definePageMeta({
 
 <template>
   <nuxt-layout name="custom">
-    <Welcome>
+    <Welcome :show="sysStore.showUserWelcome">
       <client-only>
         <div class="user-wrapper">
           <div

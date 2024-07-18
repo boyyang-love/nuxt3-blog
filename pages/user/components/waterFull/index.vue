@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import {NImage} from 'naive-ui'
+import {NImage, NIcon} from 'naive-ui'
 import {type Upload} from '~/api/upload'
 import errimg from 'assets/image/wolp.jpg'
 import SunMoonLoading from '@/components/Loadings/SunMoonLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import {CloudDownload} from '@vicons/ionicons5'
+import {imageDownload} from '@/utils/fileDownload'
 
 interface Props {
   gap?: number
@@ -88,6 +90,16 @@ const getPos = (imgW: number) => {
   }
 }
 
+const download = (url: string, name: string) => {
+  const _url = addImagePrefix(url)
+
+  window.$uploadProgress.begin()
+
+  imageDownload(_url, name).then(() => {
+    window.$uploadProgress.end()
+  })
+}
+
 onMounted(() => {
   nextTick(() => {
     getWrapperBox()
@@ -117,6 +129,13 @@ defineExpose({
             height: `${item.ih}px`,
           }"
       >
+        <NIcon
+            size="16"
+            class="download"
+            @click="download(item.file_path, item.file_name)"
+        >
+          <CloudDownload></CloudDownload>
+        </NIcon>
         <n-image
             class="img"
             :alt="item.file_path"
@@ -164,6 +183,22 @@ defineExpose({
       display: flex;
       position: absolute;
       transition: all 0.45s ease-in-out;
+      overflow: hidden;
+
+      .download {
+        display: block;
+        position: absolute;
+        bottom: -15px;
+        right: 5px;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+      }
+
+      &:hover {
+        .download {
+          bottom: 5px;
+        }
+      }
 
 
       .img {

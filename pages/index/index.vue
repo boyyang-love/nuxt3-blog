@@ -6,6 +6,7 @@ import {definePageMeta} from '#imports'
 import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
+import {useSysStore} from '@/store/modules/system'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 import Welcome from '@/components/Welcome/index.vue'
@@ -13,6 +14,7 @@ import Welcome from '@/components/Welcome/index.vue'
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
+const sysStore = useSysStore()
 const isShowThemeBtn = ref<boolean>(false)
 
 const menus = computed(() => {
@@ -68,6 +70,10 @@ definePageMeta({
 onMounted(() => {
   nextTick(() => {
     window.scrollTo(0, 0)
+
+    setTimeout(() => {
+      sysStore.setShowWelcome(false, 'index')
+    }, 3000)
   })
 })
 
@@ -76,7 +82,7 @@ onMounted(() => {
 <template>
   <nuxt-layout name="custom">
     <client-only>
-      <Welcome>
+      <Welcome :show="sysStore.showIndexWelcome">
         <div class="index-wrapper ">
           <div class="index-content">
             <div class="left-img">

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-
+const props = defineProps<{
+  show: boolean
+}>()
 </script>
 <template>
   <div class="page">
     <slot></slot>
   </div>
-  <div id="splash">
+  <div id="splash" v-show="props.show">
     <div class="anim">
       <div id="loader">
         <svg version="1.1" width="60px" height="70px" viewBox="0 0 60 70">
