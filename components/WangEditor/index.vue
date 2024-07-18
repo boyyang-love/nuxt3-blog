@@ -64,7 +64,7 @@ const handleCreated = (editor: any) => {
 }
 
 const submit = () => {
-  const des = editorRef?.value.getText()
+  const des = editorRef?.value.getText().replace(/[ ]/g,"").replace(/[\r\n]/g,"")
   const content = editorRef.value?.getHtml()
 
   if (blogInfo.title.trim() === '' || content?.trim() === '' || keywords.value.trim() === '') {
@@ -77,7 +77,7 @@ const submit = () => {
     const data = {
       id: Number(props.editInfo?.id),
       title: blogInfo.title,
-      des: des?.slice(0, 60) || '',
+      des: des?.slice(0, 200) || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
@@ -99,7 +99,7 @@ const submit = () => {
     window.$uploadProgress.begin()
     createBlog({
       title: blogInfo.title,
-      des: des?.slice(0, 60) || '',
+      des: des?.slice(0, 200) || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
