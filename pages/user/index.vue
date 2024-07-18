@@ -747,7 +747,7 @@ definePageMeta({
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    //justify-content: center;
   }
 
   .search-result-item {

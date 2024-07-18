@@ -77,7 +77,7 @@ const submit = () => {
     const data = {
       id: Number(props.editInfo?.id),
       title: blogInfo.title,
-      des: des?.slice(0, 50) || '',
+      des: des?.slice(0, 60) || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
@@ -99,7 +99,7 @@ const submit = () => {
     window.$uploadProgress.begin()
     createBlog({
       title: blogInfo.title,
-      des: des?.slice(0, 250) || '',
+      des: des?.slice(0, 60) || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
