@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import {NImage, NIcon, NPopconfirm} from 'naive-ui'
-import {Close, PaperPlane, CloudDownload, LockClosed, LockOpen, ChevronForward, ChevronBack, EyeOff} from '@vicons/ionicons5'
+import {
+  Close,
+  PaperPlane,
+  CloudDownload,
+  LockClosed,
+  LockOpen,
+  ChevronForward,
+  ChevronBack,
+  EyeOff,
+} from '@vicons/ionicons5'
 import SunMoonLoading from '~/components/Loadings/SunMoonLoading/index.vue'
 import {type Upload, uploadDelete} from '@/api/upload'
 import {updateUserInfo} from '@/api/user'
@@ -58,7 +67,7 @@ const delText = computed<string>(() => {
     return '删除当前图片有可能导致当前头像引用失败，是否确定？'
   }
 
-  if (props.type === 'categories'){
+  if (props.type === 'categories') {
     return '删除当前图片有可能导致分类图片引用失败，是否确定？'
   }
 
@@ -141,7 +150,7 @@ const changeWallpaprStatus = () => {
           v-if="props.type === 'images'"
       >
         <template #trigger>
-          <n-icon  class="desktop icon">
+          <n-icon class="desktop icon">
             <component :is="props.status ? LockOpen : LockClosed "></component>
           </n-icon>
         </template>
@@ -153,7 +162,7 @@ const changeWallpaprStatus = () => {
           @positive-click="downloadImage"
       >
         <template #trigger>
-          <n-icon  class="desktop icon">
+          <n-icon class="desktop icon">
             <CloudDownload></CloudDownload>
           </n-icon>
         </template>
@@ -178,7 +187,7 @@ const changeWallpaprStatus = () => {
           @positive-click="delImage"
       >
         <template #trigger>
-          <n-icon  class="close icon">
+          <n-icon class="close icon">
             <Close></Close>
           </n-icon>
         </template>
@@ -313,7 +322,7 @@ const changeWallpaprStatus = () => {
     top: 0;
     right: 0;
     padding: 3px;
-    border-radius:0 0 0 5px;
+    border-radius: 0 0 0 5px;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
     --webkit-backdrop-filter: blur(2px);

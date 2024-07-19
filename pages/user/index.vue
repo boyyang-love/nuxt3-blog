@@ -209,11 +209,11 @@ onMounted(() => {
     t = setTimeout(() => {
       changeCol()
     }, 500)
-
-    setTimeout(() => {
-      sysStore.setShowWelcome(false, 'user')
-    }, 3000)
   })
+
+  setTimeout(() => {
+    sysStore.setShowWelcome(false, 'user')
+  }, 3000)
 })
 
 const toCategoriesDetail = (id: number) => {

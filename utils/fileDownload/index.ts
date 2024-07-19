@@ -33,4 +33,13 @@ const getImageBase64 = (image: HTMLImageElement) => {
     return canvas.toDataURL(`image/${extension}`, 1)
 }
 
-export {imageDownload}
+const imageDownloadByLink = (url: string, name: string) => {
+    const link = document.createElement('a')
+    link.setAttribute('download', name)
+    link.setAttribute('href', url)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+}
+
+export {imageDownload, imageDownloadByLink}
