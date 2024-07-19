@@ -17,8 +17,8 @@ const useUserStore = defineStore({
         user_info: {
             username: 'boyyang',
             motto: '第一行没有你，第二行没有你，第三行没有也罢！',
-            avatar: 'BOYYANG/default/default_avatar.jpg',
-            cover: 'BOYYANG/default/default_avatar.jpg',
+            avatar: 'BOYYANG/default/avatar.png',
+            cover: 'BOYYANG/default/bg.png',
         } as Signinup.UserInfo,
         showUserInfoModal: false,
         isSignin: true,

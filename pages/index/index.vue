@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {NSpace, NAvatar, NIcon, NImage} from 'naive-ui'
 import {useUserStore} from '@/store/modules/user'
-import errImg from '@/assets/image/avatar_g.jpg'
+import errImg from '@/assets/image/avatar.png'
 import {definePageMeta} from '#imports'
 import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'

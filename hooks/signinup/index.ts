@@ -2,7 +2,6 @@ import {reactive} from 'vue'
 import {signup, signin} from '@/api/signinup'
 import {sendEmail} from '@/api/email'
 import {useUserStoreWithOut} from '@/store/modules/user'
-import {env} from '~/utils/env'
 import {emailRegex} from '@/utils/emailRegex'
 
 export const useSigninup = () => {
@@ -88,7 +87,11 @@ export const useSigninup = () => {
             })
             return
         }
-        sendEmail({email: data.email, type: 'blog'}).then(() => {
+        sendEmail({
+            email: data.email,
+            type: 'blog',
+            subject: '博客注册',
+        }).then(() => {
             window.$notification.create({
                 type: 'success',
                 title: '提示',
