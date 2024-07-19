@@ -88,7 +88,7 @@ export const useSigninup = () => {
             })
             return
         }
-        sendEmail({email: data.email}).then(() => {
+        sendEmail({email: data.email, type: 'blog'}).then(() => {
             window.$notification.create({
                 type: 'success',
                 title: '提示',

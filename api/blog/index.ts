@@ -62,6 +62,7 @@ export namespace Blog {
         content: string
         user_id: number
         keywords: string
+        viewed: number
         user: UserInfo
         tag: Tag[]
         comment: Comment.CommentInfo[]

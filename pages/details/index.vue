@@ -6,7 +6,7 @@ import {useRoute, useRouter} from 'vue-router'
 import {deleteBlog, type Blog} from '@/api/blog'
 import moment from 'moment'
 import {env} from '~/utils/env'
-import {TrashBin, Create, ArrowUndo, Time, Person, Library} from '@vicons/ionicons5'
+import {TrashBin, Create, ArrowUndo, Time, Person, Library, Eye} from '@vicons/ionicons5'
 import {useUserStore} from '@/store/modules/user'
 import {useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
@@ -71,8 +71,8 @@ const backToUser = () => {
   router.replace({
     path: '/user',
     query: {
-      id: route.query.user_id
-    }
+      id: route.query.user_id,
+    },
   })
 }
 
@@ -93,7 +93,8 @@ definePageMeta({
       <Head>
         <Title>{{ data?.data.info.title || 'boyyang的个人博客网站' }}</Title>
         <Meta name="description" :content="data?.data.info.des || 'boyyang的个人博客网站'"></Meta>
-        <Meta name="keywords" :content="`${data?.data.info.keywords},${data?.data.info.tag.map(t => t.tag_name).join(',')}  - boyyang的个人博客网站`"></Meta>
+        <Meta name="keywords"
+              :content="`${data?.data.info.keywords},${data?.data.info.tag.map(t => t.tag_name).join(',')}  - boyyang的个人博客网站`"></Meta>
       </Head>
 
       <div class="back">
@@ -155,6 +156,15 @@ definePageMeta({
                 更新:
               </span>
                 <span class="text">{{ moment(data?.data.info?.updated).format('YYYY-MM-DD HH:mm:ss') }}</span>
+              </div>
+              <div class="title-label">
+              <span class="label">
+                <n-icon class="icon" size="17">
+                  <Eye></Eye>
+                </n-icon>
+                浏览:
+              </span>
+                <span class="text">{{ data?.data.info?.viewed }}</span>
               </div>
             </div>
 
@@ -269,7 +279,7 @@ definePageMeta({
   width: 800px;
   height: 100%;
   overflow-y: auto;
-  margin:   auto;
+  margin: auto;
 
   .back {
     box-sizing: border-box;
@@ -442,6 +452,7 @@ definePageMeta({
 @media screen and (max-width: 800px) {
   .home-wrapper {
     width: 100%;
+
     .info {
 
       .blog-title {

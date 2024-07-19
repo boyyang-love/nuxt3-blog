@@ -7,7 +7,7 @@ import {useRoute, useRouter} from 'vue-router'
 import {deleteBlog, type Blog} from '@/api/blog'
 import moment from 'moment'
 import {env} from '~/utils/env'
-import {TrashBin, Create, Library, Time, Person} from '@vicons/ionicons5'
+import {TrashBin, Create, Library, Time, Person, Eye} from '@vicons/ionicons5'
 import {useUserStore} from '@/store/modules/user'
 import {useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
@@ -131,6 +131,15 @@ watch(() => route.query.id, (newVal) => {
                 更新:
               </span>
               <span class="text">{{ moment(data?.data.info?.updated).format('YYYY-MM-DD HH:mm:ss') }}</span>
+            </div>
+            <div class="title-label">
+              <span class="label">
+                <n-icon class="icon" size="17">
+                  <Eye></Eye>
+                </n-icon>
+                浏览:
+              </span>
+              <span class="text">{{ data?.data.info?.viewed }}</span>
             </div>
           </div>
           <div class="inner-info-wrapper">
