@@ -9,6 +9,7 @@ import {
   NForm,
   NFormItem,
   NIcon,
+  NInputGroup,
   type FormRules,
   type FormInst,
 } from 'naive-ui'
@@ -312,7 +313,7 @@ const toUserDetail = () => {
                 ></n-input>
               </div>
               <div class="email-code" v-if="!userStore.isSignin">
-                <n-space justify="space-between">
+                <n-input-group>
                   <n-input
                       placeholder="验证码"
                       v-model:value="data.code"
@@ -324,7 +325,7 @@ const toUserDetail = () => {
                       :disabled="data.emailSendDisable"
                   >验证码 {{ data.emailSendDisable ? `${data.emailSendDisableTime}s` : '' }}
                   </n-button>
-                </n-space>
+                </n-input-group>
               </div>
               <div class="password">
                 <n-input

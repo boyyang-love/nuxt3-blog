@@ -2,7 +2,7 @@
 import {markRaw} from 'vue'
 import {useBackTopStore} from '@/store/modules/backTop'
 import {NIcon} from 'naive-ui'
-import {Pricetag, FolderOpen, ArrowUp} from '@vicons/ionicons5'
+import {Pricetag, FolderOpen, ArrowUp, Link} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 
@@ -27,6 +27,12 @@ const moreMenus = computed(() => {
     },
     {
       id: 3,
+      text: '友链',
+      icon: markRaw(Link),
+      show: true,
+    },
+    {
+      id: 4,
       text: 'top',
       icon: markRaw(ArrowUp),
       show: show,
@@ -42,6 +48,10 @@ const menuItemClick = (id: number) => {
     router.push('/categories')
   }
   if (id === 3) {
+    router.push('/links')
+    // window.open(`${window.location.host}/links`, '_blank')
+  }
+  if (id === 4) {
     backTopStore.setShow(false)
   }
 }
