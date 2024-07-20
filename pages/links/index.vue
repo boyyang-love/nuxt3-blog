@@ -6,8 +6,9 @@ import {definePageMeta} from '#imports'
 import LinkCard from './componets/linkCard/index.vue'
 import {createLink, listLink, type LinkApi} from '@/api/link'
 import {sendEmail} from '@/api/email'
+import {useSysStore} from '@/store/modules/system'
 
-
+const sysStore = useSysStore()
 const rules = {
   website_name: {
     required: true,
@@ -51,7 +52,7 @@ const linkData = reactive<LinkApi.CreateLinkReq>({
 })
 
 const linkListdata = ref<LinkApi.ListLinkItem[]>()
-
+const formRef = ref()
 const showAdd = ref<boolean>(false)
 const sendBtnStatus = reactive({
   disable: false,
@@ -77,13 +78,26 @@ const getCode = () => {
 }
 
 const sub = () => {
-  const data = {
-    ...linkData,
-  }
 
-  createLink(data).then(() => {
-    window.$message.success('友链提交成功')
-  })
+  formRef.value?.validate((errors: boolean) => {
+        if (!errors) {
+          const data = {
+            ...linkData,
+          }
+
+          createLink(data).then(() => {
+            window.$message.success('友链提交成功')
+            linkData.website_name = ''
+            linkData.website_url = ''
+            linkData.website_desc = ''
+            linkData.website_icon = ''
+            linkData.email = ''
+            linkData.code = ''
+            showAdd.value = false
+          })
+        }
+      },
+  )
 }
 
 const timeCount = () => {
@@ -112,6 +126,9 @@ const getLinkList = () => {
 
 onMounted(() => {
   getLinkList()
+  setTimeout(() => {
+    sysStore.setShowWelcome(false, 'link')
+  }, 3000)
 })
 
 definePageMeta({
@@ -122,7 +139,7 @@ definePageMeta({
 <template>
   <nuxt-layout name="custom">
     <client-only>
-      <Welcome :show="false">
+      <Welcome :show="true">
         <div class="links-wrapper">
           <div class="alert">
             <n-alert title="友链申请提示" type="warning" closable>
@@ -168,6 +185,7 @@ definePageMeta({
                 <n-form
                     :model="linkData"
                     :rules="rules"
+                    ref="formRef"
                 >
                   <n-form-item label="网站名称:" path="website_name">
                     <NInput
