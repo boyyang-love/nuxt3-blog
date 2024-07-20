@@ -94,6 +94,8 @@ const sub = () => {
             linkData.email = ''
             linkData.code = ''
             showAdd.value = false
+
+            getLinkList()
           })
         }
       },
@@ -139,7 +141,7 @@ definePageMeta({
 <template>
   <nuxt-layout name="custom">
     <client-only>
-      <Welcome :show="true">
+      <Welcome :show="sysStore.showLinkWelcome">
         <div class="links-wrapper">
           <div class="alert">
             <n-alert title="友链申请提示" type="warning" closable>
