@@ -64,7 +64,7 @@ const handleCreated = (editor: any) => {
 }
 
 const submit = () => {
-  const des = editorRef?.value.getText().replace(/[ ]/g,"").replace(/[\r\n]/g,"")
+  const des = editorRef?.value.getText().replace(/[ ]/g, '').replace(/[\r\n]/g, '')
   const content = editorRef.value?.getHtml()
 
   if (blogInfo.title.trim() === '' || content?.trim() === '' || keywords.value.trim() === '') {
@@ -520,6 +520,10 @@ onMounted(() => {
         color: white;
       }
     }
+  }
+
+  :deep(.w-e-image-container) {
+    margin: 0;
   }
 }
 

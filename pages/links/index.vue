@@ -328,6 +328,7 @@ definePageMeta({
       .icon {
         cursor: pointer;
         transition: all .45s ease-in-out;
+        color: var(--font-color);
 
         &:hover {
           transform-origin: center;
@@ -375,6 +376,7 @@ definePageMeta({
       left: 10px;
       top: 10px;
       cursor: pointer;
+      color: var(--font-color);
     }
 
     .link-sub {
