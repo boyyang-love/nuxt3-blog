@@ -10,6 +10,7 @@ import {useSysStore} from '@/store/modules/system'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 import Welcome from '@/components/Welcome/index.vue'
+import axios from 'axios'
 
 
 const userStore = useUserStore()

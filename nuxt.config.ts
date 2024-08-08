@@ -12,13 +12,13 @@ export default defineNuxtConfig({
         prerender: {
             routes: ['/index', '/create', '/upload', '/tags', '/user', '/categories', '/wallpaper'],
         },
-        // devProxy: {
-        //     '/proxy': {
-        //         target: 'http://localhost:9527',
-        //         changeOrigin: true,
-        //         prependPath: true,
-        //     },
-        // },
+        devProxy: {
+            '/proxy': {
+                target: 'http://localhost:3001',
+                changeOrigin: true,
+                prependPath: true,
+            },
+        },
     },
     routeRules: {
         '/index': {
