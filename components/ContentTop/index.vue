@@ -17,8 +17,8 @@ import {
   List,
   Key,
   Close,
-  TabletLandscape,
 } from '@vicons/ionicons5'
+import {AnimalCat16Filled} from "@vicons/fluent"
 import {renderIcon} from '@/utils/renderIcon'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
@@ -63,11 +63,6 @@ const options = computed(() => {
             icon: renderIcon(Information),
           },
           {
-            label: '卡片',
-            key: 9,
-            icon: renderIcon(TabletLandscape),
-          },
-          {
             label: '密码',
             key: 11,
             icon: renderIcon(Key),
@@ -109,6 +104,11 @@ const options = computed(() => {
         ],
       },
       {
+        label: '喵喵',
+        key: 9,
+        icon: renderIcon(AnimalCat16Filled),
+      },
+      {
         label: '退出',
         key: 10,
         icon: renderIcon(Exit),
@@ -144,9 +144,9 @@ const options = computed(() => {
         icon: renderIcon(Cube),
       },
       {
-        label: '卡片',
+        label: '喵喵',
         key: 9,
-        icon: renderIcon(TabletLandscape),
+        icon: renderIcon(AnimalCat16Filled),
       },
     ]
   }

@@ -17,6 +17,7 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "@types/qs": "^6.9.12",
+    "@vicons/fluent": "^0.12.0",
     "@wangeditor/editor-for-vue": "next",
     "axios": "^1.6.8",
     "highlight.js": "^11.9.0",

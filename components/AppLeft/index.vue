@@ -13,7 +13,8 @@ import {
   type FormRules,
   type FormInst,
 } from 'naive-ui'
-import {Home, Cube, FingerPrint, Create, Images, CloudUpload, Planet, Close, TabletLandscape} from '@vicons/ionicons5'
+import {Home, Cube, FingerPrint, Create, Images, CloudUpload, Planet, Close, Leaf} from '@vicons/ionicons5'
+import {AnimalCat16Filled} from "@vicons/fluent"
 import {useRoute, useRouter} from 'vue-router'
 import Cropper from '~/components/Cropper/index.vue'
 import {useSigninup} from '@/hooks/signinup'
@@ -85,24 +86,24 @@ const menus = computed(() => {
       },
       {
         name: 'create',
-        text: '发布博客',
+        text: '发布',
         path: '/create',
         routeName: 'create',
         icon: markRaw(Create),
       },
       {
         name: 'upload',
-        text: '上传图片',
+        text: '上传',
         path: '/upload',
         routeName: 'upload',
         icon: markRaw(CloudUpload),
       },
       {
         name: 'card',
-        text: '个人卡片',
+        text: '喵喵',
         path: '/',
         routeName: '/',
-        icon: markRaw(TabletLandscape),
+        icon: markRaw(AnimalCat16Filled),
       },
     ]
   }
@@ -123,10 +124,10 @@ const menus = computed(() => {
     },
     {
       name: 'upload',
-      text: '个人卡片',
+      text: '喵喵',
       path: '/',
       routeName: '/',
-      icon: markRaw(FingerPrint),
+      icon: markRaw(AnimalCat16Filled),
     },
   ]
 })
