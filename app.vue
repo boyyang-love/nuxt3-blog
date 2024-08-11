@@ -12,6 +12,7 @@
                 <notification-content></notification-content>
                 <upload-progress></upload-progress>
                 <search-res></search-res>
+                <Ghost></Ghost>
               </client-only>
               <NuxtLayout>
                 <NuxtPage/>
@@ -22,6 +23,7 @@
       </n-dialog-provider>
     </n-loading-bar-provider>
   </n-config-provider>
+
 </template>
 <script lang="ts" setup>
 import {
@@ -34,6 +36,7 @@ import {
   NLoadingBarProvider,
   NModalProvider,
 } from 'naive-ui'
+import {Ghost} from '#components'
 import MessageContent from '@/components/MessageContent/index.vue'
 import DialogContent from '@/components/DialogContent/index.vue'
 import NotificationContent from '@/components/NotificationContent/index.vue'
@@ -72,6 +75,13 @@ useHead({
     {
       name: 'x5-page-mode',
       content: 'app',
+    },
+  ],
+  script: [
+    {
+      src: '/mouse/index.js',
+      type: 'module',
+      defer: true,
     },
   ],
 })

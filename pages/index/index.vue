@@ -10,7 +10,7 @@ import {useSysStore} from '@/store/modules/system'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 import Welcome from '@/components/Welcome/index.vue'
-import axios from 'axios'
+import Sence from '@/components/Sence'
 
 
 const userStore = useUserStore()
@@ -84,7 +84,7 @@ onMounted(() => {
   <nuxt-layout name="custom">
     <client-only>
       <Welcome :show="sysStore.showIndexWelcome">
-        <div class="index-wrapper ">
+        <div class="index-wrapper">
           <div class="index-content">
             <div class="left-img">
               <n-image
@@ -162,6 +162,9 @@ onMounted(() => {
               ></div>
             </div>
           </div>
+          <div class="sence">
+            <Sence></Sence>
+          </div>
         </div>
       </Welcome>
     </client-only>
@@ -189,6 +192,7 @@ onMounted(() => {
     display: flex;
     padding: 10px;
     position: relative;
+    z-index: 9;
 
     .left-img {
       box-sizing: border-box;
@@ -296,6 +300,12 @@ onMounted(() => {
       bottom: 100%;
       right: 45px;
     }
+
+    .time {
+      position: absolute;
+      top: -40%;
+      left: 0;
+    }
   }
 
   .theme-circle-wrapper {
@@ -331,6 +341,13 @@ onMounted(() => {
       }
     }
 
+  }
+
+  .sence {
+    box-sizing: border-box;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
   }
 }
 

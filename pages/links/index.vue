@@ -150,7 +150,7 @@ definePageMeta({
                 <span>网站名称：boyyang's blog</span>
                 <span>网站描述：第一行没有你，第二行没有你，第三行没有也罢！</span>
                 <span>网站地址: https://www.boyyang.cn</span>
-                <span>网站图片地址:http://minio.boyyang.cn/boyyang/BOYYANG/default/avatar.png</span>
+                <span>网站图片地址:https://minio.boyyang.cn/boyyang/BOYYANG/default/avatar.png</span>
                 <span>如果您愿意的话，可以在您的网站加上本小破网站的相关信息，谢谢</span>
               </div>
             </n-alert>

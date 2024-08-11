@@ -1,13 +1,18 @@
 <script lang="ts">
+// import Ghost from '@/components/Ghost/index.vue'
+
 export default {
   layout: 'custom',
+  components: {
+    // Ghost,
+  },
 }
 </script>
 
 <template>
-    <div class="custom-wrapper">
-      <slot/>
-    </div>
+  <div class="custom-wrapper">
+    <slot/>
+  </div>
 </template>
 
 <style scoped lang="less">
@@ -16,5 +21,9 @@ export default {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+
+  .ghost {
+    position: absolute;
+  }
 }
 </style>

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import {AppLeft} from '#components'
-import {AppRight} from '#components'
-import {ContentTop} from '#components'
-import {MoreMenu} from '#components'
+import {AppLeft, AppRight, ContentTop, MoreMenu} from '#components'
 import {NBackTop} from 'naive-ui'
 import {useRouter} from 'vue-router'
 import {useBackTopStore} from '@/store/modules/backTop'
@@ -29,6 +26,7 @@ const toTop = (show: boolean) => {
   backTopStore.setShow(show)
   backTopStore.domRef = backTopDomRef.value
 }
+
 </script>
 
 <template>
