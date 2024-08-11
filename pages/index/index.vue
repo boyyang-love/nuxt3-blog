@@ -316,6 +316,7 @@ onMounted(() => {
     justify-content: center;
     flex-direction: column;
     padding: 2px 5px;
+    z-index: 11;
 
     .icon {
       margin: 10px auto;

@@ -1151,7 +1151,7 @@
   display: block;
   z-index: 6;
   border-top: 2px solid #030308;
-  background-color: #fee300;
+  //background-color: #fee300;
 }
 .water-wrapper{
   position: absolute;
@@ -1198,7 +1198,7 @@
   width: 77px;
   display: block;
   z-index: 6;
-  background-color: #fee300;
+  //background-color: #fee300;
 }
 .water.snd{
   left: 77px;
@@ -1735,7 +1735,7 @@
   width: 116px;
   display: block;
   z-index: 1;
-  background-color: #fee300;
+  //background-color: #fee300;
 }
 .water-big span:nth-child(2){
   left: -2px;
