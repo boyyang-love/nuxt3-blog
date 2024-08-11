@@ -68,7 +68,7 @@ onMounted(() => {
     })
 
     window.addEventListener('mousedown', (e) => {
-      e.preventDefault()
+      // e.preventDefault()
       clicked.value = true
     })
     window.addEventListener('mouseup', () => {
