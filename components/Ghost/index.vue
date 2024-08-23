@@ -37,7 +37,7 @@ const follow = () => {
   const velY = distY / 8
 
   pos.x += distX / 10
-  pos.y += distY / 10
+  pos.y += distY / 10 + 3
 
   const skewX = map(velX, 0, 100, 0, -50)
   const scaleY = map(velY, 0, 100, 1, 2.0)
@@ -98,7 +98,8 @@ onMounted(() => {
         <feGaussianBlur
             in="SourceGraphic"
             stdDeviation="10"
-            result="ghost-blur"/>
+            result="ghost-blur"
+        />
         <feColorMatrix
             in="ghost-blur"
             mode="matrix"
@@ -106,8 +107,10 @@ onMounted(() => {
                 1 0 0 0 0
                 0 1 0 0 0
                 0 0 1 0 0
-                0 0 0 16 -7"
-            result="ghost-gooey"/>
+                0 0 0 16 -7
+            "
+            result="ghost-gooey"
+        />
       </filter>
     </defs>
   </svg>
