@@ -17,8 +17,8 @@ import {
   List,
   Key,
   Close,
+  SparklesSharp,
 } from '@vicons/ionicons5'
-import {AnimalCat16Filled} from "@vicons/fluent"
 import {renderIcon} from '@/utils/renderIcon'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
@@ -104,9 +104,9 @@ const options = computed(() => {
         ],
       },
       {
-        label: '喵喵',
+        label: '落地页',
         key: 9,
-        icon: renderIcon(AnimalCat16Filled),
+        icon: renderIcon(SparklesSharp),
       },
       {
         label: '退出',
@@ -144,9 +144,9 @@ const options = computed(() => {
         icon: renderIcon(Cube),
       },
       {
-        label: '喵喵',
+        label: '落地页',
         key: 9,
-        icon: renderIcon(AnimalCat16Filled),
+        icon: renderIcon(SparklesSharp),
       },
     ]
   }

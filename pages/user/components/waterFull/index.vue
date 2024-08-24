@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {NImage, NIcon} from 'naive-ui'
 import {type Upload} from '~/api/upload'
-import errimg from 'assets/image/wolp.jpg'
 import SunMoonLoading from '@/components/Loadings/SunMoonLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 import {CloudDownload} from '@vicons/ionicons5'
@@ -140,7 +139,6 @@ defineExpose({
             class="img"
             :alt="item.file_path"
             :src="addImagePrefix(item.file_path)"
-            :fallback-src="errimg"
             :img-props="{
               width: '100%'
             }"

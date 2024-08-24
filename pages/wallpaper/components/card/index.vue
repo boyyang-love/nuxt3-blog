@@ -271,6 +271,7 @@ const changeWallpaprStatus = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 9;
 
     .close {
       cursor: pointer;
