@@ -77,13 +77,6 @@ useHead({
       content: 'app',
     },
   ],
-  script: [
-    {
-      src: '/mouse/index.js',
-      type: 'module',
-      defer: true,
-    },
-  ],
 })
 
 onMounted(() => {
@@ -115,11 +108,11 @@ const requestFullScreen = (element: any) => {
 }
 </script>
 <style lang="less">
-@import "@/font/font.less";
-@import "@/theme/dark.less";
-@import "@/theme/light.less";
-@import "@/theme/gray.less";
-@import "@/theme/blue.less";
+//@import "@/font/font.less";
+//@import "@/theme/dark.less";
+//@import "@/theme/light.less";
+//@import "@/theme/gray.less";
+//@import "@/theme/blue.less";
 
 .page-enter-active,
 .page-leave-active {

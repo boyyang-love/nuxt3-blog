@@ -131,4 +131,11 @@ export default defineNuxtConfig({
             },
         },
     },
+    css: [
+        '~/font/font.less',
+        '~/theme/dark.less',
+        '~/theme/light.less',
+        '~/theme/gray.less',
+        '~/theme/blue.less',
+    ],
 })

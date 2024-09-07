@@ -144,14 +144,14 @@ definePageMeta({
       <Welcome :show="sysStore.showLinkWelcome">
         <div class="links-wrapper">
           <div class="alert">
-            <n-alert title="友链申请提示" type="warning" closable>
+            <n-alert title="友链申请提示" type="success" closable>
               <div class="alert-info">
                 <span>欢迎大家,提交友链申请！</span>
-                <span>网站名称：boyyang's blog</span>
-                <span>网站描述：第一行没有你，第二行没有你，第三行没有也罢！</span>
-                <span>网站地址: https://www.boyyang.cn</span>
+                <span>网站名称:boyyang's blog</span>
+                <span>网站描述:第一行没有你，第二行没有你，第三行没有也罢！</span>
+                <span>网站地址:https://www.boyyang.cn</span>
                 <span>网站图片地址:https://minio.boyyang.cn/boyyang/BOYYANG/default/avatar.png</span>
-                <span>如果您愿意的话，可以在您的网站加上本小破网站的相关信息，谢谢</span>
+                <span>如果您愿意的话，可以在您的网站加上本小破网站的相关信息，谢谢!</span>
               </div>
             </n-alert>
           </div>
@@ -165,13 +165,15 @@ definePageMeta({
             <div class="link-sub" @click="showAdd = true">友链申请</div>
             <div class="title">友链</div>
             <div class="links">
-              <LinkCard
-                  v-for="item in linkListdata"
-                  :avatar="item.website_icon"
-                  :name="item.website_name"
-                  :des="item.website_desc"
-                  :url="item.website_url"
-              ></LinkCard>
+              <div class="cards">
+                <LinkCard
+                    v-for="item in linkListdata"
+                    :avatar="item.website_icon"
+                    :name="item.website_name"
+                    :des="item.website_desc"
+                    :url="item.website_url"
+                ></LinkCard>
+              </div>
             </div>
           </div>
           <div class="dialog-wrapper" v-show="showAdd">
@@ -219,18 +221,11 @@ definePageMeta({
                     ></NInput>
                   </n-form-item>
                   <n-form-item label="邮箱" path="email">
-                    <NInput
-                        placeholder="请输入邮箱"
-                        v-model:value="linkData.email"
-                    ></NInput>
-                  </n-form-item>
-                  <n-form-item label="验证码" path="code">
                     <NInputGroup>
                       <NInput
-                          placeholder="请输入验证码"
-                          v-model:value="linkData.code as string"
-                      >
-                      </NInput>
+                          placeholder="请输入邮箱"
+                          v-model:value="linkData.email"
+                      ></NInput>
                       <NButton
                           type="error"
                           @click="getCode"
@@ -238,6 +233,13 @@ definePageMeta({
                       >{{ !sendBtnStatus.disable ? '获取验证码' : sendBtnStatus.time }}
                       </NButton>
                     </NInputGroup>
+                  </n-form-item>
+                  <n-form-item label="验证码" path="code">
+                    <NInput
+                        placeholder="请输入验证码"
+                        v-model:value="linkData.code as string"
+                    >
+                    </NInput>
                   </n-form-item>
                 </n-form>
                 <NSpace vertical v-if="false">
@@ -301,9 +303,10 @@ definePageMeta({
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background-image: url("@/assets/image/bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
+  //background-image: url("@/assets/image/bg.png");
+  //background-size: cover;
+  //background-repeat: no-repeat;
+  background-color: var(--content-left-right);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -315,7 +318,7 @@ definePageMeta({
     box-sizing: border-box;
     width: 450px;
     border-radius: 5px;
-    background-color: var(--bg-color);
+    background-color: var(--card-color);
     padding: 20px;
     position: relative;
 
@@ -400,9 +403,13 @@ definePageMeta({
       width: 100%;
       height: calc(100% - 55px);
       overflow-y: auto;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+
+      .cards {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
     }
   }
 
