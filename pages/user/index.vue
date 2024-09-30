@@ -17,8 +17,8 @@ import {type Category, categoryList} from '~/api/categories'
 import CategoriesCard from '@/components/CategoriesCard/index.vue'
 import {useSearchResStore} from '@/store/modules/searchRes'
 import {addImagePrefix} from '~/utils/addImagePrefix'
-import SunMoonLoading from '~/components/Loadings/SunMoonLoading/index.vue'
 import {useSysStore} from '~/store/modules/system'
+import NumberLoading from '~/components/Loadings/NumberLoading/index.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -328,7 +328,7 @@ definePageMeta({
                       v-for="item in blogInfo"
                       :title="item.title"
                       :id="item.id"
-                      :user_id="route.query.id as unknown as number"
+                      :user_id="route.query.id"
                       :des="item.des"
                       :cover="item.cover"
                       :time="item.created"
@@ -432,14 +432,14 @@ definePageMeta({
                         :show-toolbar="false"
                         lazy
                         :intersection-observer-options="{
-                        root: '.search-result'
+                        root: '.blog-list'
                       }"
                         style="height: 100%"
                         object-fit="cover"
                     >
                       <template #placeholder>
                         <div>
-                          <SunMoonLoading></SunMoonLoading>
+                          <NumberLoading></NumberLoading>
                         </div>
                       </template>
                     </NImage>

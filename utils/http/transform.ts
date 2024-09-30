@@ -2,7 +2,6 @@ import type {RequestOptions, Result, TransForm, ResultErr} from './types'
 import type {AxiosError, AxiosResponse} from 'axios'
 import qs from 'qs'
 import {useUserStore} from '@/store/modules/user'
-import {emit} from '@/utils/emit'
 
 const transForm: TransForm = {
     beforeRequestHook(config, opt) {

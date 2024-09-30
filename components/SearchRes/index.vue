@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import {NCard, NEllipsis, NIcon, NModal, NEmpty} from 'naive-ui'
+import {NCard, NEllipsis, NIcon, NModal, NEmpty, NImage} from 'naive-ui'
 import {Close} from '@vicons/ionicons5'
 import {useSearchResStore} from '@/store/modules/searchRes'
 import {useRouter} from 'vue-router'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import errImg from 'assets/image/avatar_g.jpg'
+import NumberLoading from '~/components/Loadings/NumberLoading/index.vue'
 
 const searchResStore = useSearchResStore()
 const router = useRouter()
@@ -13,7 +15,7 @@ const toDetail = (id: number) => {
     path: `/${searchResStore.toType}`,
     query: {
       id: id,
-      user_id: searchResStore.user_id
+      user_id: searchResStore.user_id,
     },
   }).then(() => {
     searchResStore.show = false
@@ -44,7 +46,27 @@ const toDetail = (id: number) => {
               @click="toDetail(item.id)"
           >
             <div class="left-img">
-              <img class="img" :src="addImagePrefix(item.cover)" :alt="item.cover">
+              <n-image
+                  class="img"
+                  :fallback-src="errImg"
+                  :preview-disabled="true"
+                  :src="addImagePrefix(item.cover)"
+                  lazy
+                  style="height: 100%;width: 100%;"
+                  object-fit="cover"
+                  :img-props="{
+                    width: '100%',
+                  }"
+                  :intersection-observer-options="{
+                    root: '.blog-list'
+                  }"
+              >
+                <template #placeholder>
+                  <div class="loading">
+                    <NumberLoading></NumberLoading>
+                  </div>
+                </template>
+              </n-image>
             </div>
             <div class="right-content">
               <n-ellipsis
@@ -115,6 +137,13 @@ const toDetail = (id: number) => {
         width: 100%;
         height: 100%;
         object-fit: cover;
+
+        .loading {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
 

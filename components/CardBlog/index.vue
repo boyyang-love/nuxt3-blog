@@ -7,7 +7,7 @@ import {addImagePrefix} from '~/utils/addImagePrefix'
 
 interface Props {
   id: number
-  user_id: number
+  user_id: number | string
   title: string
   des: string
   cover: string

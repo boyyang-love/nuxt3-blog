@@ -90,6 +90,7 @@ onMounted(() => {
           <n-upload
               :show-file-list="false"
               :custom-request="customRequest"
+              accept="image/*"
               ref="uploadRef"
           >
             <n-button type="default" size="small">
