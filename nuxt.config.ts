@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     },
     ssr: true,
     nitro: {
-        compressPublicAssets: true,        // 启动压缩
+        compressPublicAssets: true, // 启动压缩
         prerender: {
             routes: ['/index', '/create', '/upload', '/tags', '/user', '/categories', '/wallpaper'],
         },
