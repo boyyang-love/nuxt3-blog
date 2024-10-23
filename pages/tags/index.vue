@@ -202,10 +202,13 @@ onMounted(() => {
                       :intersection-observer-options="{
                         root: '.blog-list'
                       }"
+                      :img-props="{
+                        width: '100%',
+                      }"
                       object-fit="cover"
                   >
                     <template #placeholder>
-                      <div>
+                      <div class="loading">
                         <NumberLoading></NumberLoading>
                       </div>
                     </template>
@@ -348,15 +351,20 @@ onMounted(() => {
       border-radius: 5px;
       overflow: hidden;
       flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-      :deep(.img) {
+      .img {
         box-sizing: border-box;
-        width: 100%;
         height: 100%;
-        object-fit: cover;
+        width: 100%;
 
-        img {
-          width: 100%;
+        .loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto;
         }
       }
     }

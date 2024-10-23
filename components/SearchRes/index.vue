@@ -52,7 +52,6 @@ const toDetail = (id: number) => {
                   :preview-disabled="true"
                   :src="addImagePrefix(item.cover)"
                   lazy
-                  style="height: 100%;width: 100%;"
                   object-fit="cover"
                   :img-props="{
                     width: '100%',
@@ -131,18 +130,21 @@ const toDetail = (id: number) => {
       border-radius: 5px;
       overflow: hidden;
       flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .img {
         box-sizing: border-box;
-        width: 100%;
         height: 100%;
+        width: 100%;
         object-fit: cover;
 
         .loading {
-          width: 100%;
           display: flex;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
+          margin: 0 auto;
         }
       }
     }
