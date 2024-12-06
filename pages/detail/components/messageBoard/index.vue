@@ -8,7 +8,7 @@ import type {LocationQueryValue} from 'vue-router'
 const props = withDefaults(defineProps<{
       id: number | string | LocationQueryValue | LocationQueryValue[]
       count: number,
-      infos: Comment.CommentInfo[]
+      infos: Comment.CommentInfo[] | null | undefined
     }>(),
     {
       id: 0,

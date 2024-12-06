@@ -2,7 +2,7 @@
 import {markRaw} from 'vue'
 import {useBackTopStore} from '@/store/modules/backTop'
 import {NIcon} from 'naive-ui'
-import {Pricetag, FolderOpen, ArrowUp, Link} from '@vicons/ionicons5'
+import {Pricetag, FolderOpen, ArrowUp, Link, Close} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 
@@ -12,6 +12,7 @@ const userStore = useUserStore()
 
 const moreMenus = computed(() => {
   const show = backTopStore.show
+  const showClose = backTopStore.showClose
   return [
     {
       id: 1,
@@ -33,10 +34,17 @@ const moreMenus = computed(() => {
     },
     {
       id: 4,
+      text: 'close',
+      icon: markRaw(Close),
+      show: showClose,
+    },
+    {
+      id: 5,
       text: 'top',
       icon: markRaw(ArrowUp),
       show: show,
     },
+
   ].filter(m => m.show)
 })
 
@@ -52,6 +60,10 @@ const menuItemClick = (id: number) => {
     // window.open(`${window.location.host}/links`, '_blank')
   }
   if (id === 4) {
+    backTopStore.setShowClose(false)
+    router.back()
+  }
+  if (id === 5) {
     backTopStore.setShow(false)
   }
 }

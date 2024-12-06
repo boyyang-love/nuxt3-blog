@@ -13,10 +13,16 @@ import {useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
 import type {Result} from '~/utils/http/types'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import {useBackTopStore} from '@/store/modules/backTop'
 
 const userStore = useUserStore()
+const backTopStore = useBackTopStore()
 const route = useRoute()
 const router = useRouter()
+
+onMounted(() => {
+  backTopStore.setShowClose(true)
+})
 
 const {data, refresh} = await useAsyncData(
     'blog_detail',
@@ -209,7 +215,7 @@ watch(() => route.query.id, (newVal) => {
             </div>
             <div class="message-board">
               <MessageBoard
-                  :count="data?.data.info.comment.length"
+                  :count="data?.data.info.comment.length || 0"
                   :infos="data?.data.info.comment"
                   :id="route.query.id"
                   @submit="refresh"
@@ -232,7 +238,6 @@ watch(() => route.query.id, (newVal) => {
   }
 
   .left-content {
-
     .top-cover {
       box-sizing: border-box;
       padding: 10px;
@@ -248,6 +253,7 @@ watch(() => route.query.id, (newVal) => {
       box-sizing: border-box;
       border-radius: 10px;
       padding: 10px;
+      position: relative;
 
       .inner-info-wrapper {
         display: flex;
