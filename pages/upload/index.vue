@@ -28,7 +28,7 @@ const {
             v-else
             ref="uploadRef"
             @change="onChange"
-            accept="image/*"
+            accept=".jpg,.png,.jepg"
         >
           <n-upload-dragger>
             <div class="upload-icon">

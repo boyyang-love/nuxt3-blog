@@ -7,8 +7,7 @@ export interface SystemState {
     showLinkWelcome: boolean
 }
 
-const useSysStore = defineStore({
-    id: 'app-system',
+const useSysStore = defineStore<'app-system', SystemState, {}, {}>('app-system', {
     state: (): SystemState => ({
         showIndexWelcome: true,
         showUserWelcome: true,
@@ -30,10 +29,10 @@ const useSysStore = defineStore({
         },
     },
     //开启持久化
-    persist: process.client && {
+    persist: import.meta.client && {
         key: 'app-system',
         storage: window.sessionStorage,
-        paths: ['showIndexWelcome', 'showUserWelcome', "showLinkWelcome"],
+        pick: ['showIndexWelcome', 'showUserWelcome', 'showLinkWelcome'],
     },
 })
 

@@ -1,12 +1,12 @@
 import {defineStore} from 'pinia'
 import {useNuxtApp} from '#app'
+import type {BackTopState} from '~/store/modules/backTop'
 
 export interface SearchState {
     keywords: string[]
 }
 
-const useSearchStore = defineStore({
-    id: 'app-search',
+const useSearchStore = defineStore<'app-search', SearchState, {}, {}>('app-search', {
     state: (): SearchState => ({
         keywords: [],
     }),
@@ -23,10 +23,10 @@ const useSearchStore = defineStore({
     },
 
     //开启持久化
-    persist: process.client && {
+    persist: import.meta.client && {
         key: 'app-search',
         storage: window.localStorage,
-        paths: ['keywords'],
+        pick: ['keywords'],
     },
 })
 

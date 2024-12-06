@@ -10,8 +10,7 @@ export interface UserState {
     showSigninModal: boolean
 }
 
-const useUserStore = defineStore({
-    id: 'app-user',
+const useUserStore = defineStore<'app-user', UserState, { getToken: (s: UserState) => string }, {}>('app-user', {
     state: (): UserState => ({
         token: '',
         user_info: {
@@ -22,11 +21,11 @@ const useUserStore = defineStore({
         } as Signinup.UserInfo,
         showUserInfoModal: false,
         isSignin: true,
-        showSigninModal: false
+        showSigninModal: false,
     }),
     getters: {
-        getToken: (state) => {
-            return state.token
+        getToken: (state): string => {
+            return state.token || ''
         },
     },
     actions: {
@@ -39,10 +38,10 @@ const useUserStore = defineStore({
 
     },
     //开启持久化
-    persist: process.client && {
+    persist: import.meta.client && {
         key: 'app-user',
         storage: window.localStorage,
-        paths: ['token', 'user_info'],
+        pick: ['token', 'user_info'],
     },
 })
 

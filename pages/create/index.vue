@@ -1,7 +1,6 @@
 <template>
   <nuxt-layout name="custom">
     <client-only>
-
       <div class="create-wrapper">
         <div class="inner">
           <Editor

@@ -1,6 +1,5 @@
 import {type UploadInst, type UploadFileInfo, type UploadCustomRequestOptions} from 'naive-ui'
 import {uploadFile} from '@/api/upload'
-import {env} from '@/utils/env'
 
 interface UploadSucess {
     FileInfo: FileInfo
@@ -16,19 +15,17 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
     const uploadRef = ref<UploadInst | null>()
     const imgUrl = ref<string>()
     const imgBase64 = ref<string>()
-    const fileInfo = reactive<{ file_name: string }>({
-        file_name: '',
-    })
+    const fileInfo = reactive<{ file_name: string | null | undefined }>({file_name: ''})
 
     const uploadFileInfo = ref<UploadFileInfo | null>()
 
     const onChange = (options: { fileList: UploadFileInfo[] }) => {
         uploadFileInfo.value = options.fileList[0]
-        const file = options.fileList[0].file as File
+        const file = options.fileList[0]?.file
 
-        fileInfo.file_name = file.name
+        fileInfo.file_name = file?.name
 
-        const blob = new Blob([file], {type: file?.type})
+        const blob = new Blob([file as File], {type: file?.type})
 
         const render = new FileReader()
         render.readAsDataURL(blob)
@@ -43,7 +40,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
             window.$loadingBar.start()
             window.$uploadProgress.begin()
             uploadFile({
-                file_name: fileInfo.file_name,
+                file_name: fileInfo?.file_name as string,
                 file: file,
                 dir: dir,
             }).then(res => {
@@ -66,11 +63,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
         }
     }
 
-    const customRequest = (
-        {
-            file,
-            onFinish,
-        }: UploadCustomRequestOptions) => {
+    const customRequest = ({file, onFinish}: UploadCustomRequestOptions) => {
         window.$loadingBar.start()
         window.$uploadProgress.begin()
         uploadFile({

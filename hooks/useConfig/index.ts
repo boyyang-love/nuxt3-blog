@@ -1,13 +1,17 @@
 import {uploadFile} from '~/api/upload'
+import {type IToolbarConfig, type IEditorConfig,} from '@wangeditor-next/editor'
 
 type InsertFnType = (url: string, alt: string, href: string) => void
 import {env} from '@/utils/env'
 import {ref} from 'vue'
 
 const insertedImages = ref<string[]>([])
+
 const useConfig = () => {
-    const toolbarConfig = {}
-    const editorConfig = {
+    const toolbarConfig: Partial<IToolbarConfig> = {
+        excludeKeys: ['insertVideo', 'uploadVideo'],
+    }
+    const editorConfig: Partial<IEditorConfig> = {
         placeholder: '请输入内容',
         MENU_CONF: {
             uploadImage: {
@@ -20,15 +24,15 @@ const useConfig = () => {
 
                     insertFn(`${env.VITE_APP_IMG_URL}/${res.data.path}`, file.name, `${env.VITE_APP_IMG_URL}/${res.data.file_name}`)
                 },
-            },
+            } as any,
             insertImage: {
                 onInsertedImage(imageNode: any | null) {  // TS 语法
                     // onInsertedImage(imageNode) {                    // JS 语法
                     if (imageNode == null) return
-                    const { src, alt, url, href } = imageNode
+                    const {src, alt, url, href} = imageNode
                     insertedImages.value.push(src)
                 },
-            }
+            },
         },
         scroll: false,
     }

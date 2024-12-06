@@ -1,8 +1,6 @@
 import {defineStore} from 'pinia'
 import {useNuxtApp} from '#app'
 import {type SearchApi, searchByCategoriesId} from '~/api/search'
-import {env} from '~/utils/env'
-import {useRouter} from 'vue-router'
 
 export interface SearchState {
     toType: ToType
@@ -13,8 +11,7 @@ export interface SearchState {
 
 export type ToType = 'detail' | 'details'
 
-const useSearchResStore = defineStore({
-    id: 'app-search-res',
+const useSearchResStore = defineStore<'app-search-res', SearchState, {}, {}>('app-search-res', {
     state: (): SearchState => ({
         toType: 'detail',
         show: false,
@@ -38,10 +35,9 @@ const useSearchResStore = defineStore({
     },
 
     //开启持久化
-    persist: process.client && {
+    persist: import.meta.client && {
         key: 'app-search-result',
         storage: window.localStorage,
-        paths: [],
     },
 })
 

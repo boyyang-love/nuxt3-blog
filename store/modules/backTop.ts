@@ -6,8 +6,7 @@ export interface BackTopState {
     domRef: HTMLElement | null
 }
 
-const useBackTopStore = defineStore({
-    id: 'app-back-top',
+const useBackTopStore = defineStore<'app-back-top', BackTopState, {}, {}>('app-back-top', {
     state: (): BackTopState => ({
         show: false,
         domRef: null,
@@ -17,16 +16,15 @@ const useBackTopStore = defineStore({
         setShow(show: boolean) {
             this.show = show
         },
-        setTop(){
+        setTop() {
             this.domRef && (this.domRef as any).handleClick()
-        }
+        },
     },
 
     //开启持久化
-    persist: process.client && {
+    persist: import.meta.client && {
         key: 'app-back-top',
         storage: window.localStorage,
-        paths: [],
     },
 })
 

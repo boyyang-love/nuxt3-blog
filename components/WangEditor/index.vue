@@ -7,7 +7,7 @@ import {useConfig} from '@/hooks/useConfig'
 import {useFileUpload} from '@/hooks/fileUpload'
 import {useTags} from '@/hooks/useTags'
 import {useRouter} from 'vue-router'
-import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
+import {Editor, Toolbar} from '@wangeditor-next/editor-for-vue'
 import {useUserStore} from '@/store/modules/user'
 import {addImagePrefix} from '@/utils/addImagePrefix'
 

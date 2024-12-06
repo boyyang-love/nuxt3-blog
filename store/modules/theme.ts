@@ -9,8 +9,7 @@ export interface ThemeState {
     light: string[],
 }
 
-const useThemeStore = defineStore({
-    id: 'app-theme',
+const useThemeStore = defineStore<"app-theme",ThemeState,{},{}>('app-theme', {
     state: (): ThemeState => ({
         theme: '#f2f0fd',
         themeSelectArray: ['#101625', '#3B5998', '#f2f0fd', '#454545', ],
@@ -29,10 +28,10 @@ const useThemeStore = defineStore({
         },
     },
     //开启持久化
-    persist: process.client && {
+    persist: import.meta.client && {
         key: 'app-theme',
         storage: window.localStorage,
-        paths: ['theme', 'naiveTheme'],
+        pick: ['theme', 'naiveTheme'],
     },
 })
 

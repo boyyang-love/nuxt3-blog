@@ -31,7 +31,7 @@ const transForm: TransForm = {
             const userStore = useUserStore()
             config.headers = {
                 ...config.headers,
-                [opt.tokenKey as string]: opt.token || userStore.token,
+                [opt.tokenKey as string]: opt.token || userStore.getToken,
             }
         }
 
