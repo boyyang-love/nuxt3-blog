@@ -38,7 +38,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
     }
 
     const submit = () => {
-        if (uploadFileInfo) {
+        if (uploadFileInfo.value) {
             const file = uploadFileInfo.value?.file as File
             window.$loadingBar.start()
             window.$uploadProgress.begin()
@@ -59,6 +59,7 @@ export const useFileUpload = (dir = 'blog', success?: (info: UploadSucess) => vo
                 window.$uploadProgress.end()
                 fileInfo.file_name = ''
                 imgBase64.value = ''
+                uploadFileInfo.value = null
             })
         } else {
             window.$message.error('没有获取到文件信息')
