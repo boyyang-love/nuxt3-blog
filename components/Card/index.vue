@@ -8,6 +8,7 @@ import {getUserInfoById, type User} from '@/api/user'
 import CubeLoading from '~/components/Loadings/CubeLoading/index.vue'
 import WaterTitle from '~/components/AniText/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import {useContentScrollStore} from '@/store/modules/contentScroll'
 
 
 const isReadAll = ref<boolean>(false)
@@ -27,9 +28,24 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
+const contentScrollStore = useContentScrollStore()
 
 const readAll = () => {
   isReadAll.value = true
+  nextTick(() => {
+    const content = document.getElementById('content')
+    contentScrollStore.setScrollTop(content?.scrollTop || 0)
+  })
+}
+
+const close = () => {
+  isReadAll.value = false
+  nextTick(() => {
+    const content = document.getElementById('content')
+    if (content && content.scrollTop) {
+      content.scrollTop = contentScrollStore.getScrollTop() || 0
+    }
+  })
 }
 
 const getUserInfo = () => {
@@ -181,7 +197,7 @@ const toDetail = () => {
         </div>
         <div
             class="close-readall"
-            @click="isReadAll = false"
+            @click="close"
             v-if="isReadAll"
         >
           <span class="text">
