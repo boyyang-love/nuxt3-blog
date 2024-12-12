@@ -23,7 +23,6 @@ const useContentScrollStore = defineStore<
         actions: {
             setScrollTop(val: number) {
                 this.scrollTop.push(val)
-                console.log(this.scrollTop)
             },
             getScrollTop(): number {
                 return this.scrollTop.pop() || 0
