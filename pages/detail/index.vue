@@ -24,6 +24,10 @@ onMounted(() => {
   backTopStore.setShowClose(true)
 })
 
+onUnmounted(() => {
+  backTopStore.setShowClose(false)
+})
+
 const {data, refresh} = await useAsyncData(
     'blog_detail',
     () => $fetch<Result<Blog.ListBlogSearchByIdRes>>('/blog/search/id',
