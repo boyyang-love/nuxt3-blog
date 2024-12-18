@@ -30,23 +30,22 @@ const isShowSkeleton = ref<boolean>(true)
 
 
 const {data} = useFetch<Result<Blog.ListBlogRes>>('/blog/list', {
-      baseURL: env.VITE_APP_API_URL,
-      method: 'GET',
-      params: {
-        page: page.value,
-        limit: limit.value,
-        type: 'recently',
-      },
-      onResponse(ctx): Promise<any> {
-        return new Promise((resolve) => {
-          const {_data} = ctx.response
-          const {data} = _data as Result<Blog.ListBlogRes>
-          isShowSkeleton.value = false
-          resolve(ctx)
-        })
-      },
-    },
-)
+  baseURL: env.VITE_APP_API_URL,
+  method: 'GET',
+  params: {
+    page: page.value,
+    limit: limit.value,
+    type: 'recently',
+  },
+  onResponse(ctx): Promise<any> {
+    return new Promise((resolve) => {
+      const {_data} = ctx.response
+      const {data} = _data as Result<Blog.ListBlogRes>
+      isShowSkeleton.value = false
+      resolve(ctx)
+    })
+  },
+})
 
 
 onMounted(() => {

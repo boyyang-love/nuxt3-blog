@@ -9,7 +9,7 @@ export interface BackTopState {
 
 const useBackTopStore = defineStore<'app-back-top', BackTopState, {}, {
     setShow: (show: boolean) => void,
-    setTop: (show: boolean) => void,
+    setTop: () => void,
     setShowClose: (show: boolean) => void,
 }>('app-back-top', {
     state: (): BackTopState => ({

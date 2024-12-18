@@ -2,7 +2,12 @@ import {defineStore} from 'pinia'
 import {useNuxtApp} from '#app'
 
 export interface ContentScroll {
-    scrollTop: number[]
+    scrollTop: ScrollTopItem[]
+}
+
+export interface ScrollTopItem {
+    id: number,
+    num: number
 }
 
 const useContentScrollStore = defineStore<
@@ -10,8 +15,8 @@ const useContentScrollStore = defineStore<
     ContentScroll,
     {},
     {
-        setScrollTop: (v: number) => void,
-        getScrollTop: () => number
+        setScrollTop: (item: ScrollTopItem) => void,
+        getScrollTop: (id: number) => number
     }
 >(
     'app-content-scroll',
@@ -21,11 +26,22 @@ const useContentScrollStore = defineStore<
         }),
         getters: {},
         actions: {
-            setScrollTop(val: number) {
-                this.scrollTop.push(val)
+            setScrollTop(item: ScrollTopItem) {
+                const ids = this.scrollTop.map(s => s.id)
+                if(ids.includes(item.id)){
+                    this.scrollTop.forEach(s => {
+                        if(s.id === item.id){
+                            s.num = item.num
+                        }
+                    })
+                }else{
+                    this.scrollTop.push({
+                        ...item
+                    })
+                }
             },
-            getScrollTop(): number {
-                return this.scrollTop.pop() || 0
+            getScrollTop(id: number): number {
+                return this.scrollTop.filter(s => s.id === id)[0].num || 0
             },
         },
         //开启持久化

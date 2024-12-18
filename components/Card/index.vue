@@ -34,7 +34,7 @@ const readAll = () => {
   isReadAll.value = true
   nextTick(() => {
     const content = document.getElementById('content')
-    contentScrollStore.setScrollTop(content?.scrollTop || 0)
+    contentScrollStore.setScrollTop({id: props.id, num: content?.scrollTop || 0})
   })
 }
 
@@ -43,7 +43,7 @@ const close = () => {
   nextTick(() => {
     const content = document.getElementById('content')
     if (content && content.scrollTop) {
-      content.scrollTop = contentScrollStore.getScrollTop() || 0
+      content.scrollTop = contentScrollStore.getScrollTop(props.id) || 0
     }
   })
 }
