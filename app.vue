@@ -173,4 +173,26 @@ body {
   overflow: hidden;
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+.editor table {
+  border-collapse: collapse;
+}
+.editor td,
+.editor th {
+  border: 1px solid #ccc;
+  min-width: 50px;
+  height: 20px;
+}
+.editor th {
+  background-color: #f1f1f1;
+}
+
+.editor ul,
+.editor ol {
+  padding-left: 20px;
+}
+
+.editor input[type="checkbox"] {
+  margin-right: 5px;
+}
 </style>

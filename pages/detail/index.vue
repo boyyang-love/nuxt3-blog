@@ -152,7 +152,7 @@ watch(() => route.query.id, (newVal) => {
               <span class="text">{{ data?.data.info?.viewed }}</span>
             </div>
           </div>
-          <div class="inner-info-wrapper">
+          <div class="inner-info-wrapper editor">
             <div
                 class="inner-html"
                 v-html="data?.data.info?.content"

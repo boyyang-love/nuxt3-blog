@@ -21,6 +21,7 @@ interface Props {
   id: number
   url: string
   type: Upload.FileType
+  originPath: string
   path: string
   fileName: string
   status: boolean
@@ -112,6 +113,7 @@ const delImage = () => {
   const data = {
     id: props.id,
     file_path: props.path,
+    origin_file_path: props.originPath,
     type: props.type,
   }
 

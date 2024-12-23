@@ -168,7 +168,7 @@ definePageMeta({
               </div>
             </div>
 
-            <div class="inner-info-wrapper">
+            <div class="inner-info-wrapper editor">
               <div
                   class="inner-html"
                   v-html="data?.data.info?.content"

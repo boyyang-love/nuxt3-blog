@@ -191,6 +191,7 @@ defineExpose({
             :type="props.type"
             :file-name="item.file_name"
             :path="item.path"
+            :originPath="item.origin_file_path"
             @del="del"
             @wallpaperStatus="wallpaperStatus"
         >

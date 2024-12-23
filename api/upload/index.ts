@@ -9,6 +9,7 @@ export namespace Upload {
     export interface UploadListItem {
         id: number
         file_name: string
+        origin_file_path: string
         file_path: string
         status: boolean
         w: number
@@ -25,6 +26,7 @@ export namespace Upload {
     export interface UploadDeleteReq {
         id: number
         file_path: string
+        origin_file_path: string
         type: FileType
     }
 
