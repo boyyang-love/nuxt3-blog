@@ -85,16 +85,19 @@ watch(() => route.query.id, (newVal) => {
 definePageMeta({
   layout: false,
 })
+
 </script>
 
 <template>
   <nuxt-layout name="custom">
     <div class="home-wrapper">
       <Head>
-        <Title>{{ data?.data.info.title || 'boyyang的个人博客网站' }}</Title>
-        <Meta name="description" :content="data?.data.info.des || 'boyyang的个人博客网站'"></Meta>
-        <Meta name="keywords"
-              :content="`${data?.data.info.keywords},${data?.data.info.tag.map(t => t.tag_name).join(',')}  - boyyang的个人博客网站`"></Meta>
+        <Title>{{ data?.data.info.title || "boyyang's blog"}}</Title>
+        <Meta name="description" :content="data?.data.info.des"></Meta>
+        <Meta
+            name="keywords"
+            :content="`${data?.data.info.keywords},${data?.data.info.tag.map(t => t.tag_name).join(',')}  - boyyang的个人博客网站`"
+        ></Meta>
       </Head>
 
       <div class="back">
@@ -237,8 +240,8 @@ definePageMeta({
               </div>
               <div class="message-board">
                 <MessageBoard
-                    :count="data?.data.info.comment.length"
-                    :infos="data?.data.info.comment"
+                    :count="data?.data.info.comment.length || 0"
+                    :infos="data?.data.info.comment || []"
                     :id="route.query.id"
                     @submit="refresh"
                 ></MessageBoard>

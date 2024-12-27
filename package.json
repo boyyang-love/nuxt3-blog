@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "boyyang",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@css-render/vue3-ssr": "^0.15.12",
-    "@nuxtjs/robots": "^3.0.0",
-    "@nuxtjs/sitemap": "^5.1.2",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "@types/qs": "^6.9.12",
@@ -33,6 +31,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@nuxtjs/seo": "^2.0.2",
     "@vicons/ionicons5": "^0.12.0",
     "naive-ui": "^2.38.1"
   }

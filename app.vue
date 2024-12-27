@@ -77,6 +77,7 @@ useHead({
       content: 'app',
     },
   ],
+  script: ['/clarity/index.js'],
 })
 
 onMounted(() => {
@@ -167,7 +168,7 @@ body {
   }
 
   margin: 0;
-  font-family: AlimamaDaoLiTi, system-ui, DM Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+  font-family: "阿里妈妈刀隶体 Regular", system-ui, DM Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
   background-color: var(--bg-color);
   position: relative;
   overflow: hidden;
@@ -177,12 +178,14 @@ body {
 .editor table {
   border-collapse: collapse;
 }
+
 .editor td,
 .editor th {
   border: 1px solid #ccc;
   min-width: 50px;
   height: 20px;
 }
+
 .editor th {
   background-color: #f1f1f1;
 }

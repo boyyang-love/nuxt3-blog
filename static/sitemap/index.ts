@@ -1,4 +1,5 @@
 import axios from 'axios'
+import type {ModuleOptions} from '@nuxtjs/seo'
 
 let baseUrl = 'https://backend.boyyang.cn/blog/list'
 let hostUrl = 'https://www.boyyang.cn'
@@ -62,13 +63,13 @@ const sitemap = {
                         priority: 0.9,
                     },
                 )
-                detailList.push(
-                    {
-                        loc: `${hostUrl}/detail/?id=${item.id}`,
-                        changefreq: 'daily',
-                        priority: 0.9,
-                    },
-                )
+                // detailList.push(
+                //     {
+                //         loc: `${hostUrl}/detail/?id=${item.id}`,
+                //         changefreq: 'daily',
+                //         priority: 0.9,
+                //     },
+                // )
             })
             url = [
                 ...url,
@@ -78,5 +79,5 @@ const sitemap = {
 
         return url
     },
-}
+} as Partial<ModuleOptions>
 export {sitemap}
