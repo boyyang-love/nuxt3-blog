@@ -293,7 +293,6 @@ definePageMeta({
           </div>
         </div>
       </Welcome>
-
     </client-only>
   </nuxt-layout>
 </template>

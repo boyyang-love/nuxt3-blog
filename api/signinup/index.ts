@@ -29,7 +29,7 @@ export namespace Signinup {
         address: string
         tel: string
         email: string
-        qq: number
+        qq: string
         wechat: string
         git_hub: string
     }

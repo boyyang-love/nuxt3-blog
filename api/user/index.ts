@@ -10,7 +10,7 @@ export namespace User {
         address: string
         tel: number
         email: string
-        qq: number
+        qq: string
         wechat: string
         git_hub: string
     }

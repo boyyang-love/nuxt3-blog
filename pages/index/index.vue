@@ -9,13 +9,9 @@ import {useThemeStore} from '@/store/modules/theme'
 import {useSysStore} from '@/store/modules/system'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
-import Welcome from '@/components/Welcome/index.vue'
-import Sence from '@/components/Sence/index.vue'
-
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
-const sysStore = useSysStore()
 const isShowThemeBtn = ref<boolean>(false)
 
 const menus = computed(() => {
@@ -68,105 +64,99 @@ definePageMeta({
   layout: false,
 })
 
-onMounted(() => {
-  nextTick(() => {
-    window.scrollTo(0, 0)
-
-    setTimeout(() => {
-      sysStore.setShowWelcome(false, 'index')
-    }, 3000)
-  })
-})
-
 </script>
 
 <template>
   <nuxt-layout name="custom">
+    <Head>
+      <Title>boyyang的个人博客网站</Title>
+      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等技术领域的一些博客小文章"></Meta>
+      <Meta
+          name="keywords"
+          content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"
+      ></Meta>
+    </Head>
     <client-only>
-      <Welcome :show="sysStore.showIndexWelcome">
-        <div class="index-wrapper">
-          <div class="index-content">
-            <div class="left-img">
-              <n-image
-                  class="img"
-                  :fallback-src="errImg"
-                  :src="addImagePrefix(userStore.user_info.cover)"
-                  :preview-disabled="true"
-                  lazy
-                  style="height: 100%;width: 100%;"
-                  object-fit="cover"
-                  :img-props="{
+      <div class="index-wrapper">
+        <div class="index-content">
+          <div class="left-img">
+            <n-image
+                class="img"
+                :fallback-src="errImg"
+                :src="addImagePrefix(userStore.user_info.cover)"
+                :preview-disabled="true"
+                lazy
+                style="height: 100%;width: 100%;"
+                object-fit="cover"
+                :img-props="{
                   width: '100%',
                   height: '100%'
                 }"
-              >
-                <template #placeholder>
-                  <div class="loading">
-                    <MouseLoading></MouseLoading>
-                  </div>
-                </template>
-              </n-image>
-            </div>
-            <div class="right-content">
-              <div class="user-info">
-                <div class="user-avatar">
-                  <n-avatar
-                      :size="112"
-                      :src="addImagePrefix(userStore.user_info.avatar)"
-                      :fallback-src="errImg"
-                      :img-props="{
+            >
+              <template #placeholder>
+                <div class="loading">
+                  <MouseLoading></MouseLoading>
+                </div>
+              </template>
+            </n-image>
+          </div>
+          <div class="right-content">
+            <div class="user-info">
+              <div class="user-avatar">
+                <n-avatar
+                    :size="112"
+                    :src="addImagePrefix(userStore.user_info.avatar)"
+                    :fallback-src="errImg"
+                    :img-props="{
                       alt: userStore.user_info.avatar,
                     }"
-                      object-fit="cover"
-                  >
-                  </n-avatar>
-                </div>
-                <div class="user-name-motto">
-                  <span class="name">{{ userStore.user_info.username }}</span>
-                  <span class="motto">{{ userStore.user_info.motto }}</span>
-                </div>
+                    object-fit="cover"
+                >
+                </n-avatar>
+              </div>
+              <div class="user-name-motto">
+                <span class="name">{{ userStore.user_info.username }}</span>
+                <span class="motto">{{ userStore.user_info.motto }}</span>
+              </div>
 
-              </div>
-              <div class="menu">
-                <n-space>
-                  <nuxt-link :to="item.path" class="link" v-for="item in menus">
-                    <div class="menu-item">
-                      <n-icon
-                          :size="22"
-                          class="icon"
-                      >
-                        <component :is="item.icon"></component>
-                      </n-icon>
-                      <span class="text">{{ item.text }}</span>
-                    </div>
-                  </nuxt-link>
-                </n-space>
-              </div>
             </div>
-            <div class="cat">
-              <Cat></Cat>
+            <div class="menu">
+              <n-space>
+                <nuxt-link :to="item.path" class="link" v-for="item in menus">
+                  <div class="menu-item">
+                    <n-icon
+                        :size="22"
+                        class="icon"
+                    >
+                      <component :is="item.icon"></component>
+                    </n-icon>
+                    <span class="text">{{ item.text }}</span>
+                  </div>
+                </nuxt-link>
+              </n-space>
             </div>
           </div>
-          <div class="theme-circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '-40px'}">
-            <div class="icon">
-              <n-icon :size="24" @click="isShowThemeBtn = !isShowThemeBtn">
-                <component :is="isShowThemeBtn ? ChevronDown : ChevronUp"></component>
-              </n-icon>
-            </div>
-            <div class="circle-wrapper">
-              <div
-                  class="item"
-                  :style="{'--color': item}"
-                  @click="themeStore.setTheme(item)"
-                  v-for="item in themeStore.themeSelectArray"
-              ></div>
-            </div>
-          </div>
-          <div class="sence">
-            <Sence></Sence>
+          <div class="cat">
+            <Cat></Cat>
           </div>
         </div>
-      </Welcome>
+        <div class="theme-circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '-40px'}">
+          <div class="icon">
+            <n-icon :size="24" @click="isShowThemeBtn = !isShowThemeBtn">
+              <component :is="isShowThemeBtn ? ChevronDown : ChevronUp"></component>
+            </n-icon>
+          </div>
+          <div class="circle-wrapper">
+            <div
+                class="item"
+                :style="{'--color': item}"
+                @click="themeStore.setTheme(item)"
+                v-for="item in themeStore.themeSelectArray"
+            ></div>
+          </div>
+        </div>
+      </div>
+
     </client-only>
   </nuxt-layout>
 </template>

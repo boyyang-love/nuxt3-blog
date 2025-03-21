@@ -9,7 +9,7 @@ export interface ThemeState {
     light: string[],
 }
 
-const useThemeStore = defineStore<"app-theme",ThemeState,{},{}>('app-theme', {
+const useThemeStore = defineStore<"app-theme",ThemeState,{setTheme: (t: string)=> void},{}>('app-theme', {
     state: (): ThemeState => ({
         theme: '#f2f0fd',
         themeSelectArray: ['#101625', '#3B5998', '#f2f0fd', '#454545', ],

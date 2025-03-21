@@ -92,11 +92,11 @@ definePageMeta({
   <nuxt-layout name="custom">
     <div class="home-wrapper">
       <Head>
-        <Title>{{ data?.data.info.title || "boyyang's blog"}}</Title>
-        <Meta name="description" :content="data?.data.info.des"></Meta>
+        <Title>{{ data?.data.info.title}}  - boyyang的个人博客网站</Title>
+        <Meta name="description" :content="`文章分类:${data?.data.info.categories.name}、 文章标题:${data?.data.info.title}、文章描述: ${data?.data.info.des} - 'boyyang的个人博客网站'`"></Meta>
         <Meta
             name="keywords"
-            :content="`${data?.data.info.keywords},${data?.data.info.tag.map(t => t.tag_name).join(',')}  - boyyang的个人博客网站`"
+            :content="`${data?.data.info.keywords}}  - boyyang的个人博客网站`"
         ></Meta>
       </Head>
 

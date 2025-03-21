@@ -44,6 +44,7 @@ watch(() => props.editInfo, (value) => {
       valueHtml.value = value.content
     }
     blogInfo.title = value.title
+    blogInfo.des = value.des
     imgUrl.value = value.cover
     selectValues.value = value.tag.map(t => Number(t.id))
     keywords.value = value.keywords
@@ -77,7 +78,7 @@ const submit = () => {
     const data = {
       id: Number(props.editInfo?.id),
       title: blogInfo.title,
-      des: des?.slice(0, 200) || '',
+      des: blogInfo.des || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
@@ -99,7 +100,7 @@ const submit = () => {
     window.$uploadProgress.begin()
     createBlog({
       title: blogInfo.title,
-      des: des?.slice(0, 200) || '',
+      des: blogInfo.des || '',
       cover: imgUrl.value || '',
       content: content || '',
       tags: selectValues.value.map(s => {
@@ -169,6 +170,14 @@ onMounted(() => {
                 type="textarea"
                 placeholder="请输入关键字"
                 v-model:value="keywords"
+            ></n-input>
+          </div>
+          <div class="keywords">
+            <div class="title">描述</div>
+            <n-input
+                type="textarea"
+                placeholder="请输入文章描述"
+                v-model:value="blogInfo.des"
             ></n-input>
           </div>
           <div class="cover">添加封面</div>

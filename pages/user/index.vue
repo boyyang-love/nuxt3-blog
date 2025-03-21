@@ -210,10 +210,6 @@ onMounted(() => {
       changeCol()
     }, 500)
   })
-
-  setTimeout(() => {
-    sysStore.setShowWelcome(false, 'user')
-  }, 3000)
 })
 
 const toCategoriesDetail = (id: number) => {
@@ -233,7 +229,6 @@ definePageMeta({
 
 <template>
   <nuxt-layout name="custom">
-    <Welcome :show="sysStore.showUserWelcome">
       <client-only>
         <div class="user-wrapper">
           <div
@@ -328,7 +323,7 @@ definePageMeta({
                       v-for="item in blogInfo"
                       :title="item.title"
                       :id="item.id"
-                      :user_id="route.query.id"
+                      :user_id="route.query.id as string"
                       :des="item.des"
                       :cover="item.cover"
                       :time="item.created"
@@ -477,7 +472,6 @@ definePageMeta({
           </n-card>
         </n-modal>
       </client-only>
-    </Welcome>
   </nuxt-layout>
 </template>
 

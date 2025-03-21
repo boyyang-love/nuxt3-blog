@@ -34,7 +34,7 @@ const formValues = reactive({
   motto: userStore.user_info.motto,
   email: userStore.user_info.email,
   git_hub: userStore.user_info.git_hub,
-  qq: String(userStore.user_info.qq),
+  qq: userStore.user_info.qq,
   wechat: userStore.user_info.wechat,
 })
 
@@ -44,7 +44,7 @@ watch(() => userStore.showUserInfoModal, (value) => {
     formValues.motto = userStore.user_info.motto
     formValues.email = userStore.user_info.email
     formValues.git_hub = userStore.user_info.git_hub
-    formValues.qq = String(userStore.user_info.qq)
+    formValues.qq = userStore.user_info.qq
     formValues.wechat = userStore.user_info.wechat
   }
 })
@@ -176,7 +176,7 @@ const updateUserInfoSub = () => {
         username: formValues.username,
         motto: formValues.motto,
         git_hub: formValues.git_hub,
-        qq: Number(formValues.qq),
+        qq: formValues.qq,
         wechat: formValues.wechat,
       }).then(() => {
         userStore.$patch({
@@ -185,7 +185,7 @@ const updateUserInfoSub = () => {
             motto: formValues.motto,
             git_hub: formValues.git_hub,
             wechat: formValues.wechat,
-            qq: Number(formValues.qq),
+            qq: formValues.qq,
           },
           showUserInfoModal: false,
         })

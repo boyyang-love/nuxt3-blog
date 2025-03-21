@@ -61,10 +61,12 @@ onMounted(() => {
 <template>
   <div class="home-wrapper" id="home-wrapper">
     <Head>
-      <Title>{{ data?.data.list.map(d => d.title).join(',') || 'boyyang的个人博客' }}</Title>
-      <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
-      <Meta name="keywords"
-            :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
+      <Title>boyyang的个人博客网站</Title>
+      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等技术领域的一些博客小文章"></Meta>
+      <Meta
+          name="keywords"
+          content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"
+      ></Meta>
     </Head>
     <client-only>
       <div class="banner">

@@ -168,7 +168,7 @@ body {
   }
 
   margin: 0;
-  font-family: "阿里妈妈刀隶体 Regular", system-ui, DM Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+  font-family: "阿里妈妈东方大楷 Regular", system-ui, DM Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
   background-color: var(--bg-color);
   position: relative;
   overflow: hidden;

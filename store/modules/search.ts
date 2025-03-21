@@ -1,6 +1,5 @@
 import {defineStore} from 'pinia'
 import {useNuxtApp} from '#app'
-import type {BackTopState} from '~/store/modules/backTop'
 
 export interface SearchState {
     keywords: string[]

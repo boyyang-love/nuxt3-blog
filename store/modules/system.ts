@@ -7,7 +7,7 @@ export interface SystemState {
     showLinkWelcome: boolean
 }
 
-const useSysStore = defineStore<'app-system', SystemState, {}, {}>('app-system', {
+const useSysStore = defineStore<'app-system', SystemState, {setShowWelcome: (show: boolean, type: string) => void}, {}>('app-system', {
     state: (): SystemState => ({
         showIndexWelcome: true,
         showUserWelcome: true,
