@@ -130,7 +130,7 @@ const props = withDefaults(defineProps<{
       ></path>
     </svg>
   </span>
-    <span class="text">{{props.text}}</span>
+    <h1 class="text">{{props.text}}</h1>
   </div>
 
 </template>

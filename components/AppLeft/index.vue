@@ -279,6 +279,8 @@ const toUserDetail = () => {
       <div class="beian">
         <a href="https://beian.mps.gov.cn/#/query/webSearch?recordcode=51010602002116" target="_blank">川公网安备51010602002116号</a>
         <a href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备2024050890号-1</a>
+        <span style="font-weight: bolder;color: var(--font-color-200)">友情链接</span>
+        <a href="https://boyyang.cn/" target="_blank">WallpaperCollector(壁纸收藏家)</a>
       </div>
 
       <n-modal
@@ -435,7 +437,7 @@ const toUserDetail = () => {
                 label="微信"
             >
               <n-input
-                  placeholder="请输入微信好"
+                  placeholder="请输入微信号"
                   v-model:value="formValues.wechat"
               ></n-input>
             </n-form-item>
@@ -590,6 +592,11 @@ const toUserDetail = () => {
         font-weight: bold;
       }
     }
+  }
+
+  .tars {
+    position: absolute;
+    bottom: 65px;
   }
 
   .beian {

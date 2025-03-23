@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {NAvatar, NSpace, NIcon, NPopconfirm} from 'naive-ui'
+import {NAvatar, NIcon, NPopconfirm, NSpace} from 'naive-ui'
 import MessageBoard from './components/messageBoard/index.vue'
 import AniText from '@/components/AniText/index.vue'
 import errImg from '@/assets/image/avatar_g.jpg'
 import {useRoute, useRouter} from 'vue-router'
-import {deleteBlog, type Blog} from '@/api/blog'
+import {type Blog, deleteBlog} from '@/api/blog'
 import moment from 'moment'
 import {env} from '~/utils/env'
-import {TrashBin, Create, Library, Time, Person, Eye} from '@vicons/ionicons5'
+import {Create, Eye, Library, Person, Time, TrashBin} from '@vicons/ionicons5'
 import {useUserStore} from '@/store/modules/user'
 import {useAsyncData} from '#app'
 import {$fetch} from 'ofetch/node'
@@ -88,10 +88,14 @@ watch(() => route.query.id, (newVal) => {
   <div class="home-wrapper">
     <Head>
       <Title>{{ data?.data.info.title }} - boyyang的个人博客网站</Title>
-      <Meta name="description" :content="`文章分类:${data?.data.info.categories.name}、 文章标题:${data?.data.info.title}、文章描述: ${data?.data.info.des} - 'boyyang的个人博客网站'`"></Meta>
+      <Meta
+          name="description"
+          :content="`文章分类:${data?.data.info.categories.name}、 文章标题:${data?.data.info.title}、文章描述: ${data?.data.info.des} - 'boyyang的个人博客网站'`"
+      ></Meta>
       <Meta
           name="keywords"
-            :content="`${data?.data.info.keywords}  - boyyang的个人博客网站`"></Meta>
+          :content="`${data?.data.info.keywords}  - boyyang的个人博客网站`"
+      ></Meta>
     </Head>
     <div class="content">
       <div class="left-content">
@@ -99,7 +103,7 @@ watch(() => route.query.id, (newVal) => {
           <img
               class="img"
               :src="addImagePrefix(data?.data.info?.cover as string)"
-              :alt="data?.data.info?.title"
+              :alt="data?.data.info?.cover.split('.')[0]"
           >
         </div>
         <div class="info">

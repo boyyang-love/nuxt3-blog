@@ -131,16 +131,10 @@ export default defineNuxtConfig({
         // layoutTransition: { name: 'layout', mode: 'out-in' }
     },
 
+    site: {
+        url: 'https://www.boyyang.cn',
+    },
     sitemap: sitemap ,
-
-    // site: {
-    //     url: 'https://www.boyyang.cn',
-    //     name: `boyyang's blog`,
-    //     description: 'boyyang的个人博客网站',
-    //     cacheMaxAgeSeconds: 24 * 3600, // 缓存时间一天
-    //     autoLastmod: true, // 自动检测每个 URL 的 lastmod 日期
-    // },
-
     vue: {
         compilerOptions: {
             directiveTransforms: {

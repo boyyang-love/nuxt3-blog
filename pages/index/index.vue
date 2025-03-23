@@ -70,7 +70,7 @@ definePageMeta({
   <nuxt-layout name="custom">
     <Head>
       <Title>boyyang的个人博客网站</Title>
-      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等技术领域的一些博客小文章"></Meta>
+      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等互联网技术领域的一些博客小文章，以及免费4k壁纸"></Meta>
       <Meta
           name="keywords"
           content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"
