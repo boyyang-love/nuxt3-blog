@@ -6,12 +6,14 @@ import {definePageMeta} from '#imports'
 import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
-import {useSysStore} from '@/store/modules/system'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import {useRoute} from 'vue-router'
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
+const route = useRoute()
+
 const isShowThemeBtn = ref<boolean>(false)
 
 const menus = computed(() => {
@@ -59,6 +61,13 @@ const menus = computed(() => {
     },
   ]
 })
+
+const qqLogin = () => {
+  const state = JSON.stringify({path: route.path, query: route.query})
+  window.sessionStorage.setItem('state', state)
+  const url = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${import.meta.env.VITE_APP_QQ_APP_ID}&state=${state}&redirect_uri=${encodeURIComponent(import.meta.env.VITE_APP_QQ_REDIRECTURI)}`
+  window.open(url, '_blank')
+}
 
 definePageMeta({
   layout: false,
@@ -134,6 +143,10 @@ definePageMeta({
                   </div>
                 </nuxt-link>
               </n-space>
+            </div>
+            <div  class="qq-btn" @click="qqLogin">
+              <img alt="QQ LOGO" class="logo" src="@/assets/image/qq.svg">
+              <span class="text">QQ登录</span>
             </div>
           </div>
           <div class="cat">
@@ -340,6 +353,34 @@ definePageMeta({
     position: absolute;
     bottom: 0;
   }
+
+  .qq-btn {
+    box-sizing: border-box;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid var(--border-color);
+    border-radius: 25px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    padding: 20px 10px 20px 5px;
+    background: var(--card-bg-color);
+    box-shadow: inset 11px 11px 22px var(--card-shadow-before-color),
+      inset -11px -11px 22px var(--card-shadow-after-color);
+
+    .logo {
+      width: 40px;
+    }
+
+    .text {
+      color: var(--font-color);
+      font-size: 13px;
+      font-weight: bolder;
+    }
+  }
+
 }
 
 @media screen and (max-width: 1000px) {

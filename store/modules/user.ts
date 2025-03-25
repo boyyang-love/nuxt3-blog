@@ -10,7 +10,13 @@ export interface UserState {
     showSigninModal: boolean
 }
 
-const useUserStore = defineStore<'app-user', UserState, { getToken: (s: UserState) => string }, {}>('app-user', {
+const useUserStore = defineStore<'app-user',
+    UserState,
+    { getToken: (s: UserState) => string },
+    {
+        setUserInfo: (info: Signinup.UserInfo) => void,
+        setToken:(s: string)=> void
+    }>('app-user', {
     state: (): UserState => ({
         token: '',
         user_info: {

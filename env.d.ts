@@ -13,6 +13,9 @@ interface ImportMetaEnv {
     readonly VITE_APP_BASE_URL: string
     readonly VITE_APP_API_URL: string
     readonly VITE_APP_IMG_URL: string
+    readonly VITE_APP_QQ_APP_KEY: string
+    readonly VITE_APP_QQ_APP_ID: string
+    readonly VITE_APP_QQ_REDIRECTURI: string
 }
 
 interface ImportMeta {

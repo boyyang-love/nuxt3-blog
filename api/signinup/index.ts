@@ -33,6 +33,11 @@ export namespace Signinup {
         wechat: string
         git_hub: string
     }
+
+    type SignInData = {
+        token: string
+        user_info: UserInfo
+    }
 }
 export const signup = (data: Signinup.SignupReq) => {
     return http.request({
@@ -49,5 +54,14 @@ export const signin = (data: Signinup.SigninReq) => {
         url: '/user/signin',
         method: 'POST',
         data,
+    })
+}
+
+export const signInByQQ = (params: { code: string }) => {
+
+    return http.request<Signinup.SignInData>({
+        url: '/signin/qq',
+        method: 'get',
+        params,
     })
 }

@@ -45,6 +45,9 @@ export default defineNuxtConfig({
         '/categories': {
             ssr: false,
         },
+        '/QQLoinBack': {
+            ssr: false,
+        },
     },
 
     devtools: {enabled: false},
@@ -134,7 +137,7 @@ export default defineNuxtConfig({
     site: {
         url: 'https://www.boyyang.cn',
     },
-    sitemap: sitemap ,
+    sitemap: sitemap,
     vue: {
         compilerOptions: {
             directiveTransforms: {
