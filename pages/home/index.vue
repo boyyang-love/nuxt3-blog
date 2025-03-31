@@ -56,18 +56,35 @@ onMounted(() => {
   }, 300)
 })
 
+useHead( {
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk}  -「boyyang」` : '「boyyang」'
+  },
+  title: '前端，后端，docker, golang, go, go-zero学习',
+  meta: [
+    {
+      name: 'description',
+      content: '该网站为个人博客网站，博客内容记录了，前端，后端，docker等互联网领域的学习过程中所遇到的问题'
+    },
+    {
+      name: 'keywords',
+      content: '前端开发,后端开发,golang,go,go-zero,docker,javascript,typescripc,css,html,golang学习,go学习,前端开发技巧,后端开发技巧,前端学习,后端学习,壁纸分享,精美壁纸分享'
+    }
+  ]
+})
+
 </script>
 
 <template>
   <div class="home-wrapper" id="home-wrapper">
-    <Head>
-      <Title>boyyang的个人博客网站</Title>
-      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等技术领域的一些博客小文章"></Meta>
-      <Meta
-          name="keywords"
-          content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"
-      ></Meta>
-    </Head>
+<!--    <Head>-->
+<!--      <Title>boyyang的个人博客网站</Title>-->
+<!--      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等技术领域的一些博客小文章"></Meta>-->
+<!--      <Meta-->
+<!--          name="keywords"-->
+<!--          content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"-->
+<!--      ></Meta>-->
+<!--    </Head>-->
     <client-only>
       <div class="banner">
         <n-image

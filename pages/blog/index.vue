@@ -67,15 +67,27 @@ const pageUpdate = (e: number) => {
   backTopStore.setTop()
   refresh()
 }
+
+useHead( {
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk}  -「boyyang」` : '「boyyang」'
+  },
+  title: 'boyyang的个人博客网站',
+  meta: [
+    {
+      name: 'description',
+      content: '该网站为个人博客网站，网站内容涉及到「前端开发」，「后端开发」，「docker」,「golang」,「go」等互联网领域的一些博客文章。除此以外网站会分享一些「免费」的「4k」「8k」「精美壁纸图片」，更多博客内容可访问「https://www.boyyang.cn」，更多精美壁纸可访问「https://boyyang.cn」'
+    },
+    {
+      name: 'keywords',
+      content: '前端开发,后端开发,golang,go,go-zero,docker,javascript,typescripc,css,html,golang学习,go学习,前端开发技巧,后端开发技巧,前端学习,后端学习,壁纸分享,精美壁纸分享'
+    }
+  ]
+})
 </script>
 
 <template>
   <div class="blog-wrapper">
-    <Head>
-      <Title>{{ data?.data.list.map(d => d.title).join(',') }}</Title>
-      <Meta name="description" :content="data?.data.list.map(d => d.des).join(',')"></Meta>
-      <Meta name="keywords" :content="`${data?.data.list.map(d => d.keywords).join(',')},${data?.data.list.map(d => d.title).join(',')}  - boyyang的个人博客网站`"></Meta>
-    </Head>
     <div class="content">
       <div class="empty" v-if="data?.data.list.length === 0">
         <n-empty></n-empty>

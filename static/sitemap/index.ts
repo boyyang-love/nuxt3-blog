@@ -10,15 +10,18 @@ const sitemap = {
     gzip: true,
     generate: false,
     excludeAppSources: true,
-    // exclude: [
-    //     '/wallpaper',
-    //     '/index',
-    //     '/create',
-    //     '/upload',
-    //     '/blog/components/CardRight',
-    //     '/detail/components/messageBoard',
-    //     '/wallpaper/components/card',
-    // ],
+    exclude: [
+        '/wallpaper',
+        '/index',
+        '/create',
+        '/upload',
+        '/blog/components/CardRight',
+        '/detail/components/messageBoard',
+        '/wallpaper/components/card',
+        '/QQLoginBack',
+        '/tags',
+        '/user',
+    ],
     defaults: {
         changefred: 'always',
         lastmod: new Date(),
@@ -56,20 +59,20 @@ const sitemap = {
             let list = res.data.data.list
             let detailList = [] as any
             list.forEach((item: any) => {
-                detailList.push(
-                    {
-                        loc: `${hostUrl}/details/?id=${item.id}`,
-                        changefreq: 'daily',
-                        priority: 0.9,
-                    },
-                )
                 // detailList.push(
                 //     {
-                //         loc: `${hostUrl}/detail/?id=${item.id}`,
+                //         loc: `${hostUrl}/details/?id=${item.id}`,
                 //         changefreq: 'daily',
                 //         priority: 0.9,
                 //     },
                 // )
+                detailList.push(
+                    {
+                        loc: `${hostUrl}/detail/?id=${item.id}`,
+                        changefreq: 'daily',
+                        priority: 0.9,
+                    },
+                )
             })
             url = [
                 ...url,

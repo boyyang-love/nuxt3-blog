@@ -71,19 +71,36 @@ definePageMeta({
   layout: false,
 })
 
+useHead( {
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk}  -「boyyang」` : '「boyyang」'
+  },
+  title: 'boyyang的个人博客网站',
+  meta: [
+    {
+      name: 'description',
+      content: '该网站为个人博客网站，网站内容涉及到「前端开发」，「后端开发」，「docker」,「golang」,「go」等互联网领域的一些博客文章。除此以外网站会分享一些「免费」的「4k」「8k」「精美壁纸图片」，更多博客内容可访问「https://www.boyyang.cn」，更多精美壁纸可访问「https://boyyang.cn」'
+    },
+    {
+      name: 'keywords',
+      content: '前端开发,后端开发,golang,go,go-zero,docker,javascript,typescripc,css,html,golang学习,go学习,前端开发技巧,后端开发技巧,前端学习,后端学习,壁纸分享,精美壁纸分享'
+    }
+  ]
+})
+
 </script>
 
 <template>
   <nuxt-layout name="custom">
-    <Head>
-      <Title>boyyang的个人博客网站</Title>
-      <Meta name="description"
-            content="boyyang的个人博客网站,网站记录前端开发，后端开发等互联网技术领域的一些博客小文章，以及免费4k壁纸"></Meta>
-      <Meta
-          name="keywords"
-          content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"
-      ></Meta>
-    </Head>
+<!--    <Head>-->
+<!--      <Title>boyyang的个人博客网站 -「boyyang」</Title>-->
+<!--      <Meta name="description"-->
+<!--            content="boyyang的个人博客网站,网站记录前端开发，后端开发等互联网技术领域的一些博客小文章，以及免费4k壁纸"></Meta>-->
+<!--      <Meta-->
+<!--          name="keywords"-->
+<!--          content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"-->
+<!--      ></Meta>-->
+<!--    </Head>-->
     <client-only>
       <div class="index-wrapper">
         <div class="index-content">
