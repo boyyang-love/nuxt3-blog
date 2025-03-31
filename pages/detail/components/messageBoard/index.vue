@@ -4,6 +4,8 @@ import Message from '~/components/Message/index.vue'
 import {type Comment, createComment} from '~/api/comment'
 import {useUserStore} from '@/store/modules/user'
 import type {LocationQueryValue} from 'vue-router'
+import {useRoute} from 'vue-router'
+import {loginByQQ} from '@/utils/qqLogin'
 
 const props = withDefaults(defineProps<{
       id: number | string | LocationQueryValue | LocationQueryValue[]
@@ -22,6 +24,7 @@ const emits = defineEmits<{
 }>()
 
 const userStore = useUserStore()
+const route = useRoute()
 
 const text = ref<string>('')
 
@@ -41,6 +44,10 @@ const submit = () => {
   })
 
 }
+
+const qqLogin = () => {
+  loginByQQ(route)
+}
 </script>
 
 <template>
@@ -49,7 +56,7 @@ const submit = () => {
       <span class="title">评论留言</span>
       <span class="value">{{ count }}</span>
     </div>
-    <div class="input" v-if="userStore.token">
+    <div class="input">
       <n-input
           type="textarea"
           maxlength="200"
@@ -62,9 +69,13 @@ const submit = () => {
           v-model:value="text"
       ></n-input>
     </div>
-    <div class="btns" v-if="userStore.token">
+    <div class="btns">
       <n-space align="center" size="small">
-        <div class="btn" @click="submit">发布评论</div>
+        <div class="qq-btn" v-if="!userStore.token" @click="qqLogin">
+          <img src="@/assets/image/qq.svg" alt="qq">
+          登录后发布评论
+        </div>
+        <div class="btn" @click="submit" v-else>发布评论</div>
       </n-space>
     </div>
 
@@ -104,6 +115,21 @@ const submit = () => {
     display: flex;
     margin-top: 15px;
     justify-content: flex-end;
+
+    .qq-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 4px solid var(--border-color);
+      border-radius: 20px;
+      color: var(--font-color);
+      padding: 3px 10px;
+      cursor: pointer;
+
+      img {
+        width: 25px;
+      }
+    }
 
     .btn {
       border-radius: 5px;

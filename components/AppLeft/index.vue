@@ -379,16 +379,16 @@ const toUserDetail = () => {
               :rules="rules"
               :model="formValues"
           >
-            <n-form-item
-                path="email"
-                label="账号"
-            >
-              <n-input
-                  placeholder="账号"
-                  disabled
-                  v-model:value="formValues.email"
-              ></n-input>
-            </n-form-item>
+<!--            <n-form-item-->
+<!--                path="email"-->
+<!--                label="账号"-->
+<!--            >-->
+<!--              <n-input-->
+<!--                  placeholder="账号"-->
+<!--                  disabled-->
+<!--                  v-model:value="formValues.email"-->
+<!--              ></n-input>-->
+<!--            </n-form-item>-->
             <n-form-item
                 path="username"
                 label="昵称"
@@ -414,33 +414,33 @@ const toUserDetail = () => {
                   v-model:value="formValues.motto"
               ></n-input>
             </n-form-item>
-            <n-form-item
-                path="git_hub"
-                label="GitHub"
-            >
-              <n-input
-                  placeholder="请输入签名"
-                  v-model:value="formValues.git_hub"
-              ></n-input>
-            </n-form-item>
-            <n-form-item
-                path="qq"
-                label="QQ"
-            >
-              <n-input
-                  placeholder="请输入QQ"
-                  v-model:value="formValues.qq"
-              ></n-input>
-            </n-form-item>
-            <n-form-item
-                path="wechat"
-                label="微信"
-            >
-              <n-input
-                  placeholder="请输入微信号"
-                  v-model:value="formValues.wechat"
-              ></n-input>
-            </n-form-item>
+<!--            <n-form-item-->
+<!--                path="git_hub"-->
+<!--                label="GitHub"-->
+<!--            >-->
+<!--              <n-input-->
+<!--                  placeholder="请输入签名"-->
+<!--                  v-model:value="formValues.git_hub"-->
+<!--              ></n-input>-->
+<!--            </n-form-item>-->
+<!--            <n-form-item-->
+<!--                path="qq"-->
+<!--                label="QQ"-->
+<!--            >-->
+<!--              <n-input-->
+<!--                  placeholder="请输入QQ"-->
+<!--                  v-model:value="formValues.qq"-->
+<!--              ></n-input>-->
+<!--            </n-form-item>-->
+<!--            <n-form-item-->
+<!--                path="wechat"-->
+<!--                label="微信"-->
+<!--            >-->
+<!--              <n-input-->
+<!--                  placeholder="请输入微信号"-->
+<!--                  v-model:value="formValues.wechat"-->
+<!--              ></n-input>-->
+<!--            </n-form-item>-->
           </n-form>
 
           <div class="submit-btn">

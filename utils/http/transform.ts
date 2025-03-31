@@ -1,4 +1,4 @@
-import type {RequestOptions, Result, TransForm, ResultErr} from './types'
+import type {RequestOptions, Result, ResultErr, TransForm} from './types'
 import type {AxiosError, AxiosResponse} from 'axios'
 import qs from 'qs'
 import {useUserStore} from '@/store/modules/user'
@@ -40,7 +40,7 @@ const transForm: TransForm = {
 
     transformRespData(res: AxiosResponse<Result>, opt) {
 
-        if (res.data.code === 1 && res.data.msg !== "ok" && res.data.msg) {
+        if (res.data.code === 1 && res.data.msg !== 'ok' && res.data.msg) {
             window.$message.success(res.data.msg)
         }
 
@@ -58,6 +58,7 @@ const transForm: TransForm = {
                 title: '提示',
                 content: 'token过期，请重新登录',
             })
+            window.localStorage.clear()
         }
 
         if (e.response?.status === 413) {

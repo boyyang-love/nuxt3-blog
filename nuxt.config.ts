@@ -48,6 +48,9 @@ export default defineNuxtConfig({
         '/QQLoinBack': {
             ssr: false,
         },
+        '/details': {
+            ssr: false
+        }
     },
 
     devtools: {enabled: false},

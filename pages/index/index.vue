@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import {NSpace, NAvatar, NIcon, NImage} from 'naive-ui'
+import {NAvatar, NIcon, NImage, NSpace} from 'naive-ui'
 import {useUserStore} from '@/store/modules/user'
 import errImg from '@/assets/image/avatar.png'
 import {definePageMeta} from '#imports'
-import {Home, Cube, Images, ChevronUp, ChevronDown} from '@vicons/ionicons5'
+import {ChevronDown, ChevronUp, Cube, Home, Images} from '@vicons/ionicons5'
 import Cat from '@/components/Cat/index.vue'
 import {useThemeStore} from '@/store/modules/theme'
 import MouseLoading from '@/components/Loadings/MouseLoading/index.vue'
 import {addImagePrefix} from '~/utils/addImagePrefix'
 import {useRoute} from 'vue-router'
+import {loginByQQ} from '@/utils/qqLogin'
 
 const userStore = useUserStore()
 const themeStore = useThemeStore()
@@ -63,10 +64,7 @@ const menus = computed(() => {
 })
 
 const qqLogin = () => {
-  const state = JSON.stringify({path: route.path, query: route.query})
-  window.sessionStorage.setItem('state', state)
-  const url = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${import.meta.env.VITE_APP_QQ_APP_ID}&state=${state}&redirect_uri=${encodeURIComponent(import.meta.env.VITE_APP_QQ_REDIRECTURI)}`
-  window.open(url, '_blank')
+  loginByQQ(route)
 }
 
 definePageMeta({
@@ -79,7 +77,8 @@ definePageMeta({
   <nuxt-layout name="custom">
     <Head>
       <Title>boyyang的个人博客网站</Title>
-      <Meta name="description" content="boyyang的个人博客网站,网站记录前端开发，后端开发等互联网技术领域的一些博客小文章，以及免费4k壁纸"></Meta>
+      <Meta name="description"
+            content="boyyang的个人博客网站,网站记录前端开发，后端开发等互联网技术领域的一些博客小文章，以及免费4k壁纸"></Meta>
       <Meta
           name="keywords"
           content="前端开发,后端开发,golang,javascript,typescripc,css,html,前端开发技巧,后端开发技巧,前端学习,后端学习  - boyyang的个人博客网站`"
@@ -144,7 +143,7 @@ definePageMeta({
                 </nuxt-link>
               </n-space>
             </div>
-            <div  class="qq-btn" @click="qqLogin">
+            <div class="qq-btn" @click="qqLogin" v-if="!userStore.token">
               <img alt="QQ LOGO" class="logo" src="@/assets/image/qq.svg">
               <span class="text">QQ登录</span>
             </div>

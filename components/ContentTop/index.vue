@@ -20,14 +20,16 @@ import {
   SparklesSharp,
 } from '@vicons/ionicons5'
 import {renderIcon} from '@/utils/renderIcon'
-import {useRouter} from 'vue-router'
+import {useRouter, useRoute} from 'vue-router'
 import {useUserStore} from '@/store/modules/user'
 import {updateUserPassword} from '@/api/user'
 import {searchBykeyword, type SearchApi} from '@/api/search'
 import {useSearchStore} from '@/store/modules/search'
 import {addImagePrefix} from '~/utils/addImagePrefix'
+import {loginByQQ} from '~/utils/qqLogin'
 
 const router = useRouter()
+const route = useRoute()
 const userStore = useUserStore()
 const searchStore = useSearchStore()
 const isShowSearch = ref<boolean>(false)
@@ -48,25 +50,25 @@ const options = computed(() => {
         icon: renderIcon(FingerPrint),
         children: [
           {
-            label: '登录',
+            label: 'QQ登录',
             key: 2,
             icon: renderIcon(Planet),
           },
-          {
-            label: '注册',
-            key: 3,
-            icon: renderIcon(Rocket),
-          },
+          // {
+          //   label: '注册',
+          //   key: 3,
+          //   icon: renderIcon(Rocket),
+          // },
           {
             label: '信息',
             key: 1,
             icon: renderIcon(Information),
           },
-          {
-            label: '密码',
-            key: 11,
-            icon: renderIcon(Key),
-          },
+          // {
+          //   label: '密码',
+          //   key: 11,
+          //   icon: renderIcon(Key),
+          // },
         ],
       },
       {
@@ -127,15 +129,15 @@ const options = computed(() => {
         icon: renderIcon(FingerPrint),
         children: [
           {
-            label: '登录',
+            label: 'QQ登录',
             key: 2,
             icon: renderIcon(Planet),
           },
-          {
-            label: '注册',
-            key: 3,
-            icon: renderIcon(Rocket),
-          },
+          // {
+          //   label: '注册',
+          //   key: 3,
+          //   icon: renderIcon(Rocket),
+          // },
         ],
       },
       {
@@ -158,8 +160,7 @@ const handleSelect = (key: string | number) => {
     return
   }
   if (key === 2) {
-    userStore.isSignin = true
-    userStore.showSigninModal = true
+    loginByQQ(route)
   }
   if (key === 3) {
     userStore.isSignin = false
