@@ -7,8 +7,6 @@ export declare namespace LinkApi {
         website_url: string
         website_icon: string
         website_desc: string
-        email: string
-        code: number | string
     }
 
     export interface ListLinkReq {
@@ -46,4 +44,3 @@ export const listLink = (params: LinkApi.ListLinkReq) => {
         params,
     })
 }
-

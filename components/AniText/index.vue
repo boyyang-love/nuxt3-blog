@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {NEllipsis} from 'naive-ui'
 const props = withDefaults(defineProps<{
   text: string
   size?: string
@@ -130,17 +131,19 @@ const props = withDefaults(defineProps<{
       ></path>
     </svg>
   </span>
-    <h1 class="text">{{props.text}}</h1>
+    <h1 class="text">
+     <NEllipsis style="width: 100%">{{props.text}}</NEllipsis>
+    </h1>
   </div>
 
 </template>
 
 <style scoped lang="less">
 .Projects-Button {
-  width: fit-content;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 5px 0;
   gap: 10px;
   border: none;
@@ -167,9 +170,14 @@ const props = withDefaults(defineProps<{
   position: absolute;
 }
 .text {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
   color: var(--font-color);
   font-weight: 500;
   font-size: v-bind('props.size');
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .Projects-Button .svgFG {
   animation: clockwise 2s linear infinite;

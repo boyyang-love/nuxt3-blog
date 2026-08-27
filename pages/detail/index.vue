@@ -90,11 +90,11 @@ watch(() => route.query.id, (newVal) => {
       <Title>{{ data?.data.info.title }} - boyyang的个人博客网站</Title>
       <Meta
           name="description"
-          :content="`文章分类:${data?.data.info.categories.name}、 文章标题:${data?.data.info.title}、文章描述: ${data?.data.info.des} - 'boyyang的个人博客网站'`"
+          :content="`文章分类:「${data?.data.info.categories.name}」、 文章标题:「${data?.data.info.title}」、文章描述: 「${data?.data.info.des}」 - 'boyyang的个人博客网站'`"
       ></Meta>
       <Meta
           name="keywords"
-          :content="`${data?.data.info.keywords}  - boyyang的个人博客网站`"
+          :content="`${data?.data.info.keywords}`"
       ></Meta>
     </Head>
     <div class="content">

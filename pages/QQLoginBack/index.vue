@@ -8,20 +8,47 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 
+// 通知父页面
+const notifyParent = (type: string) => {
+  if (window.opener) {
+    window.opener.postMessage({ type }, window.location.origin)
+  }
+}
+
 const getCode = () => {
   const {code, state} = route.query
 
-  if (state === window.sessionStorage.getItem('state')) {
-    signInByQQ({code: code as string}).then((res) => {
+  if (!code) {
+    window.$message.error('QQ登录失败：未获取到授权码')
+    notifyParent('qq-login-cancel')
+    setTimeout(() => window.close(), 1500)
+    return
+  }
+
+  if (state !== window.sessionStorage.getItem('state')) {
+    window.$message.error('QQ登录失败：状态验证不通过')
+    notifyParent('qq-login-cancel')
+    setTimeout(() => window.close(), 1500)
+    return
+  }
+
+  signInByQQ({code: code as string})
+    .then((res) => {
       if (res.code === 1) {
         userStore.setUserInfo(res.data.user_info)
         userStore.setToken(res.data.token)
-        const routeParam = JSON.parse(state as string)
-
-        router.replace({path: routeParam.path, query: routeParam.query})
+        window.$message.success('QQ登录成功')
+        // 通知父页面登录成功
+        notifyParent('qq-login-success')
+        setTimeout(() => window.close(), 1000)
       }
     })
-  }
+    .catch((err) => {
+      console.error('QQ登录失败:', err)
+      window.$message.error('QQ登录失败，请重试')
+      notifyParent('qq-login-cancel')
+      setTimeout(() => window.close(), 1500)
+    })
 }
 
 onMounted(() => {

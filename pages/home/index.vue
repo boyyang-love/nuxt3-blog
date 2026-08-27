@@ -137,6 +137,7 @@ useHead( {
           :cover="item.cover"
           :content="item.content"
           :des="item.des"
+          :view="item.viewed"
       ></Card>
     </div>
   </div>

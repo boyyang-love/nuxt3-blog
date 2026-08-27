@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {NAvatar, NEllipsis} from 'naive-ui'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
 const props = withDefaults(defineProps<{
   name: string
@@ -16,7 +17,7 @@ const toDetail = () => {
 <template>
   <div class="link-card-wrapper">
     <n-avatar
-        :src="props.avatar"
+        :src="addImagePrefix(props.avatar)"
         :size="70"
         class="avatar"
         bordered

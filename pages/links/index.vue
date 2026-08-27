@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import {reactive} from 'vue'
-import {NInput, NSpace, NButton, NInputGroup, NIcon, NForm, NFormItem, NAlert, NTooltip} from 'naive-ui'
-import {Close, ArrowBack, Alert} from '@vicons/ionicons5'
+import {NInput, NButton, NIcon, NForm, NFormItem, NAlert} from 'naive-ui'
+import {Close, ArrowBack} from '@vicons/ionicons5'
 import {definePageMeta} from '#imports'
 import LinkCard from './componets/linkCard/index.vue'
 import {createLink, listLink, type LinkApi} from '@/api/link'
-import {sendEmail} from '@/api/email'
+import {useUserStore} from '@/store/modules/user'
 import {useSysStore} from '@/store/modules/system'
+import {loginByQQ} from '~/utils/qqLogin'
+import {useRoute} from 'vue-router'
+import {addImagePrefix} from '~/utils/addImagePrefix'
 
+const route = useRoute()
+const userStore = useUserStore()
 const sysStore = useSysStore()
+
 const rules = {
   website_name: {
     required: true,
@@ -30,88 +36,42 @@ const rules = {
     message: '请输入网站icon',
     trigger: 'blur',
   },
-  email: {
-    required: true,
-    message: '请输入邮箱',
-    trigger: 'blur',
-  },
-  code: {
-    required: true,
-    message: '请输入验证码',
-    trigger: 'blur',
-  },
 }
 
-const linkData = reactive<LinkApi.CreateLinkReq>({
+const linkData = reactive({
   website_name: '',
   website_url: '',
   website_desc: '',
   website_icon: '',
-  email: '',
-  code: '',
 })
 
 const linkListdata = ref<LinkApi.ListLinkItem[]>()
 const formRef = ref()
 const showAdd = ref<boolean>(false)
-const sendBtnStatus = reactive({
-  disable: false,
-  time: 60,
-})
 
-const getCode = () => {
-  if (linkData.email.trim() === '') {
-    window.$message.warning('请输入邮箱')
-    return
-  }
-  timeCount()
-  sendEmail({
-    email: linkData.email,
-    type: 'link',
-    subject: 'boyyang\'s 博客网站友链申请',
-  }).then(() => {
-    window.$notification.success({
-      title: '提示',
-      content: '验证码已经发送至您的邮箱，请注意查收',
-    })
-  })
+const qqLogin = () => {
+  loginByQQ(route)
 }
 
 const sub = () => {
+  if (!userStore.token) {
+    window.$message.warning('请先登录后再申请友链')
+    return
+  }
 
   formRef.value?.validate((errors: boolean) => {
-        if (!errors) {
-          const data = {
-            ...linkData,
-          }
-
-          createLink(data).then(() => {
-            window.$message.success('友链提交成功')
-            linkData.website_name = ''
-            linkData.website_url = ''
-            linkData.website_desc = ''
-            linkData.website_icon = ''
-            linkData.email = ''
-            linkData.code = ''
-            showAdd.value = false
-
-            getLinkList()
-          })
-        }
-      },
-  )
-}
-
-const timeCount = () => {
-  sendBtnStatus.disable = true
-  const t = setTimeout(() => {
-    sendBtnStatus.time--
-    if (sendBtnStatus.time <= 0) {
-      sendBtnStatus.disable = false
-      sendBtnStatus.time = 60
-      clearTimeout(t)
+    if (!errors) {
+      createLink(linkData as any).then(() => {
+        window.$message.success('友链提交成功，请等待审核')
+        linkData.website_name = ''
+        linkData.website_url = ''
+        linkData.website_desc = ''
+        linkData.website_icon = ''
+        showAdd.value = false
+        getLinkList()
+      })
     }
-  }, 1000)
+  })
 }
 
 const getLinkList = () => {
@@ -168,6 +128,7 @@ definePageMeta({
               <div class="cards">
                 <LinkCard
                     v-for="item in linkListdata"
+                    :key="item.website_url"
                     :avatar="item.website_icon"
                     :name="item.website_name"
                     :des="item.website_desc"
@@ -176,8 +137,9 @@ definePageMeta({
               </div>
             </div>
           </div>
+          
+          <!-- 友链申请弹窗 -->
           <div class="dialog-wrapper" v-show="showAdd">
-
             <div class="links-box">
               <div class="close-icon">
                 <NIcon size="18" class="icon" @click="showAdd = false">
@@ -185,13 +147,28 @@ definePageMeta({
                 </NIcon>
               </div>
               <div class="title">友链申请</div>
-              <div class="user-input">
-                <n-form
-                    :model="linkData"
-                    :rules="rules"
-                    ref="formRef"
-                >
-                  <n-form-item label="网站名称:" path="website_name">
+              
+              <!-- 未登录提示 -->
+              <div class="login-tip" v-if="!userStore.token">
+                <p>请先登录后再申请友链</p>
+                <div class="login-btns">
+                  <NButton type="primary" @click="qqLogin">
+                    <template #icon>
+                      <img src="@/assets/image/qq.svg" class="qq-icon" />
+                    </template>
+                    QQ登录
+                  </NButton>
+                </div>
+              </div>
+              
+              <!-- 已登录表单 -->
+              <div class="user-input" v-else>
+                <div class="user-info">
+                  <img :src="addImagePrefix(userStore.user_info.avatar)" class="avatar" />
+                  <span class="username">{{ userStore.user_info.username }}</span>
+                </div>
+                <n-form :rules="rules" :model="linkData" ref="formRef">
+                  <n-form-item label="网站名称" path="website_name">
                     <NInput
                         placeholder="请输入网站名称"
                         maxlength="25"
@@ -199,13 +176,13 @@ definePageMeta({
                         v-model:value="linkData.website_name"
                     ></NInput>
                   </n-form-item>
-                  <n-form-item label="网站访问地址:" path="website_url">
+                  <n-form-item label="网站地址" path="website_url">
                     <NInput
                         placeholder="请输入网站访问地址"
                         v-model:value="linkData.website_url"
                     ></NInput>
                   </n-form-item>
-                  <n-form-item label="网站描述:" path="website_desc">
+                  <n-form-item label="网站描述" path="website_desc">
                     <NInput
                         placeholder="请输入网站描述"
                         type="textarea"
@@ -214,80 +191,17 @@ definePageMeta({
                         v-model:value="linkData.website_desc"
                     ></NInput>
                   </n-form-item>
-                  <n-form-item label="网站图标:" path="website_icon">
+                  <n-form-item label="网站图标" path="website_icon">
                     <NInput
                         placeholder="请输入网站Icon地址"
                         v-model:value="linkData.website_icon"
                     ></NInput>
                   </n-form-item>
-                  <n-form-item label="邮箱" path="email">
-                    <NInputGroup>
-                      <NInput
-                          placeholder="请输入邮箱"
-                          v-model:value="linkData.email"
-                      ></NInput>
-                      <NButton
-                          type="error"
-                          @click="getCode"
-                          :disabled="sendBtnStatus.disable"
-                      >{{ !sendBtnStatus.disable ? '获取验证码' : sendBtnStatus.time }}
-                      </NButton>
-                    </NInputGroup>
-                  </n-form-item>
-                  <n-form-item label="验证码" path="code">
-                    <NInput
-                        placeholder="请输入验证码"
-                        v-model:value="linkData.code as string"
-                    >
-                    </NInput>
-                  </n-form-item>
                 </n-form>
-                <NSpace vertical v-if="false">
-                  <div class="label">网站名称:</div>
-                  <NInput
-                      placeholder="请输入网站名称"
-                      maxlength="25"
-                      show-count
-                      v-model:value="linkData.website_name"
-                  ></NInput>
-                  <div class="label">网站访问地址:</div>
-                  <NInput
-                      placeholder="请输入网站访问地址"
-                      v-model:value="linkData.website_url"
-                  ></NInput>
-                  <div class="label">网站描述:</div>
-                  <NInput
-                      placeholder="请输入网站描述"
-                      type="textarea"
-                      maxlength="50"
-                      show-count
-                      v-model:value="linkData.website_desc"
-                  ></NInput>
-                  <div class="label">网站图标:</div>
-                  <NInput
-                      placeholder="请输入网站Icon地址"
-                      v-model:value="linkData.website_icon"
-                  ></NInput>
-                  <div class="label">邮箱:</div>
-                  <NInput
-                      placeholder="请输入邮箱"
-                      v-model:value="linkData.email"
-                  ></NInput>
-
-                  <div class="label">验证码:</div>
-                  <NInputGroup>
-                    <NInput
-                        placeholder="请输入验证码"
-                        v-model:value="linkData.code as string"
-                    >
-                    </NInput>
-                    <NButton type="error">获取验证码</NButton>
-                  </NInputGroup>
-                </NSpace>
               </div>
 
-              <div class="btns">
-                <NButton type="primary" @click="sub">提交</NButton>
+              <div class="btns" v-if="userStore.token">
+                <NButton type="primary" @click="sub">提交申请</NButton>
               </div>
             </div>
           </div>
@@ -302,16 +216,12 @@ definePageMeta({
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  //background-image: url("@/assets/image/bg.png");
-  //background-size: cover;
-  //background-repeat: no-repeat;
   background-color: var(--content-left-right);
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 
   .links-box {
     box-sizing: border-box;
@@ -326,7 +236,6 @@ definePageMeta({
       top: 10px;
       right: 10px;
 
-
       .icon {
         cursor: pointer;
         transition: all .45s ease-in-out;
@@ -337,7 +246,6 @@ definePageMeta({
           transform: rotateZ(90deg);
         }
       }
-
     }
 
     .title {
@@ -348,8 +256,49 @@ definePageMeta({
       margin-bottom: 15px;
     }
 
-    .user-input {
+    .login-tip {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--font-color);
 
+      p {
+        margin-bottom: 15px;
+      }
+
+      .login-btns {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .qq-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .username {
+        color: var(--font-color);
+        font-weight: bold;
+      }
+    }
+
+    .user-input {
       .label {
         color: var(--font-color);
         font-size: 13px;
@@ -426,9 +375,6 @@ definePageMeta({
   }
 
   .alert {
-    //position: absolute;
-    //bottom: 25px;
-    //right: 25px;
     width: 800px;
     margin-bottom: 10px;
 

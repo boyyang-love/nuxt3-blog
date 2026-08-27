@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         '/categories': {
             ssr: false,
         },
-        '/QQLoinBack': {
+        '/QQLoginBack': {
             ssr: false,
         },
         '/details': {

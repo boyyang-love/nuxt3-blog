@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {NEllipsis, NAvatar, NIcon, NImage, NPopover} from 'naive-ui'
-import {ChevronUp, ChevronDown} from '@vicons/ionicons5'
+import {ChevronUp, ChevronDown, Eye} from '@vicons/ionicons5'
 import {useRouter} from 'vue-router'
 import moment from 'moment'
 import errImg from '@/assets/image/avatar_g.jpg'
@@ -25,6 +25,7 @@ const props = defineProps<{
   cover: string
   des: string
   content: string
+  view: number
 }>()
 
 const router = useRouter()
@@ -219,6 +220,10 @@ const toDetail = () => {
             </n-icon>
           </span>
         </div>
+        <div class="viewed" v-if="!isReadAll">
+          <n-icon :component="Eye" :size="20" class="icon"></n-icon>
+          {{view || 0 }}
+        </div>
       </div>
     </div>
   </div>
@@ -239,6 +244,7 @@ const toDetail = () => {
     .link {
       position: relative;
       //text-decoration: none;
+      width: calc(100% - 150px);
       text-decoration-color: var(--font-color);
       text-underline-offset: 5px;
     }
@@ -392,6 +398,22 @@ const toDetail = () => {
           padding-top: 5px;
           cursor: pointer;
           font-size: 13px;
+          color: var(--font-color-200);
+        }
+      }
+
+      .viewed {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--font-color-200);
+        font-size: 12px;
+        font-weight: bold;
+        .icon {
+          margin-right: 4px;
           color: var(--font-color-200);
         }
       }
