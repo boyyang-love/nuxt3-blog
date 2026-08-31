@@ -58,23 +58,12 @@ export default defineNuxtConfig({
     modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/seo'],
 
     build: {
-        transpile:
-            process.env.NODE_ENV === 'production'
-                ? [
-                    'naive-ui',
-                    'vueuc',
-                    '@css-render/vue3-ssr',
-                    '@juggle/resize-observer',
-                ]
-                : ['@juggle/resize-observer'],
+        transpile: ['naive-ui', 'vueuc', '@css-render/vue3-ssr', '@juggle/resize-observer'],
     },
 
     vite: {
         optimizeDeps: {
-            include:
-                process.env.NODE_ENV === 'development'
-                    ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone']
-                    : [],
+            include: ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone'],
         },
     },
 

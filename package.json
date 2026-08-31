@@ -34,6 +34,6 @@
   "devDependencies": {
     "@nuxtjs/seo": "^5.3.14",
     "@vicons/ionicons5": "^0.12.0",
-    "naive-ui": "^2.38.1"
+    "naive-ui": "^2.45.3"
   }
 }
