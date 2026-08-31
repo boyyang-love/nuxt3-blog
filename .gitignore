@@ -24,3 +24,6 @@ stats.html
 
 .env
 
+
+# Yarn
+.yarn/install-state.gz

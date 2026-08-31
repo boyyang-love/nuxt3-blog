@@ -14,15 +14,16 @@
     "@css-render/vue3-ssr": "^0.15.12",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
+    "@takumi-rs/core": "^2.13.3",
     "@types/qs": "^6.9.12",
     "@vicons/fluent": "^0.12.0",
     "@wangeditor-next/editor": "^5.6.15",
     "@wangeditor-next/editor-for-vue": "^5.1.14",
-    "axios": "1.7.4",
+    "axios": "^1.20.0",
     "highlight.js": "^11.9.0",
     "less": "^4.2.0",
     "moment": "^2.30.1",
-    "nuxt": "3.12.4",
+    "nuxt": "^3.21.11",
     "pinia": "^2.1.7",
     "qs": "^6.12.0",
     "sketch.js": "^1.1.1",
@@ -31,7 +32,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@nuxtjs/seo": "^2.0.2",
+    "@nuxtjs/seo": "^5.3.14",
     "@vicons/ionicons5": "^0.12.0",
     "naive-ui": "^2.38.1"
   }
