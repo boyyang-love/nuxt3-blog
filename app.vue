@@ -17,6 +17,10 @@
               <NuxtLayout>
                 <NuxtPage/>
               </NuxtLayout>
+              <div class="global-beian">
+                <a href="https://beian.mps.gov.cn/#/query/webSearch?recordcode=51010602002116" target="_blank" rel="noopener">川公网安备51010602002116号</a>
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2024050890号-1</a>
+              </div>
             </n-modal-provider>
           </n-notification-provider>
         </n-message-provider>
@@ -114,6 +118,32 @@ const requestFullScreen = (element: any) => {
 //@import "@/theme/light.less";
 //@import "@/theme/gray.less";
 //@import "@/theme/blue.less";
+
+.global-beian {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 11px;
+  background: var(--bg-color);
+  opacity: 0.9;
+
+  a {
+    color: var(--font-color, #333);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: #23d69b;
+    }
+  }
+}
 
 .page-enter-active,
 .page-leave-active {

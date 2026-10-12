@@ -169,13 +169,13 @@ useHead( {
             <Cat></Cat>
           </div>
         </div>
-        <div class="theme-circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '-40px'}">
+        <div class="theme-circle-wrapper">
           <div class="icon">
             <n-icon :size="24" @click="isShowThemeBtn = !isShowThemeBtn">
               <component :is="isShowThemeBtn ? ChevronDown : ChevronUp"></component>
             </n-icon>
           </div>
-          <div class="circle-wrapper">
+          <div class="circle-wrapper" :style="{'--p': isShowThemeBtn ? '0px' : '50px', 'opacity': isShowThemeBtn ? '1' : '0'}">
             <div
                 class="item"
                 :style="{'--color': item}"
@@ -329,8 +329,7 @@ useHead( {
 
   .theme-circle-wrapper {
     position: absolute;
-    transition: all 0.45s linear;
-    bottom: var(--p);
+    bottom: 28px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -348,6 +347,8 @@ useHead( {
       border-radius: 20px;
       padding: 2px 10px;
       display: flex;
+      transition: transform 0.45s linear, opacity 0.45s linear;
+      transform: translateY(var(--p, 0px));
 
       .item {
         box-sizing: border-box;
